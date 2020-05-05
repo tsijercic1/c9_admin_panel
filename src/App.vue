@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <navigation />
+    <navigation v-if="this.$router.history.current.name !== 'Login'" />
     <v-content>
       <router-view />
     </v-content>
