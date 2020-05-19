@@ -1,9 +1,5 @@
 <template>
-  <v-card
-    class="ma-4 ml-0"
-    min-width="240"
-    elevation="4"
-  >
+  <v-card class="ma-4 ml-0" min-width="240" elevation="4">
     <v-card-title class="subtitle-2">
       <router-link :to="courseLink(course.id)">{{ course.name }}</router-link>
     </v-card-title>
@@ -36,5 +32,5 @@ export default {
       return `/courses/${id}`;
     }
   }
-}
+};
 </script>

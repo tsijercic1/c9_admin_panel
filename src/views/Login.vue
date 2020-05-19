@@ -11,12 +11,14 @@
                   light
                   label="Username"
                   prepend-icon="mdi-account"
+                  :value="user.username"
                 />
                 <v-text-field
                   light
                   type="password"
                   label="Password"
                   prepend-icon="mdi-lock"
+                  :value="user.password"
                 />
                 <v-btn large width="100%" class="mt-6" dark>Log in</v-btn>
               </v-form>
