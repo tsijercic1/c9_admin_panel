@@ -11,16 +11,18 @@
                   light
                   label="Username"
                   prepend-icon="mdi-account"
-                  :value="user.username"
+                  :value="username"
                 />
                 <v-text-field
                   light
                   type="password"
                   label="Password"
                   prepend-icon="mdi-lock"
-                  :value="user.password"
+                  :value="password"
                 />
-                <v-btn large width="100%" class="mt-6" dark>Log in</v-btn>
+                <v-btn large width="100%" class="mt-6" dark @click="login">
+                  Log in
+                </v-btn>
               </v-form>
             </v-card>
           </v-flex>
@@ -32,6 +34,18 @@
 
 <script>
 export default {
-  name: "Login"
+  name: "Login",
+  data: () => {
+    return {
+      username: undefined,
+      password: undefined
+    };
+  },
+  methods: {
+    login: function() {
+      const { username, password } = this;
+      this.$store.dispatch("login", { username, password });
+    }
+  }
 };
 </script>
