@@ -18,7 +18,9 @@ export default {
   },
   actions: {
     login: async function(context, { username, password }) {
+      console.log(username);
       try{
+        console.log("username: "+encodeURIComponent(username));
         const response = await fetch(
           `${API_BASE_URL}/services/auth.php`,
           {
@@ -26,12 +28,14 @@ export default {
             body: `login=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`,
             headers: {
               "Content-Type": "application/x-www-form-urlencoded",
-              "mode":"cors"
-            }
+              "Accept":"application/json",
+            },
+            mode:"cors"
           }
         );
-        response;
+        console.log(await response.json());
       }catch(e){
+        console.log("ERROR")
         console.log(e);
       }
       context.commit("setUserId", 1);

@@ -11,14 +11,14 @@
                   light
                   label="Username"
                   prepend-icon="mdi-account"
-                  :value="username"
+                  v-model="username"
                 />
                 <v-text-field
                   light
                   type="password"
                   label="Password"
                   prepend-icon="mdi-lock"
-                  :value="password"
+                  v-model="password"
                 />
                 <v-btn large width="100%" class="mt-6" dark @click="login">
                   Log in
@@ -44,6 +44,7 @@ export default {
   methods: {
     login: function() {
       const { username, password } = this;
+      console.log(this);
       this.$store.dispatch("login", { username, password });
     }
   }
