@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <h1>Courses</h1>
-    <v-container class="d-flex pa-0">
+    <v-container class="d-flex pa-0 ">
       <CourseCard v-for="course in courses" :key="course.id" :course="course" />
     </v-container>
   </v-container>
