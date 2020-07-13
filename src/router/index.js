@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
+import NotFound from "../views/NotFound";
 import Dashboard from "../views/Dashboard";
 import About from "../views/About";
 import Login from "../views/Login";
@@ -11,6 +12,11 @@ import Group from "../views/Group";
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "*",
+    name: "NotFound",
+    component: NotFound
+  },
   {
     path: "/",
     name: "Dashboard",
