@@ -1,14 +1,11 @@
 <template>
   <v-container>
-    <h1>Group {{$route.params.group_id}}</h1>
+    <h1>Group {{ $route.params.group_id }}</h1>
   </v-container>
 </template>
 
 <script>
-export default {
-}
+export default {};
 </script>
 
-<style>
-
-</style>
+<style></style>
