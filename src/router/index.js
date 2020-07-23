@@ -51,11 +51,12 @@ const routes = [
 
 const router = new VueRouter({
   mode: "history",
-  base: process.env.BASE_URL + "/admin",
+  base: process.env.BASE_URL + "/panel",
   routes
 });
 
 router.beforeEach((to, from, next) => {
+  console.log(store);
   console.log("Full path: " + to.fullPath + " ... " + to.path);
   console.log("Name: " + to.name);
   console.log("Is authenticated: " + store.getters.isAuthenticated);

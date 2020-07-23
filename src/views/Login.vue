@@ -42,10 +42,11 @@ export default {
     };
   },
   methods: {
-    login: function() {
+    login: async function() {
       const { username, password } = this;
       console.log(this);
-      this.$store.dispatch("login", { username, password });
+      await this.$store.dispatch("login", { username, password });
+      await this.$router.push({ name: "Dashboard" });
     }
   }
 };
