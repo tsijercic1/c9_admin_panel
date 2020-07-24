@@ -17,15 +17,12 @@ export default {
   },
   getters: {
     isAuthenticated(state) {
-      console.log(state.sessionId);
       return state.sessionId !== undefined;
     }
   },
   actions: {
     login: async function(context, { username, password }) {
-      console.log(username);
       try {
-        console.log("username: " + encodeURIComponent(username));
         const response = await fetch(`/services/auth.php`, {
           method: "post",
           body: `login=${encodeURIComponent(
@@ -41,11 +38,10 @@ export default {
           context.commit("setUserId", 1);
           context.commit("setSessionId", body["sid"]);
           context.commit("setProfile", {});
-          console.log("Logged in!");
+
         }
       } catch (e) {
-        console.log("ERROR");
-        console.log(e);
+
       }
     }
   }

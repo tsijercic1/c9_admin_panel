@@ -56,7 +56,7 @@ export default {
         {
           title: "Usage Statistics",
           icon: "mdi-chart-areaspline-variant",
-          link: "#"
+          link: "/courses"
         },
         {
           title: "About",

@@ -44,7 +44,6 @@ export default {
   methods: {
     login: async function() {
       const { username, password } = this;
-      console.log(this);
       await this.$store.dispatch("login", { username, password });
       await this.$router.push({ name: "Dashboard" });
     }
