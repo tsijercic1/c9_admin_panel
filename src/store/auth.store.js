@@ -1,4 +1,3 @@
-import { API_BASE_URL } from "@/app.config";
 export default {
   state: {
     userId: undefined,
@@ -16,32 +15,34 @@ export default {
       state.profile = profile;
     }
   },
+  getters: {
+    isAuthenticated(state) {
+      return state.sessionId !== undefined;
+    }
+  },
   actions: {
     login: async function(context, { username, password }) {
-      console.log(username);
-      try{
-        console.log("username: "+encodeURIComponent(username));
-        const response = await fetch(
-          `${API_BASE_URL}/services/auth.php`,
-          {
-            method: "post",
-            body: `login=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`,
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              "Accept":"application/json",
-            },
-            mode:"cors"
+      try {
+        const response = await fetch(`/services/auth.php`, {
+          method: "post",
+          body: `login=${encodeURIComponent(
+              username
+          )}&password=${encodeURIComponent(password)}`,
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Accept: "application/json"
           }
-        );
-        console.log(await response.json());
-      }catch(e){
-        console.log("ERROR")
-        console.log(e);
+        });
+        const body = await response.json();
+        if(body.success === true){
+          context.commit("setUserId", 1);
+          context.commit("setSessionId", body["sid"]);
+          context.commit("setProfile", {});
+
+        }
+      } catch (e) {
+
       }
-      context.commit("setUserId", 1);
-      context.commit("setSessionId", 1);
-      context.commit("setProfile", {});
-      console.log("Logged in!");
     }
   }
 };
