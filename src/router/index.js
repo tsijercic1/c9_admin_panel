@@ -50,7 +50,7 @@ const routes = [
   {
     path: "/statistics",
     name: "Statistics",
-    component: Dashboard
+    component: Statistics
   },
   {
     path: "*",
