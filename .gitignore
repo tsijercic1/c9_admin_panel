@@ -20,5 +20,3 @@ yarn-error.log*
 *.sln
 *.sw?
 
-# Configuration files that may be altered
-src/app.config.js
