@@ -44,8 +44,12 @@ export default {
   methods: {
     login: async function() {
       const { username, password } = this;
-      await this.$store.dispatch("login", { username, password });
-      await this.$router.push({ name: "Dashboard" });
+      const result = await this.$store.dispatch("login", { username, password });
+      if (result === true) {
+        await this.$router.push({ name: "Dashboard" });
+      } else {
+        console.log("Login view: --Wrong credentials--");
+      }
     }
   }
 };

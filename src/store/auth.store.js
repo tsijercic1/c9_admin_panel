@@ -22,27 +22,41 @@ export default {
   },
   actions: {
     login: async function(context, { username, password }) {
-      try {
         const response = await fetch(`/services/auth.php`, {
           method: "post",
           body: `login=${encodeURIComponent(
               username
-          )}&password=${encodeURIComponent(password)}`,
+          )}&password=${encodeURIComponent(password)}&admin_login=true`,
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             Accept: "application/json"
           }
         });
         const body = await response.json();
-        if(body.success === true){
+        if (body.success === true) {
           context.commit("setUserId", 1);
           context.commit("setSessionId", body["sid"]);
-          context.commit("setProfile", {});
-
+          context.commit("setProfile", {
+            username: username,
+            realName: ""
+          });
+          const profileResponse = await fetch(`/services/users.php?user=${username}`, {
+            method: "get",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              Accept: "application/json"
+            }
+          });
+          const data = await profileResponse.json();
+          if (data.success === true) {
+            context.commit("setProfile", {
+              realName: data.data.realname
+            });
+          }
+          return true;
+        } else {
+          return false;
         }
-      } catch (e) {
-
-      }
     }
   }
 };

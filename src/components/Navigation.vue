@@ -46,7 +46,7 @@ export default {
         {
           title: "Dashboard",
           icon: "mdi-view-dashboard",
-          link: "/"
+          link: "/dashboard"
         },
         {
           title: "Courses",
@@ -56,7 +56,7 @@ export default {
         {
           title: "Usage Statistics",
           icon: "mdi-chart-areaspline-variant",
-          link: "/courses"
+          link: "/statistics"
         },
         {
           title: "About",

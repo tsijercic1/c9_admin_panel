@@ -13,6 +13,11 @@ import store from "../store/index";
 Vue.use(VueRouter);
 const routes = [
   {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: Dashboard
+  },
+  {
     path: "/",
     name: "Dashboard",
     component: Dashboard
@@ -41,6 +46,11 @@ const routes = [
     path: "/courses/:course_id/groups/:group_id",
     name: "Group",
     component: Group
+  },
+  {
+    path: "/statistics",
+    name: "Statistics",
+    component: Dashboard
   },
   {
     path: "*",
