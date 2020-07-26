@@ -9,7 +9,7 @@
     <v-list dense nav class="py-0">
       <v-list-item two-line class="px-0">
         <v-list-item-avatar>
-          <img src="https://randomuser.me/api/portraits/men/81.jpg" />
+          <img src="https://randomuser.me/api/portraits/men/81.jpg"/>
         </v-list-item-avatar>
 
         <v-list-item-content>
@@ -38,40 +38,38 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      drawer: true,
-      items: [
-        {
-          title: "Dashboard",
-          icon: "mdi-view-dashboard",
-          link: "/dashboard"
-        },
-        {
-          title: "Courses",
-          icon: "mdi-school",
-          link: "/courses"
-        },
-        {
-          title: "Usage Statistics",
-          icon: "mdi-chart-areaspline-variant",
-          link: "/statistics"
-        },
-        {
-          title: "About",
-          icon: "mdi-help-box",
-          link: "/about"
-        }
-      ],
-      mini: true,
-      user: {
-
-      }
-    };
-  },
-  mounted() {
-    this.user = this.$store.getters.userProfile;
-  }
-};
+  export default {
+    data() {
+      return {
+        drawer: true,
+        items: [
+          {
+            title: "Dashboard",
+            icon: "mdi-view-dashboard",
+            link: "/dashboard"
+          },
+          {
+            title: "Courses",
+            icon: "mdi-school",
+            link: "/courses"
+          },
+          {
+            title: "Usage Statistics",
+            icon: "mdi-chart-areaspline-variant",
+            link: "/statistics"
+          },
+          {
+            title: "About",
+            icon: "mdi-help-box",
+            link: "/about"
+          }
+        ],
+        mini: true,
+        user: {}
+      };
+    },
+    mounted() {
+      this.user = this.$store.getters.userProfile;
+    }
+  };
 </script>

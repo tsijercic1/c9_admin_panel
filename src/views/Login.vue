@@ -33,24 +33,24 @@
 </template>
 
 <script>
-export default {
-  name: "Login",
-  data: () => {
-    return {
-      username: undefined,
-      password: undefined
-    };
-  },
-  methods: {
-    login: async function() {
-      const { username, password } = this;
-      const result = await this.$store.dispatch("login", { username, password });
-      if (result === true) {
-        await this.$router.push({ name: "Dashboard" });
-      } else {
-        console.log("Login view: --Wrong credentials--");
+  export default {
+    name: "Login",
+    data: () => {
+      return {
+        username: undefined,
+        password: undefined
+      };
+    },
+    methods: {
+      login: async function () {
+        const {username, password} = this;
+        const result = await this.$store.dispatch("login", {username, password});
+        if (result === true) {
+          await this.$router.push({name: "Dashboard"});
+        } else {
+          console.log("Login view: --Wrong credentials--");
+        }
       }
     }
-  }
-};
+  };
 </script>

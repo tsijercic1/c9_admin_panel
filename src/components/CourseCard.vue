@@ -4,7 +4,7 @@
       <router-link :to="courseLink(course.id)">{{ course.name }}</router-link>
     </v-card-title>
 
-    <v-divider />
+    <v-divider/>
 
     <v-list>
       <v-list-item
@@ -21,31 +21,31 @@
 </template>
 
 <script>
-export default {
-  name: "CourseCard",
-  props: ["course"],
-  data() {
-    return {
-      groups: []
-    };
-  },
-  methods: {
-    groupLink: function(id) {
-      return `${this.courseLink(this.course.id)}/groups/${id}`;
+  export default {
+    name: "CourseCard",
+    props: ["course"],
+    data() {
+      return {
+        groups: []
+      };
     },
-    courseLink: function(id) {
-      return `/courses/${id}`;
-    }
-  },
-  async mounted() {
-    const response = await fetch(`/services/courses.php?course_id=${this.course.id}&groups`, {
-      method: "get",
-      headers: {
-        Accept: "application/json"
+    methods: {
+      groupLink: function (id) {
+        return `${this.courseLink(this.course.id)}/groups/${id}`;
+      },
+      courseLink: function (id) {
+        return `/courses/${id}`;
       }
-    });
-    const body = await response.json();
-    this.groups = body.data.groups;
-  }
-};
+    },
+    async mounted() {
+      const response = await fetch(`/services/courses.php?course_id=${this.course.id}&groups`, {
+        method: "get",
+        headers: {
+          Accept: "application/json"
+        }
+      });
+      const body = await response.json();
+      this.groups = body.data.groups;
+    }
+  };
 </script>

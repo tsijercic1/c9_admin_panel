@@ -1,26 +1,26 @@
 <template>
   <v-app>
-    <navigation v-if="this.$router.history.current.name !== 'Login'" />
+    <navigation v-if="this.$router.history.current.name !== 'Login'"/>
     <v-content>
-      <router-view />
+      <router-view/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import Navigation from "./components/Navigation";
+  import Navigation from "./components/Navigation";
 
-export default {
-  components: {
-    Navigation
-  }
-};
+  export default {
+    components: {
+      Navigation
+    }
+  };
 </script>
 
 <style lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
 
-* {
-  font-family: "Roboto", sans-serif;
-}
+  * {
+    font-family: "Roboto", sans-serif;
+  }
 </style>
