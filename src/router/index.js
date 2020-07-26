@@ -7,6 +7,7 @@ import About from "../views/About";
 import Login from "../views/Login";
 import Courses from "../views/Courses";
 import Course from "../views/Course";
+import Statistics from "../views/Statistics";
 import Group from "../views/Group";
 import store from "../store/index";
 

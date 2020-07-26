@@ -21,9 +21,9 @@ export default {
     CourseCard
   },
   async mounted() {
+    console.log("Mounted Courses: ");
     const response = await fetch(`/services/courses.php`, {
-      method: "post",
-      body: ``,
+      method: "get",
       headers: {
         Accept: "application/json"
       }

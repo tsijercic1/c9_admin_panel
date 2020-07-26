@@ -13,8 +13,8 @@
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title>Application</v-list-item-title>
-          <v-list-item-subtitle>Subtext</v-list-item-subtitle>
+          <v-list-item-title>{{ user.realName }}</v-list-item-title>
+          <v-list-item-subtitle>{{ user.username }}</v-list-item-subtitle>
         </v-list-item-content>
 
         <v-btn icon @click.stop="mini = !mini">
@@ -64,8 +64,14 @@ export default {
           link: "/about"
         }
       ],
-      mini: true
+      mini: true,
+      user: {
+
+      }
     };
+  },
+  mounted() {
+    this.user = this.$store.getters.userProfile;
   }
 };
 </script>

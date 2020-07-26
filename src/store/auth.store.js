@@ -12,12 +12,15 @@ export default {
       state.sessionId = id;
     },
     setProfile(state, profile) {
-      state.profile = profile;
+      state.profile = {...state.profile, ...profile};
     }
   },
   getters: {
     isAuthenticated(state) {
       return state.sessionId !== undefined;
+    },
+    userProfile(state) {
+      return state.profile;
     }
   },
   actions: {
@@ -33,7 +36,7 @@ export default {
           }
         });
         const body = await response.json();
-        if (body.success === true) {
+        if (body.success === true || body.success === "true") {
           context.commit("setUserId", 1);
           context.commit("setSessionId", body["sid"]);
           context.commit("setProfile", {
@@ -48,7 +51,7 @@ export default {
             }
           });
           const data = await profileResponse.json();
-          if (data.success === true) {
+          if (data.success === true || data.success === "true") {
             context.commit("setProfile", {
               realName: data.data.realname
             });
