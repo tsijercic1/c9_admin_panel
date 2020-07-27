@@ -8,9 +8,9 @@
 </template>
 
 <script>
-  import CourseCard from "../components/CourseCard";
+import CourseCard from "../components/CourseCard";
 
-  export default {
+export default {
     name: "Courses",
     data() {
       return {
@@ -21,14 +21,28 @@
       CourseCard
     },
     async mounted() {
-      const response = await fetch(`/services/courses.php`, {
-        method: "get",
-        headers: {
-          Accept: "application/json"
+      this.courses = [
+        {
+          id: 1,
+          name: "Uvod u programiranje"
+        },
+        {
+          id: 2,
+          name: "Osnove računarstva"
+        },
+        {
+          id: 3,
+          name: "Razvoj softvera"
+        },
+        {
+          id: 4,
+          name: "Tehnike programiranja"
+        },
+        {
+          id: 5,
+          name: "Razvoj Softvera"
         }
-      });
-      const body = await response.json();
-      this.courses = body.data;
+      ];
     }
   };
 </script>
