@@ -11,38 +11,17 @@
 import CourseCard from "../components/CourseCard";
 
 export default {
-    name: "Courses",
-    data() {
-      return {
-        courses: []
-      }
-    },
-    components: {
-      CourseCard
-    },
-    async mounted() {
-      this.courses = [
-        {
-          id: 1,
-          name: "Course 1"
-        },
-        {
-          id: 2,
-          name: "Course 2"
-        },
-        {
-          id: 3,
-          name: "Course 3"
-        },
-        {
-          id: 4,
-          name: "Course 4"
-        },
-        {
-          id: 5,
-          name: "Course 5"
-        }
-      ];
+  name: "Courses",
+  components: {
+    CourseCard
+  },
+  computed: {
+    courses() {
+      return this.$store.getters.courses;
     }
-  };
+  },
+  mounted() {
+    this.$store.dispatch("refreshCourses");
+  }
+};
 </script>
