@@ -1,15 +1,16 @@
 <template>
-  <v-card class="" min-width="240" elevation="4">
-    <v-card-title class="subtitle-2 text-sm-center">
+  <v-card class="mb-5" min-width="240" elevation="4">
+    <v-card-title class="subtitle-1 text-sm-center">
       <router-link :to="courseLink(course.id)">{{ course.name }}</router-link>
     </v-card-title>
 
     <v-divider/>
 
     <v-container fluid>
-      <v-row justify="center">
+      <v-row>
         <v-col
-            cols="10"
+            cols="12"
+            sm="6"
             md="4"
             lg="3"
             xl="2"
@@ -17,7 +18,7 @@
             :key="group.id"
         >
             <v-card
-                class="pa-4"
+                class="pa-3 subtitle-2"
                 outlined
                 tile
                 :to="groupLink(group.id)"
