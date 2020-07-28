@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <h1>Courses</h1>
-    <v-container class="d-flex pa-0 ">
+    <v-container>
       <CourseCard v-for="course in courses" :key="course.id" :course="course"/>
     </v-container>
   </v-container>
@@ -24,23 +24,23 @@ export default {
       this.courses = [
         {
           id: 1,
-          name: "Uvod u programiranje"
+          name: "Course 1"
         },
         {
           id: 2,
-          name: "Osnove računarstva"
+          name: "Course 2"
         },
         {
           id: 3,
-          name: "Razvoj softvera"
+          name: "Course 3"
         },
         {
           id: 4,
-          name: "Tehnike programiranja"
+          name: "Course 4"
         },
         {
           id: 5,
-          name: "Razvoj Softvera"
+          name: "Course 5"
         }
       ];
     }

@@ -1,22 +1,32 @@
 <template>
-  <v-card class="ma-4 ml-0" min-width="240" elevation="4">
-    <v-card-title class="subtitle-2">
+  <v-card class="" min-width="240" elevation="4">
+    <v-card-title class="subtitle-2 text-sm-center">
       <router-link :to="courseLink(course.id)">{{ course.name }}</router-link>
     </v-card-title>
 
     <v-divider/>
 
-    <v-list>
-      <v-list-item
-          v-for="group in groups"
-          :key="group.id"
-          :to="groupLink(group.id)"
-      >
-        <v-list-item-content>
-          {{ group.name }}
-        </v-list-item-content>
-      </v-list-item>
-    </v-list>
+    <v-container fluid>
+      <v-row justify="center">
+        <v-col
+            cols="10"
+            md="4"
+            lg="3"
+            xl="2"
+            v-for="group in groups"
+            :key="group.id"
+        >
+            <v-card
+                class="pa-4"
+                outlined
+                tile
+                :to="groupLink(group.id)"
+            >
+              {{group.name}}
+            </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-card>
 </template>
 
@@ -46,39 +56,39 @@ export default {
         },
         {
           id: 7,
-          name: "G1"
+          name: "Group 1"
         },
         {
           id: 8,
-          name: "Grupa 2"
+          name: "Group 2"
         },
         {
           id: 9,
-          name: "Sastav 3"
+          name: "Group 3"
         },
         {
           id: 10,
-          name: "Skup 4"
+          name: "Group 4"
         },
         {
           id: 11,
-          name: "Kategorija 5"
+          name: "Group 5"
         },
         {
           id: 12,
-          name: "Sedam"
+          name: "Group 6"
         },
         {
           id: 13,
-          name: "Sad sedam"
+          name: "Group 7"
         },
         {
           id: 14,
-          name: "Devet"
+          name: "Group 8"
         },
         {
           id: 15,
-          name: "Deset"
+          name: "Group 9"
         }
       ],
       2: [
