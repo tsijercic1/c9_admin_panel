@@ -22,6 +22,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("refreshCourses");
+    this.$store.dispatch("refreshAssignments");
   }
 };
 </script>

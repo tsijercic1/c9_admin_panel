@@ -10,6 +10,7 @@ import Course from "../views/Course";
 import Statistics from "../views/Statistics";
 import Group from "../views/Group";
 import store from "../store/index";
+import Assignment from "@/views/Assignment";
 
 Vue.use(VueRouter);
 const routes = [
@@ -47,6 +48,11 @@ const routes = [
     path: "/courses/:course_id/groups/:group_id",
     name: "Group",
     component: Group
+  },
+  {
+    path: "/assignments/:course_id",
+    name: "Assignments",
+    component: Assignment
   },
   {
     path: "/statistics",

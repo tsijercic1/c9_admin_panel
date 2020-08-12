@@ -8,8 +8,11 @@ export default {
     }
   },
   getters: {
-    courses(state) {
+    courses: (state) => {
       return state.courses;
+    },
+    courseById: (state) => (id) => {
+      return state.courses.filter(course => course.id + "" === id)[0];
     }
   },
   actions: {
@@ -21,15 +24,40 @@ export default {
           groups: [
             {
               id: 6,
-              name: "All students"
+              name: "All students",
+              members: {
+                "username1": "Real Name 1",
+                "username2": "Real Name 2",
+                "username3": "Real Name 3",
+                "username4": "Real Name 4",
+                "username5": "Real Name 5"
+              }
             },
             {
               id: 7,
-              name: "Group 1"
+              name: "Group 1",
+              members: {
+                "username6": "Real Name 6",
+                "username7": "Real Name 7",
+                "username8": "Real Name 8",
+                "username9": "Real Name 9",
+                "username10": "Real Name 10",
+                "username11": "Real Name 11"
+              }
             },
             {
               id: 8,
-              name: "Group 2"
+              name: "Group 2",
+              members: {
+                "username16": "Real Name 16",
+                "username17": "Real Name 17",
+                "username18": "Real Name 18",
+                "username19": "Real Name 19",
+                "username110": "Real Name 110",
+                "username113": "Real Name 113",
+                "username114": "Real Name 114",
+                "username116": "Real Name 116",
+              }
             },
             {
               id: 9,
