@@ -13,37 +13,38 @@
               :active.sync="active"
           ></v-treeview>
         </v-col>
-        <v-col md="9">
-          <v-card
-              v-if='editorType === "none"'
-              tile
-          >
-            <v-card-title>Select a file or an assignment/task</v-card-title>
-          </v-card>
-          <v-card
-              v-else-if='editorType.type === "html"'
-              tile
-          >
-            <v-card-title>An html file has been selected</v-card-title>
-            <editor
-                ref="toaster"
-                :initialValue="editorText"
-                :options="editorOptions"
-            ></editor>
-            <viewer
-                :initialValue="editorText"
-                :options="editorOptions"
-            ></viewer>
-          </v-card>
-          <v-card
-              v-else-if='editorType.type === "code"'
-              tile
-          >
-            <v-card-title>A code file has been selected</v-card-title>
-            <codemirror v-model="code" :options="cmOptions"/>
-            <v-input type="button" @click="toggleTheme()">Change Theme</v-input>
-          </v-card>
-
+        <v-col md="9" class="sidebar-container">
+          <vue-sticky-sidebar containerSelector=".sidebar-container" innerWrapperSelector='.inner-tile'>
+            <v-card class="inner-tile"
+                    v-if='editorType === "none"'
+                    tile
+            >
+              <v-card-title>Select a file or an assignment/task</v-card-title>
+            </v-card>
+            <v-card class="inner-tile"
+                    v-else-if='editorType.type === "html"'
+                    tile
+            >
+              <v-card-title>An html file has been selected</v-card-title>
+              <editor
+                  ref="toaster"
+                  :initialValue="editorText"
+                  :options="editorOptions"
+              ></editor>
+              <viewer
+                  :initialValue="editorText"
+                  :options="editorOptions"
+              ></viewer>
+            </v-card>
+            <v-card class="inner-tile"
+                    v-else-if='editorType.type === "code"'
+                    tile
+            >
+              <v-card-title>A code file has been selected</v-card-title>
+              <codemirror v-model="code" :options="cmOptions"/>
+              <v-input type="button" @click="toggleTheme()">Change Theme</v-input>
+            </v-card>
+          </vue-sticky-sidebar>
         </v-col>
       </v-row>
     </v-container>
@@ -66,12 +67,14 @@ import {codemirror} from "vue-codemirror";
 // import base style
 import "codemirror/lib/codemirror.css";
 import "codemirror/addon/edit/closebrackets";
+import vueStickySidebar from "vue-sticky-sidebar";
 
 export default {
   components: {
     editor: Editor,
     viewer: Viewer,
-    codemirror
+    codemirror,
+    "vue-sticky-sidebar": vueStickySidebar
   },
   data() {
     return {
@@ -103,9 +106,9 @@ export default {
       return result;
     },
     editorType() {
-      if(this.active.length !== 0) {
+      if (this.active.length !== 0) {
         const name = this.active[0].name;
-        if(name === ".autotest" || name === "main.cpp") {
+        if (name === ".autotest" || name === "main.cpp") {
           return {
             type: "code"
           }
@@ -166,7 +169,7 @@ export default {
         })
       }
       let html = "";
-      if(this.$refs.toaster) {
+      if (this.$refs.toaster) {
         html = this.$refs.toaster.invoke("getHtml");
       }
       console.log(html);
@@ -204,5 +207,4 @@ export default {
 </script>
 
 <style>
-
 </style>
