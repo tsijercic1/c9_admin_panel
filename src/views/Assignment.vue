@@ -182,6 +182,7 @@ export default {
       if (this.$refs.toaster) {
         html = this.$refs.toaster.invoke("getHtml");
       }
+      console.log(html);
     },
     constructAssignmentsTree(assignments) {
       let tree = [];
