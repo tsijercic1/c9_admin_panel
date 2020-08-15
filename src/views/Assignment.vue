@@ -14,15 +14,17 @@
           ></v-treeview>
         </v-col>
         <v-col md="9" class="sidebar-container">
-          <vue-sticky-sidebar containerSelector=".sidebar-container" innerWrapperSelector='.inner-tile'>
+          <v-sticky-sidebar
+              :config="sidebarConfig"
+          >
             <v-card class="inner-tile"
-                    v-if='editorType === "none"'
+                    v-if='editorType2 === "none"'
                     tile
             >
               <v-card-title>Select a file or an assignment/task</v-card-title>
             </v-card>
             <v-card class="inner-tile"
-                    v-else-if='editorType.type === "html"'
+                    v-else-if='editorType2.type === "html"'
                     tile
             >
               <v-card-title>An html file has been selected</v-card-title>
@@ -37,14 +39,20 @@
               ></viewer>
             </v-card>
             <v-card class="inner-tile"
-                    v-else-if='editorType.type === "code"'
+                    v-else-if='editorType2.type === "code"'
                     tile
             >
               <v-card-title>A code file has been selected</v-card-title>
               <codemirror v-model="code" :options="cmOptions"/>
-              <v-input type="button" @click="toggleTheme()">Change Theme</v-input>
             </v-card>
-          </vue-sticky-sidebar>
+            <v-card class="inner-tile"
+                    v-else-if='editorType2.type === "autotest"'
+                    tile
+            >
+              <v-card-title>An autotest file has been selected</v-card-title>
+            </v-card>
+          </v-sticky-sidebar>
+
         </v-col>
       </v-row>
     </v-container>
@@ -67,17 +75,24 @@ import {codemirror} from "vue-codemirror";
 // import base style
 import "codemirror/lib/codemirror.css";
 import "codemirror/addon/edit/closebrackets";
-import vueStickySidebar from "vue-sticky-sidebar";
+import VStickySidebar from "@/components/VueStickySidebar";
 
 export default {
   components: {
+    VStickySidebar,
     editor: Editor,
     viewer: Viewer,
-    codemirror,
-    "vue-sticky-sidebar": vueStickySidebar
+    codemirror
+  },
+  mounted() {
   },
   data() {
     return {
+      sidebarConfig: {
+        topSpacing: 28,
+        bottomSpacing: 10,
+        innerWrapperSelector: ".inner-tile",
+      },
       active: [],
       editorText: "This is initialValue.",
       editorOptions: {
@@ -102,10 +117,9 @@ export default {
     assignments() {
       const courseId = this.$route.params.course_id;
       let result = this.$store.getters.assignmentsForCourse(courseId);
-      this.renameAssignmentPropertyRecursively(result);
-      return result;
+      return this.constructAssignmentsTree(result);
     },
-    editorType() {
+    editorType2() {
       if (this.active.length !== 0) {
         const name = this.active[0].name;
         if (name === ".autotest" || name === "main.cpp") {
@@ -121,19 +135,15 @@ export default {
         }
       }
       return "none";
+    },
+    sidebarContent(selectedItem) {
+      return selectedItem;
     }
   },
   watch: {
-    activeSelections: "logActive"
+    activeSelections: "logActive",
   },
   methods: {
-    toggleTheme() {
-      if (this.cmOptions.theme === "darcula") {
-        this.cmOptions.theme = "";
-      } else {
-        this.cmOptions.theme = "darcula";
-      }
-    },
     findInTree(root, wanted) {
       if (root.id === wanted.id && root.name === wanted.name) {
         return {
@@ -172,35 +182,72 @@ export default {
       if (this.$refs.toaster) {
         html = this.$refs.toaster.invoke("getHtml");
       }
-      console.log(html);
     },
-    renameAssignmentPropertyRecursively(assignments) {
+    constructAssignmentsTree(assignments) {
+      let tree = [];
       assignments.forEach(assignment => {
-        if (assignment.files) {
-          assignment.children = assignment.files.map((file, index) => {
-            if (typeof file === "string" || file instanceof String) {
-              return {
-                id: assignment.id + "000" + index,
-                name: file,
-                binary: false,
-                show: true
-              };
-            } else {
-              return {
-                id: assignment.id + "000" + index,
-                name: file.filename,
-                binary: file.binary,
-                show: file.show
-              };
-            }
-          });
+        let element = {};
+        if (assignment.id) {
+          element.nodeType = "assignment";
+          element.id = assignment.id;
+          element.name = assignment.name;
+          element.type = assignment.type;
+          element.path = assignment.path;
+          element.hidden = assignment.hidden;
+          element.children = this.constructHomogeneousArrayFromAssignmentItemsProperty(assignment);
+          element.children.push(...this.constructHomogeneousArrayFromFilesProperty(assignment, "assignmentFile"));
+          tree.push(element);
         }
-        if (!assignment.items) {
-          return;
-        }
-        assignment.children = [...assignment.children, ...assignment.items];
-        this.renameAssignmentPropertyRecursively(assignment.children);
       });
+      return tree;
+    },
+    constructHomogeneousArrayFromAssignmentItemsProperty(assignment) {
+      if (assignment.items) {
+        let result = [];
+        assignment.items.forEach(item => {
+          let element = {};
+          if (item.id) {
+            element.nodeType = "task";
+            element.id = item.id;
+            element.name = item.name;
+            element.type = item.type;
+            element.path = item.path;
+            element.hidden = item.hidden;
+            element.children = this.constructHomogeneousArrayFromFilesProperty(item, "taskFile");
+            result.push(element);
+          }
+        });
+        return result;
+      }
+      return [];
+    },
+    constructHomogeneousArrayFromFilesProperty(element, fileNodeType) {
+      if (element.files) {
+        let result = [];
+        element.files.forEach(file => {
+          if (file.filename) {
+            result.push({
+              parentId: element.id,
+              id: element.path+"/"+file.filename,
+              nodeType: fileNodeType,
+              name: file.filename,
+              binary: file.binary,
+              show: file.show,
+            });
+          } else {
+            result.push({
+              parentId: element.id,
+              id: element.path+"/"+file,
+              nodeType: fileNodeType,
+              name: file,
+              binary: false,
+              show: true,
+            });
+          }
+        });
+        return result;
+      }
+      return [];
     }
   }
 };
