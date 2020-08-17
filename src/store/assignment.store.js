@@ -19,11 +19,156 @@ export default {
         console.log(courseId);
       }
       return state.assignments;
+    },
+    autotestFile() {
+      return {
+        "id": 56181,
+        "name": "Tehnike programiranja (2019/2020), Zada\u0107a 1, zadatak 1",
+        "language": "C++",
+        "required_compiler": "g++",
+        "preferred_compiler": "g++",
+        "compiler_features": [],
+        "compiler_options": "-std=c++11 -O1 -Wall -Wuninitialized -Winit-self -Wfloat-equal -Wno-sign-compare -Werror=implicit-function-declaration -Werror=vla -pedantic -lm -pass-exit-codes",
+        "compiler_options_debug": "-std=c++11 -ggdb -lm -pass-exit-codes",
+        "compile": "true",
+        "run": "false",
+        "test": "true",
+        "debug": "true",
+        "profile": "true",
+        "test_specifications": [
+          {
+            "id": 108,
+            "require_symbols": [],
+            "replace_symbols": [],
+            "code": "//AT1 - definisanje i testiranje main funkcije (za parametar true)\n//Za sva pitanja vezana za autotestove za ovaj zadatak, javiti se na e-mail bcocalic1@etf.unsa.ba\n\n\n_main();",
+            "global_above_main": "",
+            "global_top": "",
+            "running_params": {
+              "timeout": "10",
+              "vmem": "1000000",
+              "stdin": "14 191 233 43 -313 142 13 121 678 -151 23 -12 727 173 656 1\n"
+            },
+            "expected": [
+              "Unesite broj elemenata niza: Unesite elemente niza: Unesite parametar (1 ili 0): Izdvojeni elementi su: 121, -151, 656"
+            ],
+            "expected_exception": "false",
+            "expected_crash": "false",
+            "ignore_whitespace": "false",
+            "regex": "false",
+            "substring": "false"
+          },
+          {
+            "id": 109,
+            "require_symbols": [],
+            "replace_symbols": [],
+            "code": "//AT2 - testiranje main funkcije (za parametar false)\n\n_main();",
+            "global_above_main": "",
+            "global_top": "",
+            "running_params": {
+              "timeout": "10",
+              "vmem": "1000000",
+              "stdin": "15 191 100 233 43 -313 142 13 121 678 -151 23 -12 727 173 656 0\n"
+            },
+            "expected": [
+              "Unesite broj elemenata niza: Unesite elemente niza: Unesite parametar (1 ili 0): Izdvojeni elementi su: 100, 233, 142, 13, 23, 173"
+            ],
+            "expected_exception": "false",
+            "expected_crash": "false",
+            "ignore_whitespace": "false",
+            "regex": "false",
+            "substring": "false"
+          },
+          {
+            "id": 110,
+            "require_symbols": [],
+            "replace_symbols": [],
+            "code": "//AT3 - testiranje main funkcije (za parametar true, sa ponavljanjem)\n\n_main();",
+            "global_above_main": "",
+            "global_top": "",
+            "running_params": {
+              "timeout": "10",
+              "vmem": "1000000",
+              "stdin": "17 191 233 14 43 -313 233 142 -12 13 121 678 -151 23 -12 727 173 656 1\n"
+            },
+            "expected": [
+              "Unesite broj elemenata niza: Unesite elemente niza: Unesite parametar (1 ili 0): Izdvojeni elementi su: 121, -151, 656"
+            ],
+            "expected_exception": "false",
+            "expected_crash": "false",
+            "ignore_whitespace": "false",
+            "regex": "false",
+            "substring": "false"
+          },
+          {
+            "id": 111,
+            "require_symbols": [],
+            "replace_symbols": [],
+            "code": "//AT4 - testiranje main funkcije (za parametar false, sa ponavljanjem)\n\n_main();",
+            "global_above_main": "",
+            "global_top": "",
+            "running_params": {
+              "timeout": "10",
+              "vmem": "1000000",
+              "stdin": "18 191 100 233 656 43 -313 142 13 121 100 678 -151 23 -12 727 191 173 656 0"
+            },
+            "expected": [
+              "Unesite broj elemenata niza: Unesite elemente niza: Unesite parametar (1 ili 0): Izdvojeni elementi su: 100, 233, 142, 13, 23, 173"
+            ],
+            "expected_exception": "false",
+            "expected_crash": "false",
+            "ignore_whitespace": "false",
+            "regex": "false",
+            "substring": "false"
+          },
+          {
+            "id": 112,
+            "require_symbols": [],
+            "replace_symbols": [],
+            "code": "//AT5 - testiranje main funkcije (za parametar true, sa ponavljanjem)\n\n_main();",
+            "global_above_main": "",
+            "global_top": "",
+            "running_params": {
+              "timeout": "10",
+              "vmem": "1000000",
+              "stdin": "20 191 233 14 43 -313 233 142 -12 13 121 678 -151 121 -151 656 23 -12 727 173 656 1"
+            },
+            "expected": [
+              "Unesite broj elemenata niza: Unesite elemente niza: Unesite parametar (1 ili 0): Izdvojeni elementi su: 121, -151, 656"
+            ],
+            "expected_exception": "false",
+            "expected_crash": "false",
+            "ignore_whitespace": "false",
+            "regex": "false",
+            "substring": "false"
+          },
+          {
+            "id": 113,
+            "require_symbols": [],
+            "replace_symbols": [],
+            "code": "//AT6 - testiranje main funkcije (za parametar false, sa ponavljanjem)\n\n_main();",
+            "global_above_main": "",
+            "global_top": "",
+            "running_params": {
+              "timeout": "10",
+              "vmem": "1000000",
+              "stdin": "22 191 100 233 656 233 43 -313 142 13 142 121 100 678 13 -151 23 -12 727 23 191 173 656 0\n"
+            },
+            "expected": [
+              "Unesite broj elemenata niza: Unesite elemente niza: Unesite parametar (1 ili 0): Izdvojeni elementi su: 100, 233, 142, 13, 23, 173"
+            ],
+            "expected_exception": "false",
+            "expected_crash": "false",
+            "ignore_whitespace": "false",
+            "regex": "false",
+            "substring": "false"
+          }
+        ]
+      };
     }
   },
   actions: {
     refreshAssignments(context) {
-      const assignments = [
+      let assignments = [
         {
           id: 1,
           "type": "tutorial",
@@ -6802,6 +6947,3225 @@ export default {
           "files": [
             "main.cpp"
           ]
+        }
+      ];
+      assignments = [
+        {
+          "id": 1,
+          "type": "Folder",
+          "tasks": 11,
+          "name": "Primjeri iz knjige",
+          "items" : [
+            {
+              "id": 10,
+              "type": "Poglavlje",
+              "tasks": 11,
+              "path": "P1",
+              "name": "Poglavlje 1. Prvi koraci",
+              "items" : [
+                {
+                  "id": 100,
+                  "name": "1.1 Hello World",
+                  "items" : [
+                    {
+                      "id": 1000,
+                      "name": "str. 21",
+                      "path": "Z1",
+                      "files" : [ "1.0.0.1.c" ]
+                    },
+                    {
+                      "id": 1001,
+                      "name": "str. 24a",
+                      "path": "Z2",
+                      "files" : [ "1.1.1.1.c" ]
+                    },
+                    {
+                      "id": 1002,
+                      "name": "str. 24b",
+                      "path": "Z3",
+                      "files" : [ "1.1.1.2.c" ]
+                    },
+                    {
+                      "id": 1003,
+                      "name": "str. 24c",
+                      "path": "Z4",
+                      "files" : [ "1.1.1.3.c" ]
+                    },
+                    {
+                      "id": 1004,
+                      "name": "str. 25 - greška",
+                      "path": "Z5",
+                      "files" : [ "1.1.3.1-greska.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 101,
+                  "name": "1.2 Promjenljive i ulaz/izlaz",
+                  "items" : [
+                    {
+                      "id": 1010,
+                      "name": "str. 27",
+                      "path": "Z6",
+                      "files" : [ "1.2.0.1.c" ]
+                    },
+                    {
+                      "id": 1011,
+                      "name": "str. 32",
+                      "path": "Z7",
+                      "files" : [ "1.2.4.1.c" ]
+                    },
+                    {
+                      "id": 1012,
+                      "name": "str. 37a",
+                      "path": "Z8",
+                      "files" : [ "1.2.9.1.cpp" ]
+                    },
+                    {
+                      "id": 1013,
+                      "name": "str. 37b",
+                      "path": "Z9",
+                      "files" : [ "1.2.9.2.cpp" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 102,
+                  "name": "1.3 Rješavanje programskih zadataka",
+                  "items" : [
+                    {
+                      "id": 1020,
+                      "name": "str. 39",
+                      "path": "Z10",
+                      "files" : [ "1.3.0.1.c" ]
+                    },
+                    {
+                      "id": 1021,
+                      "name": "str. 40",
+                      "path": "Z11",
+                      "files" : [ "1.3.1.1.c" ]
+                    }
+                  ]
+                }
+              ],
+              "task_files": {
+                "1": [
+                  "1.0.0.1.c"
+                ],
+                "2": [
+                  "1.1.1.1.c"
+                ],
+                "3": [
+                  "1.1.1.2.c"
+                ],
+                "4": [
+                  "1.1.1.3.c"
+                ],
+                "5": [
+                  "1.1.3.1-greska.c"
+                ],
+                "6": [
+                  "1.2.0.1.c"
+                ],
+                "7": [
+                  "1.2.4.1.c"
+                ],
+                "8": [
+                  "1.2.9.1.cpp"
+                ],
+                "9": [
+                  "1.2.9.2.cpp"
+                ],
+                "10": [
+                  "1.3.0.1.c"
+                ],
+                "11": [
+                  "1.3.1.1.c"
+                ]
+              },
+              "homework_id": "0",
+              "hidden": "false"
+            },
+            {
+              "id": 11,
+              "type": "Poglavlje",
+              "tasks": 11,
+              "path": "P2",
+              "name": "Poglavlje 2. Uslovi",
+              "items" : [
+                {
+                  "id": 110,
+                  "name": "2.1 Vrste grananja",
+                  "items" : [
+                    {
+                      "id": 1100,
+                      "name": "str. 45",
+                      "path": "Z1",
+                      "files" : [ "2.1.1.1.c" ]
+                    },
+                    {
+                      "id": 1101,
+                      "name": "str. 46 - greška",
+                      "path": "Z2",
+                      "files" : [ "2.1.1.2-greska.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 111,
+                  "name": "2.3 Alternativa",
+                  "items" : [
+                    {
+                      "id": 1110,
+                      "name": "str. 48",
+                      "path": "Z3",
+                      "files" : [ "2.3.0.1.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 112,
+                  "name": "2.5 Višestruki izbor",
+                  "items" : [
+                    {
+                      "id": 1120,
+                      "name": "str. 54 - greška",
+                      "path": "Z4",
+                      "files" : [ "2.5.0.1-greska.c" ]
+                    },
+                    {
+                      "id": 1121,
+                      "name": "str. 55 - greška",
+                      "path": "Z5",
+                      "files" : [ "2.5.0.2-greska.c" ]
+                    },
+                    {
+                      "id": 1122,
+                      "name": "str. 56a",
+                      "path": "Z6",
+                      "files" : [ "2.5.0.3.c" ]
+                    },
+                    {
+                      "id": 1123,
+                      "name": "str. 56b",
+                      "path": "Z7",
+                      "files" : [ "2.5.0.4.c" ]
+                    },
+                    {
+                      "id": 1124,
+                      "name": "str. 59a",
+                      "path": "Z8",
+                      "files" : [ "2.5.2.1.c" ]
+                    },
+                    {
+                      "id": 1125,
+                      "name": "str. 59b",
+                      "path": "Z9",
+                      "files" : [ "2.5.2.2.c" ]
+                    },
+                    {
+                      "id": 1126,
+                      "name": "str. 60 - greška",
+                      "path": "Z10",
+                      "files" : [ "2.5.2.3-greska.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 113,
+                  "name": "2.6 Kontrola toka naredbom goto",
+                  "items" : [
+                    {
+                      "id": 1130,
+                      "name": "str. 61",
+                      "path": "Z11",
+                      "files" : [ "2.6.0.1.c" ]
+                    }
+                  ]
+                }
+              ],
+              "task_files": {
+                "1": [
+                  "2.1.1.1.c"
+                ],
+                "2": [
+                  "2.1.1.2-greska.c"
+                ],
+                "3": [
+                  "2.3.0.1.c"
+                ],
+                "4": [
+                  "2.5.0.1-greska.c"
+                ],
+                "5": [
+                  "2.5.0.2-greska.c"
+                ],
+                "6": [
+                  "2.5.0.3.c"
+                ],
+                "7": [
+                  "2.5.0.4.c"
+                ],
+                "8": [
+                  "2.5.2.1.c"
+                ],
+                "9": [
+                  "2.5.2.2.c"
+                ],
+                "10": [
+                  "2.5.2.3-greska.c"
+                ],
+                "11": [
+                  "2.6.0.1.c"
+                ]
+              },
+              "homework_id": "0",
+              "hidden": "false"
+            },
+            {
+              "id": 12,
+              "type": "Poglavlje",
+              "tasks": 5,
+              "name": "Poglavlje 3. Skok u svijet programiranja",
+              "path": "P3",
+              "items" : [
+                {
+                  "id": 120,
+                  "name": "3.1 Predstavljanje podataka u memoriji računara",
+                  "items" : [
+                    {
+                      "id": 1200,
+                      "name": "str. 72a",
+                      "path": "Z1",
+                      "files" : [ "3.1.6.1.c" ]
+                    },
+                    {
+                      "id": 1201,
+                      "name": "str. 72b - greška",
+                      "path": "Z2",
+                      "files" : [ "3.1.6.2-greska.c" ]
+                    },
+                    {
+                      "id": 1202,
+                      "name": "str. 72c",
+                      "path": "Z3",
+                      "files" : [ "3.1.6.3.c" ]
+                    },
+                    {
+                      "id": 1203,
+                      "name": "str. 77",
+                      "path": "Z4",
+                      "files" : [ "3.1.8.1.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 121,
+                  "name": "3.2 Operatori",
+                  "items" : [
+                    {
+                      "id": 1210,
+                      "name": "str. 82",
+                      "path": "Z5",
+                      "files" : [ "3.2.2.1.c" ]
+                    }
+                  ]
+                }
+              ],
+              "task_files": {
+                "1": [
+                  "3.1.6.1.c"
+                ],
+                "2": [
+                  "3.1.6.2-greska.c"
+                ],
+                "3": [
+                  "3.1.6.3.c"
+                ],
+                "4": [
+                  "3.1.8.1.c"
+                ],
+                "5": [
+                  "3.2.2.1.c"
+                ]
+              },
+              "homework_id": "0",
+              "hidden": "false"
+            },
+            {
+              "id": 13,
+              "type": "Poglavlje",
+              "tasks": 31,
+              "name": "Poglavlje 4. Petlje",
+              "path": "P4",
+              "items" : [
+                {
+                  "id": 130,
+                  "name": "4.1 for petlja",
+                  "items" : [
+                    {
+                      "id": 1300,
+                      "name": "str. 88",
+                      "path": "Z1",
+                      "files" : [ "4.1.0.1.c" ]
+                    },
+                    {
+                      "id": 1301,
+                      "name": "str. 91a",
+                      "path": "Z2",
+                      "files" : [ "4.1.1.1.c" ]
+                    },
+                    {
+                      "id": 1302,
+                      "name": "str. 91b",
+                      "path": "Z3",
+                      "files" : [ "4.1.2.1.c" ]
+                    },
+                    {
+                      "id": 1303,
+                      "name": "str. 93",
+                      "path": "Z4",
+                      "files" : [ "4.1.3.1.c" ]
+                    },
+                    {
+                      "id": 1304,
+                      "name": "str. 94",
+                      "path": "Z5",
+                      "files" : [ "4.1.4.1.c" ]
+                    },
+                    {
+                      "id": 1305,
+                      "name": "str. 95a",
+                      "path": "Z6",
+                      "files" : [ "4.1.4.2.c" ]
+                    },
+                    {
+                      "id": 1306,
+                      "name": "str. 95b",
+                      "path": "Z7",
+                      "files" : [ "4.1.4.3.c" ]
+                    },
+                    {
+                      "id": 1307,
+                      "name": "str. 96a",
+                      "path": "Z8",
+                      "files" : [ "4.1.4.4.c" ]
+                    },
+                    {
+                      "id": 1308,
+                      "name": "str. 96b",
+                      "path": "Z9",
+                      "files" : [ "4.1.4.5.c" ]
+                    },
+                    {
+                      "id": 1309,
+                      "name": "str. 97",
+                      "path": "Z10",
+                      "files" : [ "4.1.5.1.c" ]
+                    },
+                    {
+                      "id": 1310,
+                      "name": "str. 98a",
+                      "path": "Z11",
+                      "files" : [ "4.1.6.1.c" ]
+                    },
+                    {
+                      "id": 1311,
+                      "name": "str. 98b",
+                      "path": "Z12",
+                      "files" : [ "4.1.6.2.c" ]
+                    },
+                    {
+                      "id": 1312,
+                      "name": "str. 99",
+                      "path": "Z13",
+                      "files" : [ "4.1.6.3.c" ]
+                    },
+                    {
+                      "id": 1313,
+                      "name": "str. 100",
+                      "path": "Z14",
+                      "files" : [ "4.1.7.1.c" ]
+                    },
+                    {
+                      "id": 1314,
+                      "name": "str. 103",
+                      "path": "Z15",
+                      "files" : [ "4.1.7.2.c" ]
+                    },
+                    {
+                      "id": 1315,
+                      "name": "str. 104",
+                      "path": "Z16",
+                      "files" : [ "4.1.7.3.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 131,
+                  "name": "4.2 while petlja",
+                  "path": "P4",
+                  "items" : [
+                    {
+                      "id": 1310,
+                      "name": "str. 105",
+                      "path": "Z17",
+                      "files" : [ "4.2.0.1.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 132,
+                  "name": "4.3 do-while petlja",
+                  "items" : [
+                    {
+                      "id": 1320,
+                      "name": "str. 108 - greška",
+                      "path": "Z18",
+                      "files" : [ "4.3.0.1-greska.c" ]
+                    },
+                    {
+                      "id": 1321,
+                      "name": "str. 110",
+                      "path": "Z19",
+                      "files" : [ "4.3.0.2.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 133,
+                  "name": "4.4 Primjeri zadataka sa petljama",
+                  "items" : [
+                    {
+                      "id": 1330,
+                      "name": "str. 111 - Zadatak 5",
+                      "path": "Z20",
+                      "files" : [ "4.4.1.1.c" ]
+                    },
+                    {
+                      "id": 1331,
+                      "name": "str. 113 - Zadatak 6",
+                      "path": "Z21",
+                      "files" : [ "4.4.1.2.c" ]
+                    },
+                    {
+                      "id": 1332,
+                      "name": "str. 114 - Zadatak 7",
+                      "path": "Z22",
+                      "files" : [ "4.4.1.3.c" ]
+                    },
+                    {
+                      "id": 1333,
+                      "name": "str. 115 - Zadatak 8",
+                      "path": "Z23",
+                      "files" : [ "4.4.1.4.c" ]
+                    },
+                    {
+                      "id": 1334,
+                      "name": "str. 117 - Zadatak 9",
+                      "path": "Z24",
+                      "files" : [ "4.4.2.1.c" ]
+                    },
+                    {
+                      "id": 1335,
+                      "name": "str. 118 - Zadatak 10",
+                      "path": "Z25",
+                      "files" : [ "4.4.2.2.c" ]
+                    },
+                    {
+                      "id": 1336,
+                      "name": "str. 119 - Zadatak 11",
+                      "path": "Z26",
+                      "files" : [ "4.4.2.3.c" ]
+                    },
+                    {
+                      "id": 1337,
+                      "name": "str. 120 - Zadatak 11",
+                      "path": "Z27",
+                      "files" : [ "4.4.2.4.c" ]
+                    },
+                    {
+                      "id": 1338,
+                      "name": "str. 121 - greška",
+                      "path": "Z28",
+                      "files" : [ "4.4.3.1-greska.c" ]
+                    },
+                    {
+                      "id": 1339,
+                      "name": "str. 123",
+                      "path": "Z29",
+                      "files" : [ "4.4.3.2.c" ]
+                    },
+                    {
+                      "id": 1340,
+                      "name": "str. 125 - Zadatak 12",
+                      "path": "Z30",
+                      "files" : [ "4.4.4.1.c" ]
+                    },
+                    {
+                      "id": 1341,
+                      "name": "str. 126 - Zadatak 13",
+                      "path": "Z31",
+                      "files" : [ "4.4.4.2.c" ]
+                    }
+                  ]
+                }
+              ],
+              "task_files": {
+                "1": [
+                  "4.1.0.1.c"
+                ],
+                "2": [
+                  "4.1.1.1.c"
+                ],
+                "3": [
+                  "4.1.2.1.c"
+                ],
+                "4": [
+                  "4.1.3.1.c"
+                ],
+                "5": [
+                  "4.1.4.1.c"
+                ],
+                "6": [
+                  "4.1.4.2.c"
+                ],
+                "7": [
+                  "4.1.4.3.c"
+                ],
+                "8": [
+                  "4.1.4.4.c"
+                ],
+                "9": [
+                  "4.1.4.5.c"
+                ],
+                "10": [
+                  "4.1.5.1.c"
+                ],
+                "11": [
+                  "4.1.6.1.c"
+                ],
+                "12": [
+                  "4.1.6.2.c"
+                ],
+                "13": [
+                  "4.1.6.3.c"
+                ],
+                "14": [
+                  "4.1.7.1.c"
+                ],
+                "15": [
+                  "4.1.7.2.c"
+                ],
+                "16": [
+                  "4.1.7.3.c"
+                ],
+                "17": [
+                  "4.2.0.1.c"
+                ],
+                "18": [
+                  "4.3.0.1-greska.c"
+                ],
+                "19": [
+                  "4.3.0.2.c"
+                ],
+                "20": [
+                  "4.4.1.1.c"
+                ],
+                "21": [
+                  "4.4.1.2.c"
+                ],
+                "22": [
+                  "4.4.1.3.c"
+                ],
+                "23": [
+                  "4.4.1.4.c"
+                ],
+                "24": [
+                  "4.4.2.1.c"
+                ],
+                "25": [
+                  "4.4.2.2.c"
+                ],
+                "26": [
+                  "4.4.2.3.c"
+                ],
+                "27": [
+                  "4.4.2.4.c"
+                ],
+                "28": [
+                  "4.4.3.1-greska.c"
+                ],
+                "29": [
+                  "4.4.3.2.c"
+                ],
+                "30": [
+                  "4.4.4.1.c"
+                ],
+                "31": [
+                  "4.4.4.2.c"
+                ]
+              },
+              "homework_id": "0",
+              "hidden": "false"
+            },
+            {
+              "id": 14,
+              "type": "Poglavlje",
+              "tasks": 25,
+              "name": "Poglavlje 5. Nizovi",
+              "path": "P5",
+              "items" : [
+                {
+                  "id": 140,
+                  "name": "5.1 Rad sa nizovima",
+                  "items" : [
+                    {
+                      "id": 1400,
+                      "name": "str. 131a",
+                      "path": "Z1",
+                      "files" : [ "5.1.0.1.c" ]
+                    },
+                    {
+                      "id": 1401,
+                      "name": "str. 131b - greška",
+                      "path": "Z2",
+                      "files" : [ "5.1.0.2-greska.c" ]
+                    },
+                    {
+                      "id": 1402,
+                      "name": "str. 135",
+                      "path": "Z3",
+                      "files" : [ "5.1.3.1.c" ]
+                    },
+                    {
+                      "id": 1403,
+                      "name": "str. 137",
+                      "path": "Z4",
+                      "files" : [ "5.1.3.2.c" ]
+                    },
+                    {
+                      "id": 1404,
+                      "name": "str. 138",
+                      "path": "Z5",
+                      "files" : [ "5.1.4.1.c" ]
+                    },
+                    {
+                      "id": 1405,
+                      "name": "str. 139",
+                      "path": "Z6",
+                      "files" : [ "5.1.4.2.c" ]
+                    },
+                    {
+                      "id": 1406,
+                      "name": "str. 140 - greška",
+                      "path": "Z7",
+                      "files" : [ "5.1.5.1-greska.c" ]
+                    },
+                    {
+                      "id": 1407,
+                      "name": "str. 141",
+                      "path": "Z8",
+                      "files" : [ "5.1.5.2.c" ]
+                    },
+                    {
+                      "id": 1408,
+                      "name": "str. 142",
+                      "path": "Z9",
+                      "files" : [ "5.1.5.3.c" ]
+                    },
+                    {
+                      "id": 1409,
+                      "name": "str. 143",
+                      "path": "Z10",
+                      "files" : [ "5.1.5.4.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 141,
+                  "name": "5.2 Neki algoritmi za rad sa nizovima",
+                  "items" : [
+                    {
+                      "id": 1410,
+                      "name": "str. 147",
+                      "path": "Z11",
+                      "files" : [ "5.2.1.1.c" ]
+                    },
+                    {
+                      "id": 1411,
+                      "name": "str. 153",
+                      "path": "Z12",
+                      "files" : [ "5.2.2.2.c" ]
+                    },
+                    {
+                      "id": 1412,
+                      "name": "str. 154",
+                      "path": "Z13",
+                      "files" : [ "5.2.3.1.c" ]
+                    },
+                    {
+                      "id": 1413,
+                      "name": "str. 157",
+                      "path": "Z14",
+                      "files" : [ "5.2.4.1.c" ]
+                    },
+                    {
+                      "id": 1414,
+                      "name": "str. 159",
+                      "path": "Z15",
+                      "files" : [ "5.2.5.1.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 142,
+                  "name": "5.3 Višedimenzionalni nizovi",
+                  "items" : [
+                    {
+                      "id": 1420,
+                      "name": "str. 163a",
+                      "path": "Z16",
+                      "files" : [ "5.3.0.1.c" ]
+                    },
+                    {
+                      "id": 1421,
+                      "name": "str. 163b",
+                      "path": "Z18",
+                      "files" : [ "5.3.1.1.c" ]
+                    },
+                    {
+                      "id": 1422,
+                      "name": "str. 164",
+                      "path": "Z19",
+                      "files" : [ "5.3.1.2.c" ]
+                    },
+                    {
+                      "id": 1423,
+                      "name": "str. 165",
+                      "path": "Z20",
+                      "files" : [ "5.3.1.3.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 143,
+                  "name": "5.4 C++ vektori",
+                  "items" : [
+                    {
+                      "id": 1430,
+                      "name": "str. 167a",
+                      "path": "Z21",
+                      "files" : [ "5.4.1.1.cpp" ]
+                    },
+                    {
+                      "id": 1431,
+                      "name": "str. 167b",
+                      "path": "Z22",
+                      "files" : [ "5.4.1.2.cpp" ]
+                    },
+                    {
+                      "id": 1432,
+                      "name": "str. 168",
+                      "path": "Z23",
+                      "files" : [ "5.4.2.1.cpp" ]
+                    },
+                    {
+                      "id": 1433,
+                      "name": "str. 170",
+                      "path": "Z24",
+                      "files" : [ "5.4.3.1.cpp" ]
+                    },
+                    {
+                      "id": 1434,
+                      "name": "str. 171",
+                      "path": "Z25",
+                      "files" : [ "5.4.5.1.cpp" ]
+                    }
+                  ]
+                }
+              ],
+              "task_files": {
+                "1": [
+                  "5.1.0.1.c"
+                ],
+                "2": [
+                  "5.1.0.2-greska.c"
+                ],
+                "3": [
+                  "5.1.3.1.c"
+                ],
+                "4": [
+                  "5.1.3.2.c"
+                ],
+                "5": [
+                  "5.1.4.1.c"
+                ],
+                "6": [
+                  "5.1.4.2.c"
+                ],
+                "7": [
+                  "5.1.5.1-greska.c"
+                ],
+                "8": [
+                  "5.1.5.2.c"
+                ],
+                "9": [
+                  "5.1.5.3.c"
+                ],
+                "10": [
+                  "5.1.5.4.c"
+                ],
+                "11": [
+                  "5.2.1.1.c"
+                ],
+                "12": [
+                  "5.2.2.2.c"
+                ],
+                "13": [
+                  "5.2.3.1.c"
+                ],
+                "14": [
+                  "5.2.4.1.c"
+                ],
+                "15": [
+                  "5.2.5.1.c"
+                ],
+                "16": [
+                  "5.3.0.1.c"
+                ],
+                "17": [
+                  "5.3.0.2.c"
+                ],
+                "18": [
+                  "5.3.1.1.c"
+                ],
+                "19": [
+                  "5.3.1.2.c"
+                ],
+                "20": [
+                  "5.3.1.3.c"
+                ],
+                "21": [
+                  "5.4.1.1.cpp"
+                ],
+                "22": [
+                  "5.4.1.2.cpp"
+                ],
+                "23": [
+                  "5.4.2.1.cpp"
+                ],
+                "24": [
+                  "5.4.3.1.cpp"
+                ],
+                "25": [
+                  "5.4.5.1.cpp"
+                ]
+              },
+              "homework_id": "0",
+              "hidden": "false"
+            },
+            {
+              "id": 15,
+              "type": "Poglavlje",
+              "tasks": 19,
+              "name": "Poglavlje 6. Funkcije",
+              "path": "P6",
+              "items" : [
+                {
+                  "id": 150,
+                  "name": "6.1 Uvod u funkcije u C-u",
+                  "items" : [
+                    {
+                      "id": 1500,
+                      "name": "str. 178",
+                      "path": "Z1",
+                      "files" : [ "6.1.1.1.c" ]
+                    },
+                    {
+                      "id": 1501,
+                      "name": "str. 180",
+                      "path": "Z2",
+                      "files" : [ "6.1.2.1.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 151,
+                  "name": "6.2 Funkcije u C-u",
+                  "items" : [
+                    {
+                      "id": 1510,
+                      "name": "str. 188",
+                      "path": "Z3",
+                      "files" : [ "6.2.3.1.c" ]
+                    },
+                    {
+                      "id": 1511,
+                      "name": "str. 190",
+                      "path": "Z4",
+                      "files" : [ "6.2.4.1.c" ]
+                    },
+                    {
+                      "id": 1512,
+                      "name": "str. 193",
+                      "path": "Z5",
+                      "files" : [ "6.2.5.1.c" ]
+                    },
+                    {
+                      "id": 1513,
+                      "name": "str. 199 - greška",
+                      "path": "Z6",
+                      "files" : [ "6.2.7.1-greska.c" ]
+                    },
+                    {
+                      "id": 1514,
+                      "name": "str. 204",
+                      "path": "Z7",
+                      "files" : [ "6.2.8.1.c" ]
+                    },
+                    {
+                      "id": 1515,
+                      "name": "str. 205",
+                      "path": "Z8",
+                      "files" : [ "6.2.8.2.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 152,
+                  "name": "6.3 Prosljeđivanje nizova funkcijama",
+                  "items" : [
+                    {
+                      "id": 1520,
+                      "name": "str. 207",
+                      "path": "Z9",
+                      "files" : [ "6.3.0.1.c" ]
+                    },
+                    {
+                      "id": 1521,
+                      "name": "str. 208a",
+                      "path": "Z10",
+                      "files" : [ "6.3.0.2.c" ]
+                    },
+                    {
+                      "id": 1522,
+                      "name": "str. 208b",
+                      "path": "Z11",
+                      "files" : [ "6.3.0.3.c" ]
+                    },
+                    {
+                      "id": 1523,
+                      "name": "str. 209",
+                      "path": "Z12",
+                      "files" : [ "6.3.0.4.c" ]
+                    },
+                    {
+                      "id": 1524,
+                      "name": "str. 210",
+                      "path": "Z13",
+                      "files" : [ "6.3.0.5.c" ]
+                    },
+                    {
+                      "id": 1525,
+                      "name": "str. 211",
+                      "path": "Z14",
+                      "files" : [ "6.3.0.6.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 153,
+                  "name": "6.4 Rekurzivne funkcije",
+                  "items" : [
+                    {
+                      "id": 1530,
+                      "name": "str. 212",
+                      "path": "Z15",
+                      "files" : [ "6.4.0.1.c" ]
+                    },
+                    {
+                      "id": 1531,
+                      "name": "str. 213",
+                      "path": "Z16",
+                      "files" : [ "6.4.0.2.c" ]
+                    },
+                    {
+                      "id": 1532,
+                      "name": "str. 214",
+                      "path": "Z17",
+                      "files" : [ "6.4.0.3.c" ]
+                    },
+                    {
+                      "id": 1533,
+                      "name": "str. 216",
+                      "path": "Z18",
+                      "files" : [ "6.4.0.4.c" ]
+                    },
+                    {
+                      "id": 1534,
+                      "name": "str. 217",
+                      "path": "Z19",
+                      "files" : [ "6.4.0.5.c" ]
+                    }
+                  ]
+                }
+              ],
+              "task_files": {
+                "1": [
+                  "6.1.1.1.c"
+                ],
+                "2": [
+                  "6.1.2.1.c"
+                ],
+                "3": [
+                  "6.2.3.1.c"
+                ],
+                "4": [
+                  "6.2.4.1.c"
+                ],
+                "5": [
+                  "6.2.5.1.c"
+                ],
+                "6": [
+                  "6.2.7.1-greska.c"
+                ],
+                "7": [
+                  "6.2.8.1.c"
+                ],
+                "8": [
+                  "6.2.8.2.c"
+                ],
+                "9": [
+                  "6.3.0.1.c"
+                ],
+                "10": [
+                  "6.3.0.2.c"
+                ],
+                "11": [
+                  "6.3.0.3.c"
+                ],
+                "12": [
+                  "6.3.0.4.c"
+                ],
+                "13": [
+                  "6.3.0.5.c"
+                ],
+                "14": [
+                  "6.3.0.6.c"
+                ],
+                "15": [
+                  "6.4.0.1.c"
+                ],
+                "16": [
+                  "6.4.0.2.c"
+                ],
+                "17": [
+                  "6.4.0.3.c"
+                ],
+                "18": [
+                  "6.4.0.4.c"
+                ],
+                "19": [
+                  "6.4.0.5.c"
+                ]
+              },
+              "homework_id": "0",
+              "hidden": "false"
+            },
+            {
+              "id": 16,
+              "type": "Poglavlje",
+              "tasks": 18,
+              "name": "Poglavlje 7. Pokaziva\u010di",
+              "path": "P7",
+              "items" : [
+                {
+                  "id": 160,
+                  "name": "7.1 Rad sa pokazivačima",
+                  "items" : [
+                    {
+                      "id": 1600,
+                      "name": "str. 221",
+                      "path": "Z1",
+                      "files" : [ "7.0.0.1.c" ]
+                    },
+                    {
+                      "id": 1601,
+                      "name": "str. 223",
+                      "path": "Z2",
+                      "files" : [ "7.0.0.2.c" ]
+                    },
+                    {
+                      "id": 1602,
+                      "name": "str. 227",
+                      "path": "Z3",
+                      "files" : [ "7.3.0.1.c" ]
+                    },
+                    {
+                      "id": 1603,
+                      "name": "str. 228",
+                      "path": "Z4",
+                      "files" : [ "7.3.0.2.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 161,
+                  "name": "7.2 Pokazivači kao parametri funkcija",
+                  "items" : [
+                    {
+                      "id": 1610,
+                      "name": "str. 229a - greška",
+                      "path": "Z5",
+                      "files" : [ "7.4.0.1-greska.c" ]
+                    },
+                    {
+                      "id": 1611,
+                      "name": "str. 229b",
+                      "path": "Z6",
+                      "files" : [ "7.4.0.2.c" ]
+                    },
+                    {
+                      "id": 1612,
+                      "name": "str. 230",
+                      "path": "Z7",
+                      "files" : [ "7.4.1.1.c" ]
+                    },
+                    {
+                      "id": 1613,
+                      "name": "str. 232",
+                      "path": "Z8",
+                      "files" : [ "7.4.1.2.c" ]
+                    },
+                    {
+                      "id": 1614,
+                      "name": "str. 236 - greška",
+                      "path": "Z9",
+                      "files" : [ "7.4.2.1-greska.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 162,
+                  "name": "7.3 Pokazivači i nizovi",
+                  "items" : [
+                    {
+                      "id": 1620,
+                      "name": "str. 246",
+                      "path": "Z10",
+                      "files" : [ "7.5.4.1.c" ]
+                    },
+                    {
+                      "id": 1621,
+                      "name": "str. 251",
+                      "path": "Z11",
+                      "files" : [ "7.5.5.1.c" ]
+                    },
+                    {
+                      "id": 1622,
+                      "name": "str. 252",
+                      "path": "Z12",
+                      "files" : [ "7.5.5.2.c" ]
+                    },
+                    {
+                      "id": 1623,
+                      "name": "str. 253",
+                      "path": "Z13",
+                      "files" : [ "7.5.5.3.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 163,
+                  "name": "7.4 Pokazivači kao povratni tip funkcije",
+                  "items" : [
+                    {
+                      "id": 1630,
+                      "name": "str. 255",
+                      "path": "Z14",
+                      "files" : [ "7.6.0.1.c" ]
+                    },
+                    {
+                      "id": 1631,
+                      "name": "str. 256 - greška",
+                      "path": "Z15",
+                      "files" : [ "7.6.1.1-greska.c" ]
+                    },
+                    {
+                      "id": 1632,
+                      "name": "str. 257",
+                      "path": "Z16",
+                      "files" : [ "7.6.1.2.c" ]
+                    },
+                    {
+                      "id": 1633,
+                      "name": "str. 258",
+                      "path": "Z17",
+                      "files" : [ "7.6.1.3.c" ]
+                    },
+                    {
+                      "id": 1634,
+                      "name": "str. 260",
+                      "path": "Z18",
+                      "files" : [ "7.6.1.4.c" ]
+                    }
+                  ]
+                }
+              ],
+              "task_files": {
+                "1": [
+                  "7.0.0.1.c"
+                ],
+                "2": [
+                  "7.0.0.2.c"
+                ],
+                "3": [
+                  "7.3.0.1.c"
+                ],
+                "4": [
+                  "7.3.0.2.c"
+                ],
+                "5": [
+                  "7.4.0.1-greska.c"
+                ],
+                "6": [
+                  "7.4.0.2.c"
+                ],
+                "7": [
+                  "7.4.1.1.c"
+                ],
+                "8": [
+                  "7.4.1.2.c"
+                ],
+                "9": [
+                  "7.4.2.1-greska.c"
+                ],
+                "10": [
+                  "7.5.4.1.c"
+                ],
+                "11": [
+                  "7.5.5.1.c"
+                ],
+                "12": [
+                  "7.5.5.2.c"
+                ],
+                "13": [
+                  "7.5.5.3.c"
+                ],
+                "14": [
+                  "7.6.0.1.c"
+                ],
+                "15": [
+                  "7.6.1.1-greska.c"
+                ],
+                "16": [
+                  "7.6.1.2.c"
+                ],
+                "17": [
+                  "7.6.1.3.c"
+                ],
+                "18": [
+                  "7.6.1.4.c"
+                ]
+              },
+              "homework_id": "0",
+              "hidden": "false"
+            },
+            {
+              "id": 17,
+              "type": "Poglavlje",
+              "tasks": 18,
+              "name": "Poglavlje 8. Stringovi",
+              "path": "P8",
+              "items" : [
+                {
+                  "id": 170,
+                  "name": "8.1 Osnovne operacije nad stringovima",
+                  "items" : [
+                    {
+                      "id": 1700,
+                      "name": "str. 266",
+                      "path": "Z1",
+                      "files" : [ "8.1.1.1.c" ]
+                    },
+                    {
+                      "id": 1701,
+                      "name": "str. 269 - Zadatak 1",
+                      "path": "Z2",
+                      "files" : [ "8.1.2.1.c" ]
+                    },
+                    {
+                      "id": 1702,
+                      "name": "str. 270 - Zadatak 2",
+                      "path": "Z3",
+                      "files" : [ "8.1.2.2.c" ]
+                    },
+                    {
+                      "id": 1703,
+                      "name": "str. 272",
+                      "path": "Z4",
+                      "files" : [ "8.1.2.3.c" ]
+                    },
+                    {
+                      "id": 1704,
+                      "name": "str. 274 - Zadatak 3",
+                      "path": "Z5",
+                      "files" : [ "8.1.2.4.c" ]
+                    },
+                    {
+                      "id": 1705,
+                      "name": "str. 277 - Zadatak 4",
+                      "path": "Z6",
+                      "files" : [ "8.1.2.5.c" ]
+                    },
+                    {
+                      "id": 1706,
+                      "name": "str. 278 - Zadatak 5",
+                      "path": "Z7",
+                      "files" : [ "8.1.2.6.c" ]
+                    },
+                    {
+                      "id": 1707,
+                      "name": "str. 280 - Zadatak 6",
+                      "path": "Z19",
+                      "files" : [ "8.1.3.1.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 171,
+                  "name": "8.2 Neki algoritmi za rad sa stringovima",
+                  "items" : [
+                    {
+                      "id": 1710,
+                      "name": "str. 282 - Zadatak 7",
+                      "path": "Z8",
+                      "files" : [ "8.2.1.1.c" ]
+                    },
+                    {
+                      "id": 1711,
+                      "name": "str. 283",
+                      "path": "Z9",
+                      "files" : [ "8.2.2.1.c" ]
+                    },
+                    {
+                      "id": 1712,
+                      "name": "str. 284 - Zadatak 8",
+                      "path": "Z10",
+                      "files" : [ "8.2.3.1.c" ]
+                    },
+                    {
+                      "id": 1713,
+                      "name": "str. 287 - Zadatak 9",
+                      "path": "Z11",
+                      "files" : [ "8.2.4.1.c" ]
+                    },
+                    {
+                      "id": 1714,
+                      "name": "str. 289 - Zadatak 10",
+                      "path": "Z12",
+                      "files" : [ "8.2.5.1.c" ]
+                    },
+                    {
+                      "id": 1715,
+                      "name": "str. 290 - Zadatak 11",
+                      "path": "Z13",
+                      "files" : [ "8.2.6.1.c" ]
+                    },
+                    {
+                      "id": 1716,
+                      "name": "str. 291",
+                      "path": "Z14",
+                      "files" : [ "8.2.6.2.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 172,
+                  "name": "8.3 C++ stringovi",
+                  "items" : [
+                    {
+                      "id": 1720,
+                      "name": "str. 292",
+                      "path": "Z15",
+                      "files" : [ "8.3.1.1.cpp" ]
+                    },
+                    {
+                      "id": 1721,
+                      "name": "str. 293",
+                      "path": "Z16",
+                      "files" : [ "8.3.1.2.cpp" ]
+                    },
+                    {
+                      "id": 1722,
+                      "name": "str. 294",
+                      "path": "Z17",
+                      "files" : [ "8.3.3.1.cpp" ]
+                    },
+                    {
+                      "id": 1723,
+                      "name": "str. 295",
+                      "path": "Z18",
+                      "files" : [ "8.3.4.1.cpp" ]
+                    }
+                  ]
+                }
+              ],
+              "task_files": {
+                "15": [
+                  "8.3.1.1.cpp"
+                ],
+                "16": [
+                  "8.3.1.2.cpp"
+                ],
+                "17": [
+                  "8.3.3.1.cpp"
+                ],
+                "18": [
+                  "8.3.4.1.cpp"
+                ]
+              },
+              "homework_id": "0",
+              "hidden": "false"
+            },
+            {
+              "id": 18,
+              "type": "Poglavlje",
+              "tasks": 5,
+              "name": "Poglavlje 9. Vlastiti tipovi",
+              "path": "P9",
+              "items" : [
+                {
+                  "id": 181,
+                  "name": "9.2 Pobrojani tip (enum)",
+                  "items" : [
+                    {
+                      "id": 1810,
+                      "name": "str. 302",
+                      "path": "Z1",
+                      "files" : [ "9.2.0.1.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 182,
+                  "name": "9.3 Strukturni tip podataka (struct)",
+                  "items" : [
+                    {
+                      "id": 1820,
+                      "name": "str. 308",
+                      "path": "Z2",
+                      "files" : [ "9.3.5.1.c" ]
+                    },
+                    {
+                      "id": 1821,
+                      "name": "str. 309 - Zadatak 1",
+                      "path": "Z3",
+                      "files" : [ "9.3.5.2.c" ]
+                    },
+                    {
+                      "id": 1822,
+                      "name": "str. 312 - Zadatak 2",
+                      "path": "Z4",
+                      "files" : [ "9.3.6.1.c" ]
+                    },
+                    {
+                      "id": 1823,
+                      "name": "str. 314 - Zadatak 3",
+                      "path": "Z5",
+                      "files" : [ "9.3.7.1.c" ]
+                    }
+                  ]
+                }
+              ],
+              "task_files": {
+                "1": [
+                  "9.2.0.1.c"
+                ],
+                "2": [
+                  "9.3.5.1.c"
+                ],
+                "3": [
+                  "9.3.5.2.c"
+                ],
+                "4": [
+                  "9.3.6.1.c"
+                ],
+                "5": [
+                  "9.3.7.1.c"
+                ]
+              },
+              "homework_id": "0",
+              "hidden": "false"
+            },
+            {
+              "id": 19,
+              "type": "Poglavlje",
+              "tasks": 12,
+              "name": "Poglavlje 10. Datoteke",
+              "path": "P10",
+              "items" : [
+                {
+                  "id": 191,
+                  "name": "10.2 Rad sa datotekama u C-u",
+                  "items" : [
+                    {
+                      "id": 1910,
+                      "name": "str. 326",
+                      "path": "Z1",
+                      "files" : [ "10.2.1.1.c" ]
+                    },
+                    {
+                      "id": 1911,
+                      "name": "str. 328",
+                      "path": "Z2",
+                      "files" : [ "10.2.1.2.c" ]
+                    },
+                    {
+                      "id": 1912,
+                      "name": "str. 330 - Zadatak 1",
+                      "path": "Z3",
+                      "files" : [ "10.2.2.1.c" ]
+                    },
+                    {
+                      "id": 1913,
+                      "name": "str. 331",
+                      "path": "Z4",
+                      "files" : [ "10.2.2.2.c" ]
+                    },
+                    {
+                      "id": 1914,
+                      "name": "str. 332",
+                      "path": "Z5",
+                      "files" : [ "10.2.2.3.c" ]
+                    },
+                    {
+                      "id": 1915,
+                      "name": "str. 335",
+                      "path": "Z6",
+                      "files" : [ "10.2.3.1.c" ]
+                    },
+                    {
+                      "id": 1916,
+                      "name": "str. 336",
+                      "path": "Z7",
+                      "files" : [ "10.2.3.2.c" ]
+                    },
+                    {
+                      "id": 1917,
+                      "name": "str. 338 - Zadatak 2",
+                      "path": "Z8",
+                      "files" : [ "10.2.3.3.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 192,
+                  "name": "10.3 Baze podataka",
+                  "items" : [
+                    {
+                      "id": 1920,
+                      "name": "str. 341 - Zadatak 3",
+                      "path": "Z9",
+                      "files" : [ "10.3.0.1.c" ]
+                    },
+                    {
+                      "id": 1921,
+                      "name": "str. 342",
+                      "path": "Z10",
+                      "files" : [ "10.3.0.2.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 193,
+                  "name": "10.4 Binarne datoteke",
+                  "items" : [
+                    {
+                      "id": 1930,
+                      "name": "str. 344",
+                      "path": "Z11",
+                      "files" : [ "10.4.1.1.c" ]
+                    },
+
+                    {
+                      "id": 1931,
+                      "name": "str. 345",
+                      "path": "Z12",
+                      "files" : [ "10.4.1.2.c" ]
+                    }
+                  ]
+                }
+              ],
+              "task_files": {
+                "1": [
+                  "10.2.1.1.c"
+                ],
+                "2": [
+                  "10.2.1.2.c"
+                ],
+                "3": [
+                  "10.2.2.1.c"
+                ],
+                "4": [
+                  "10.2.2.2.c"
+                ],
+                "5": [
+                  "10.2.2.3.c"
+                ],
+                "6": [
+                  "10.2.3.1.c"
+                ],
+                "7": [
+                  "10.2.3.2.c"
+                ],
+                "8": [
+                  "10.2.3.3.c"
+                ],
+                "9": [
+                  "10.3.0.1.c"
+                ],
+                "10": [
+                  "10.3.0.2.c"
+                ],
+                "11": [
+                  "10.4.1.1.c"
+                ],
+                "12": [
+                  "10.4.1.2.c"
+                ]
+              },
+              "homework_id": "0",
+              "hidden": "false"
+            },
+            {
+              "id": 110,
+              "type": "Poglavlje",
+              "tasks": 25,
+              "name": "Dodatak C. Pokaziva\u010di",
+              "path": "P12",
+              "items" : [
+                {
+                  "id": 1101,
+                  "name": "C.1 Dopune uvodnog poglavlja o pokazivačima",
+                  "items" : [
+                    {
+                      "id": 11010,
+                      "name": "str. 362",
+                      "path": "Z1",
+                      "files" : [ "12.1.3.1.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1102,
+                  "name": "C.2 Dinamička alokacija memorije",
+                  "items" : [
+                    {
+                      "id": 11020,
+                      "name": "str. 368 - Zadatak 1",
+                      "path": "Z2",
+                      "files" : [ "12.2.1.1.c" ]
+                    },
+                    {
+                      "id": 11021,
+                      "name": "str. 375",
+                      "path": "Z3",
+                      "files" : [ "12.2.3.1.c" ]
+                    },
+                    {
+                      "id": 11022,
+                      "name": "str. 379",
+                      "path": "Z4",
+                      "files" : [ "12.2.3.2.c" ]
+                    },
+                    {
+                      "id": 11023,
+                      "name": "str. 380 - Zadatak 2",
+                      "path": "Z5",
+                      "files" : [ "12.2.3.3.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1103,
+                  "name": "C.3 Višestruki pokazivači",
+                  "items" : [
+                    {
+                      "id": 11030,
+                      "name": "str. 382",
+                      "path": "Z6",
+                      "files" : [ "12.3.0.1.c" ]
+                    },
+                    {
+                      "id": 11031,
+                      "name": "str. 384 - Zadatak 3",
+                      "path": "Z7",
+                      "files" : [ "12.3.1.1.c" ]
+                    },
+                    {
+                      "id": 11032,
+                      "name": "str. 387",
+                      "path": "Z8",
+                      "files" : [ "12.3.2.1.c" ]
+                    },
+                    {
+                      "id": 11033,
+                      "name": "str. 389",
+                      "path": "Z9",
+                      "files" : [ "12.3.2.2.c" ]
+                    },
+                    {
+                      "id": 11034,
+                      "name": "str. 390",
+                      "path": "Z10",
+                      "files" : [ "12.3.2.3.c" ]
+                    },
+                    {
+                      "id": 11035,
+                      "name": "str. 392",
+                      "path": "Z11",
+                      "files" : [ "12.3.3.1.c" ]
+                    },
+                    {
+                      "id": 11036,
+                      "name": "str. 393",
+                      "path": "Z12",
+                      "files" : [ "12.3.3.2.c" ]
+                    },
+                    {
+                      "id": 11037,
+                      "name": "str. 394 - greška",
+                      "path": "Z13",
+                      "files" : [ "12.3.3.3-greska.c" ]
+                    },
+                    {
+                      "id": 11038,
+                      "name": "str. 395 - Zadatak 4",
+                      "path": "Z14",
+                      "files" : [ "12.3.3.4.c" ]
+                    },
+                    {
+                      "id": 11039,
+                      "name": "str. 398a",
+                      "path": "Z15",
+                      "files" : [ "12.3.4.1.c" ]
+                    },
+                    {
+                      "id": 11040,
+                      "name": "str. 398b - Zadatak 5",
+                      "path": "Z16",
+                      "files" : [ "12.3.5.1.c" ]
+                    },
+                    {
+                      "id": 11041,
+                      "name": "str. 399",
+                      "path": "Z17",
+                      "files" : [ "12.3.5.2.c" ]
+                    },
+                    {
+                      "id": 11042,
+                      "name": "str. 400",
+                      "path": "Z18",
+                      "files" : [ "12.3.5.3.c" ]
+                    },
+                    {
+                      "id": 11043,
+                      "name": "str. 402",
+                      "path": "Z19",
+                      "files" : [ "12.3.5.4.c" ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1105,
+                  "name": "C.4 Pokazivači na funkcije",
+                  "items" : [
+                    {
+                      "id": 11050,
+                      "name": "str. 403",
+                      "path": "Z20",
+                      "files" : [ "12.4.0.1.c" ]
+                    },
+                    {
+                      "id": 11051,
+                      "name": "str. 409 - Zadatak 6",
+                      "path": "Z21",
+                      "files" : [ "12.4.0.2.c" ]
+                    },
+                    {
+                      "id": 11052,
+                      "name": "str. 411 - Zadatak 7",
+                      "path": "Z22",
+                      "files" : [ "12.4.0.3.c" ]
+                    },
+                    {
+                      "id": 11053,
+                      "name": "str. 412 - Zadatak 8",
+                      "path": "Z23",
+                      "files" : [ "12.4.0.4.c" ]
+                    },
+                    {
+                      "id": 11054,
+                      "name": "str. 415 - Zadatak 9",
+                      "path": "Z24",
+                      "files" : [ "12.4.0.5.c" ]
+                    },
+                    {
+                      "id": 11055,
+                      "name": "str. 417",
+                      "path": "Z25",
+                      "files" : [ "12.4.0.6.c" ]
+                    }
+                  ]
+                }
+              ],
+              "task_files": {
+                "1": [
+                  "12.1.3.1.c"
+                ],
+                "2": [
+                  "12.2.1.1.c"
+                ],
+                "3": [
+                  "12.2.3.1.c"
+                ],
+                "4": [
+                  "12.2.3.2.c"
+                ],
+                "5": [
+                  "12.2.3.3.c"
+                ],
+                "6": [
+                  "12.3.0.1.c"
+                ],
+                "7": [
+                  "12.3.1.1.c"
+                ],
+                "8": [
+                  "12.3.2.1.c"
+                ],
+                "9": [
+                  "12.3.2.2.c"
+                ],
+                "10": [
+                  "12.3.2.3.c"
+                ],
+                "11": [
+                  "12.3.3.1.c"
+                ],
+                "12": [
+                  "12.3.3.2.c"
+                ],
+                "13": [
+                  "12.3.3.3-greska.c"
+                ],
+                "14": [
+                  "12.3.3.4.c"
+                ],
+                "15": [
+                  "12.3.4.1.c"
+                ],
+                "16": [
+                  "12.3.5.1.c"
+                ],
+                "17": [
+                  "12.3.5.2.c"
+                ],
+                "18": [
+                  "12.3.5.3.c"
+                ],
+                "19": [
+                  "12.3.5.4.c"
+                ],
+                "20": [
+                  "12.4.0.1.c"
+                ],
+                "21": [
+                  "12.4.0.2.c"
+                ],
+                "22": [
+                  "12.4.0.3.c"
+                ],
+                "23": [
+                  "12.4.0.4.c"
+                ],
+                "24": [
+                  "12.4.0.5.c"
+                ],
+                "25": [
+                  "12.4.0.6.c"
+                ]
+              },
+              "homework_id": "0",
+              "hidden": "false"
+            }
+          ],
+          "homework_id": "0",
+          "hidden": "false"
+        },
+        {
+          "id" : 2,
+          "type" : "Folder",
+          "name" : "Zbirka zadataka",
+          "items" : [
+            {
+              "id" : 20,
+              "type" : "Poglavlje",
+              "name" : "Poglavlje 1: Prvi koraci",
+              "path" : "Z1",
+              "items" : [
+                {
+                  "id" : 2000,
+                  "name" : "Zadatak 1",
+                  "path" : "Z1",
+                  "files" : [ "main.c" ]
+                },
+                {
+                  "id" : 2001,
+                  "name" : "Zadatak 2",
+                  "path" : "Z2",
+                  "files" : [ "main.c" ]
+                },
+                {
+                  "id" : 2002,
+                  "name" : "Zadatak 3",
+                  "path" : "Z3",
+                  "files" : [ "main.c" ]
+                },
+                {
+                  "id" : 2003,
+                  "name" : "Zadatak 4",
+                  "path" : "Z4",
+                  "files" : [ "main.c" ]
+                },
+                {
+                  "id" : 2004,
+                  "name" : "Zadatak 5",
+                  "path" : "Z5",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 2005,
+                  "name" : "Zadatak 6",
+                  "path" : "Z6",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 2006,
+                  "name" : "Zadatak 7",
+                  "path" : "Z7",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 2007,
+                  "name" : "Zadatak 8",
+                  "path" : "Z8",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 2008,
+                  "name" : "Zadatak 9",
+                  "path" : "Z9",
+                  "files" : [ "main.c", ".autotest" ]
+                }
+              ],
+              "homework_id": "0",
+              "hidden" : "false"
+            },
+            {
+              "id" : 30,
+              "type" : "Poglavlje",
+              "name" : "Poglavlje 2: Uslovi i grananje",
+              "path" : "Z2",
+              "items" : [
+                {
+                  "id" : 3000,
+                  "name" : "Zadatak 1",
+                  "path" : "Z1",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3001,
+                  "name" : "Zadatak 2",
+                  "path" : "Z2",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3002,
+                  "name" : "Zadatak 3",
+                  "path" : "Z3",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3003,
+                  "name" : "Zadatak 4",
+                  "path" : "Z4",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3004,
+                  "name" : "Zadatak 5",
+                  "path" : "Z5",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3005,
+                  "name" : "Zadatak 6",
+                  "path" : "Z6",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3006,
+                  "name" : "Zadatak 7",
+                  "path" : "Z7",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3007,
+                  "name" : "Zadatak 8",
+                  "path" : "Z8",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3008,
+                  "name" : "Zadatak 9",
+                  "path" : "Z9",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3009,
+                  "name" : "Zadatak 10",
+                  "path" : "Z10",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3010,
+                  "name" : "Zadatak 11",
+                  "path" : "Z11",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3011,
+                  "name" : "Zadatak 12",
+                  "path" : "Z12",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3012,
+                  "name" : "Zadatak 13",
+                  "path" : "Z13",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3013,
+                  "name" : "Zadatak 14",
+                  "path" : "Z14",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3014,
+                  "name" : "Zadatak 15",
+                  "path" : "Z15",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3015,
+                  "name" : "Zadatak 16",
+                  "path" : "Z16",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3016,
+                  "name" : "Zadatak 17",
+                  "path" : "Z17",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3017,
+                  "name" : "Zadatak 18",
+                  "path" : "Z18",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3018,
+                  "name" : "Zadatak 19",
+                  "path" : "Z19",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3019,
+                  "name" : "Zadatak 20",
+                  "path" : "Z20",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 3020,
+                  "name" : "Zadatak 21",
+                  "path" : "Z21",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                }
+              ],
+              "homework_id": "0",
+              "hidden" : "false"
+            },
+            {
+              "id" : 40,
+              "type" : "Poglavlje",
+              "name" : "Poglavlje 4: Petlje",
+              "path" : "Z3",
+              "items" : [
+                {
+                  "id" : 4000,
+                  "name" : "Zadatak 1",
+                  "path" : "Z1",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4001,
+                  "name" : "Zadatak 2",
+                  "path" : "Z2",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4002,
+                  "name" : "Zadatak 3",
+                  "path" : "Z3",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4003,
+                  "name" : "Zadatak 4",
+                  "path" : "Z4",
+                  "files" : [ "main.c", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4004,
+                  "name" : "Zadatak 5",
+                  "path" : "Z5",
+                  "files" : [ "main.c", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4005,
+                  "name" : "Zadatak 6",
+                  "path" : "Z6",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4006,
+                  "name" : "Zadatak 7",
+                  "path" : "Z7",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4007,
+                  "name" : "Zadatak 8",
+                  "path" : "Z8",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4008,
+                  "name" : "Zadatak 9",
+                  "path" : "Z9",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4009,
+                  "name" : "Zadatak 10",
+                  "path" : "Z10",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4010,
+                  "name" : "Zadatak 11",
+                  "path" : "Z11",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4011,
+                  "name" : "Zadatak 12",
+                  "path" : "Z12",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4012,
+                  "name" : "Zadatak 13",
+                  "path" : "Z13",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4013,
+                  "name" : "Zadatak 14",
+                  "path" : "Z14",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4014,
+                  "name" : "Zadatak 15",
+                  "path" : "Z15",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4015,
+                  "name" : "Zadatak 16",
+                  "path" : "Z16",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4016,
+                  "name" : "Zadatak 17",
+                  "path" : "Z17",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4017,
+                  "name" : "Zadatak 18",
+                  "path" : "Z18",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4018,
+                  "name" : "Zadatak 19",
+                  "path" : "Z19",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4019,
+                  "name" : "Zadatak 20",
+                  "path" : "Z20",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4020,
+                  "name" : "Zadatak 21",
+                  "path" : "Z21",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4021,
+                  "name" : "Zadatak 22",
+                  "path" : "Z22",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4022,
+                  "name" : "Zadatak 23",
+                  "path" : "Z23",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4023,
+                  "name" : "Zadatak 24",
+                  "path" : "Z24",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4024,
+                  "name" : "Zadatak 25",
+                  "path" : "Z25",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4025,
+                  "name" : "Zadatak 26",
+                  "path" : "Z26",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4026,
+                  "name" : "Zadatak 27",
+                  "path" : "Z27",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4027,
+                  "name" : "Zadatak 28",
+                  "path" : "Z28",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4028,
+                  "name" : "Zadatak 29",
+                  "path" : "Z29",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4029,
+                  "name" : "Zadatak 30",
+                  "path" : "Z30",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 4030,
+                  "name" : "Zadatak 31",
+                  "path" : "Z31",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                }
+              ],
+              "homework_id": "0",
+              "hidden" : "false"
+            },
+            {
+              "id" : 50,
+              "type" : "Poglavlje",
+              "name" : "Poglavlje 5: Nizovi",
+              "path" : "Z4",
+              "items" : [
+                {
+                  "id" : 5000,
+                  "name" : "Zadatak 1",
+                  "path" : "Z1",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5001,
+                  "name" : "Zadatak 2",
+                  "path" : "Z2",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5002,
+                  "name" : "Zadatak 3",
+                  "path" : "Z3",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5003,
+                  "name" : "Zadatak 4",
+                  "path" : "Z4",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5004,
+                  "name" : "Zadatak 5",
+                  "path" : "Z5",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5005,
+                  "name" : "Zadatak 6",
+                  "path" : "Z6",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5006,
+                  "name" : "Zadatak 7",
+                  "path" : "Z7",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5007,
+                  "name" : "Zadatak 8",
+                  "path" : "Z8",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5008,
+                  "name" : "Zadatak 9",
+                  "path" : "Z9",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5009,
+                  "name" : "Zadatak 10",
+                  "path" : "Z10",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5010,
+                  "name" : "Zadatak 11",
+                  "path" : "Z11",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5011,
+                  "name" : "Zadatak 12",
+                  "path" : "Z12",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5012,
+                  "name" : "Zadatak 13",
+                  "path" : "Z13",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5013,
+                  "name" : "Zadatak 14",
+                  "path" : "Z14",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5014,
+                  "name" : "Zadatak 15",
+                  "path" : "Z15",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5015,
+                  "name" : "Zadatak 16",
+                  "path" : "Z16",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5016,
+                  "name" : "Zadatak 17",
+                  "path" : "Z17",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5017,
+                  "name" : "Zadatak 18",
+                  "path" : "Z18",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5018,
+                  "name" : "Zadatak 19",
+                  "path" : "Z19",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5019,
+                  "name" : "Zadatak 20",
+                  "path" : "Z20",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5020,
+                  "name" : "Zadatak 21",
+                  "path" : "Z21",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5021,
+                  "name" : "Zadatak 22",
+                  "path" : "Z22",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5022,
+                  "name" : "Zadatak 23",
+                  "path" : "Z23",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5023,
+                  "name" : "Zadatak 24",
+                  "path" : "Z24",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5024,
+                  "name" : "Zadatak 25",
+                  "path" : "Z25",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5025,
+                  "name" : "Zadatak 26",
+                  "path" : "Z26",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5026,
+                  "name" : "Zadatak 27",
+                  "path" : "Z27",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5027,
+                  "name" : "Zadatak 28",
+                  "path" : "Z28",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5028,
+                  "name" : "Zadatak 29",
+                  "path" : "Z29",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 5029,
+                  "name" : "Zadatak 30",
+                  "path" : "Z30",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                }
+              ],
+              "homework_id": "0",
+              "hidden" : "false"
+            },
+            {
+              "id" : 60,
+              "type" : "Poglavlje",
+              "name" : "Poglavlje 6: Funkcije",
+              "path" : "Z5",
+              "items" : [
+                {
+                  "id" : 6000,
+                  "name" : "Zadatak 1",
+                  "path" : "Z1",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 6001,
+                  "name" : "Zadatak 2",
+                  "path" : "Z2",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 6002,
+                  "name" : "Zadatak 3",
+                  "path" : "Z3",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 6003,
+                  "name" : "Zadatak 4",
+                  "path" : "Z4",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 6004,
+                  "name" : "Zadatak 5",
+                  "path" : "Z5",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 6005,
+                  "name" : "Zadatak 6",
+                  "path" : "Z6",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 6006,
+                  "name" : "Zadatak 7",
+                  "path" : "Z7",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 6007,
+                  "name" : "Zadatak 8",
+                  "path" : "Z8",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 6008,
+                  "name" : "Zadatak 9",
+                  "path" : "Z9",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 6009,
+                  "name" : "Zadatak 10",
+                  "path" : "Z10",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 6010,
+                  "name" : "Zadatak 11",
+                  "path" : "Z11",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 6011,
+                  "name" : "Zadatak 12",
+                  "path" : "Z12",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 6012,
+                  "name" : "Zadatak 13",
+                  "path" : "Z13",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 6013,
+                  "name" : "Zadatak 14",
+                  "path" : "Z14",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 6014,
+                  "name" : "Zadatak 15",
+                  "path" : "Z15",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 6015,
+                  "name" : "Zadatak 16",
+                  "path" : "Z16",
+                  "files" : [ "main.c", ".autotest" ]
+                }
+              ],
+              "homework_id": "0",
+              "hidden" : "false"
+            },
+            {
+              "id" : 70,
+              "type" : "Poglavlje",
+              "name" : "Poglavlje 7: Pokazivači",
+              "path" : "Z6",
+              "items" : [
+                {
+                  "id" : 7000,
+                  "name" : "Zadatak 1",
+                  "path" : "Z1",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 7001,
+                  "name" : "Zadatak 2",
+                  "path" : "Z2",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 7002,
+                  "name" : "Zadatak 3",
+                  "path" : "Z3",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 7003,
+                  "name" : "Zadatak 4",
+                  "path" : "Z4",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 7004,
+                  "name" : "Zadatak 5",
+                  "path" : "Z5",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 7005,
+                  "name" : "Zadatak 6",
+                  "path" : "Z6",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 7006,
+                  "name" : "Zadatak 7",
+                  "path" : "Z7",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 7007,
+                  "name" : "Zadatak 8",
+                  "path" : "Z8",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 7008,
+                  "name" : "Zadatak 9",
+                  "path" : "Z9",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 7009,
+                  "name" : "Zadatak 10",
+                  "path" : "Z10",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 7010,
+                  "name" : "Zadatak 11",
+                  "path" : "Z11",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 7011,
+                  "name" : "Zadatak 12",
+                  "path" : "Z12",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 7012,
+                  "name" : "Zadatak 13",
+                  "path" : "Z13",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 7013,
+                  "name" : "Zadatak 14",
+                  "path" : "Z14",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 7014,
+                  "name" : "Zadatak 15",
+                  "path" : "Z15",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 7015,
+                  "name" : "Zadatak 16",
+                  "path" : "Z16",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 7016,
+                  "name" : "Zadatak 17",
+                  "path" : "Z17",
+                  "files" : [ "main.c" ]
+                }
+              ],
+              "homework_id": "0",
+              "hidden" : "false"
+            },
+            {
+              "id" : 80,
+              "type" : "Poglavlje",
+              "name" : "Poglavlje 8: Stringovi",
+              "path" : "Z7",
+              "items" : [
+                {
+                  "id" : 8000,
+                  "name" : "Zadatak 1",
+                  "path" : "Z1",
+                  "files" : [ "main.c", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8001,
+                  "name" : "Zadatak 2",
+                  "path" : "Z2",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8002,
+                  "name" : "Zadatak 3",
+                  "path" : "Z3",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8003,
+                  "name" : "Zadatak 4",
+                  "path" : "Z4",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8004,
+                  "name" : "Zadatak 5",
+                  "path" : "Z5",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8005,
+                  "name" : "Zadatak 6",
+                  "path" : "Z6",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8006,
+                  "name" : "Zadatak 7",
+                  "path" : "Z7",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8007,
+                  "name" : "Zadatak 8",
+                  "path" : "Z8",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8008,
+                  "name" : "Zadatak 9",
+                  "path" : "Z9",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8009,
+                  "name" : "Zadatak 10",
+                  "path" : "Z10",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8010,
+                  "name" : "Zadatak 11",
+                  "path" : "Z11",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8011,
+                  "name" : "Zadatak 12",
+                  "path" : "Z12",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8012,
+                  "name" : "Zadatak 13",
+                  "path" : "Z13",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8013,
+                  "name" : "Zadatak 14",
+                  "path" : "Z14",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8014,
+                  "name" : "Zadatak 15",
+                  "path" : "Z15",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8015,
+                  "name" : "Zadatak 16",
+                  "path" : "Z16",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8016,
+                  "name" : "Zadatak 17",
+                  "path" : "Z17",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8017,
+                  "name" : "Zadatak 18",
+                  "path" : "Z18",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8018,
+                  "name" : "Zadatak 19",
+                  "path" : "Z19",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8019,
+                  "name" : "Zadatak 20",
+                  "path" : "Z20",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8020,
+                  "name" : "Zadatak 21",
+                  "path" : "Z21",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8021,
+                  "name" : "Zadatak 22",
+                  "path" : "Z22",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8022,
+                  "name" : "Zadatak 23",
+                  "path" : "Z23",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8023,
+                  "name" : "Zadatak 24",
+                  "path" : "Z24",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8024,
+                  "name" : "Zadatak 25",
+                  "path" : "Z25",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8025,
+                  "name" : "Zadatak 26",
+                  "path" : "Z26",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8026,
+                  "name" : "Zadatak 27",
+                  "path" : "Z27",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8027,
+                  "name" : "Zadatak 28",
+                  "path" : "Z28",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8028,
+                  "name" : "Zadatak 29",
+                  "path" : "Z29",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8029,
+                  "name" : "Zadatak 30",
+                  "path" : "Z30",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8030,
+                  "name" : "Zadatak 31",
+                  "path" : "Z31",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8031,
+                  "name" : "Zadatak 32",
+                  "path" : "Z32",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8032,
+                  "name" : "Zadatak 33",
+                  "path" : "Z33",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 8033,
+                  "name" : "Zadatak 34",
+                  "path" : "Z34",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                }
+              ],
+              "homework_id": "0",
+              "hidden" : "false"
+            },
+            {
+              "id" : 90,
+              "type" : "Poglavlje",
+              "name" : "Poglavlje 9: Vlastiti tipovi podataka",
+              "path" : "Z8",
+              "items" : [
+                {
+                  "id" : 9000,
+                  "name" : "Zadatak 1",
+                  "path" : "Z1",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 9001,
+                  "name" : "Zadatak 2",
+                  "path" : "Z2",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 9002,
+                  "name" : "Zadatak 3",
+                  "path" : "Z3",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 9003,
+                  "name" : "Zadatak 4",
+                  "path" : "Z4",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 9004,
+                  "name" : "Zadatak 5",
+                  "path" : "Z5",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 9005,
+                  "name" : "Zadatak 6",
+                  "path" : "Z6",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 9006,
+                  "name" : "Zadatak 7",
+                  "path" : "Z7",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 9007,
+                  "name" : "Zadatak 8",
+                  "path" : "Z8",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 9008,
+                  "name" : "Zadatak 9",
+                  "path" : "Z9",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 9009,
+                  "name" : "Zadatak 10",
+                  "path" : "Z10",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 9010,
+                  "name" : "Zadatak 11",
+                  "path" : "Z11",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 9011,
+                  "name" : "Zadatak 12",
+                  "path" : "Z12",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 9012,
+                  "name" : "Zadatak 13",
+                  "path" : "Z13",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 9013,
+                  "name" : "Zadatak 14",
+                  "path" : "Z14",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 9014,
+                  "name" : "Zadatak 15",
+                  "path" : "Z15",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 9015,
+                  "name" : "Zadatak 16",
+                  "path" : "Z16",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 9016,
+                  "name" : "Zadatak 17",
+                  "path" : "Z17",
+                  "files" : [ "main.c", ".autotest"]
+                }
+              ],
+              "homework_id": "0",
+              "hidden" : "false"
+            },
+            {
+              "id" : 990,
+              "type" : "Poglavlje",
+              "name" : "Poglavlje 10: Datoteke",
+              "path" : "Z9",
+              "items" : [
+                {
+                  "id" : 10000,
+                  "name" : "Zadatak 1",
+                  "path" : "Z1",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 10001,
+                  "name" : "Zadatak 2",
+                  "path" : "Z2",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 10002,
+                  "name" : "Zadatak 3",
+                  "path" : "Z3",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 10003,
+                  "name" : "Zadatak 4",
+                  "path" : "Z4",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 10004,
+                  "name" : "Zadatak 5",
+                  "path" : "Z5",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 10005,
+                  "name" : "Zadatak 6",
+                  "path" : "Z6",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 10006,
+                  "name" : "Zadatak 7",
+                  "path" : "Z7",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 10007,
+                  "name" : "Zadatak 8",
+                  "path" : "Z8",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 10008,
+                  "name" : "Zadatak 9",
+                  "path" : "Z9",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 10009,
+                  "name" : "Zadatak 10",
+                  "path" : "Z10",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 10010,
+                  "name" : "Zadatak 11",
+                  "path" : "Z11",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" } ]
+                },
+                {
+                  "id" : 10011,
+                  "name" : "Zadatak 12",
+                  "path" : "Z12",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" }, "ocjene.dat" ]
+                },
+                {
+                  "id" : 10012,
+                  "name" : "Zadatak 13",
+                  "path" : "Z13",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" }, "drzave.dat" ]
+                },
+                {
+                  "id" : 10013,
+                  "name" : "Zadatak 14",
+                  "path" : "Z14",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 10014,
+                  "name" : "Zadatak 15",
+                  "path" : "Z15",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 10015,
+                  "name" : "Zadatak 16",
+                  "path" : "Z16",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 10016,
+                  "name" : "Zadatak 17",
+                  "path" : "Z17",
+                  "files" : [ "main.c", ".autotest" ]
+                },
+                {
+                  "id" : 10017,
+                  "name" : "Zadatak 18",
+                  "path" : "Z18",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" }, {"filename": "oblici.dat", "binary": "true", "show" : "true"} ]
+                },
+                {
+                  "id" : 10018,
+                  "name" : "Zadatak 19",
+                  "path" : "Z19",
+                  "files" : [ "main.c", ".autotest", { "filename": "postavka.jpg", "binary" : "true", "show" : "true" }, {"filename" : "artikli.bin", "binary": "true", "show" : "true"} ]
+                }
+              ],
+              "homework_id": "0",
+              "hidden" : "false"
+            }
+          ],
+          "hidden" : "false"
         }
       ];
       context.commit("setAssignments", assignments);
