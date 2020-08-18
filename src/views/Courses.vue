@@ -9,6 +9,7 @@
 
 <script>
 import CourseCard from "../components/CourseCard";
+import {mapGetters} from "vuex";
 
 export default {
   name: "Courses",
@@ -16,13 +17,19 @@ export default {
     CourseCard
   },
   computed: {
-    courses() {
-      return this.$store.getters.courses;
-    }
+    ...mapGetters(["courses"]),
   },
-  mounted() {
-    this.$store.dispatch("refreshCourses");
-    this.$store.dispatch("refreshAssignments");
+  async mounted() {
+    await this.$store.dispatch("refreshCourses");
+    await this.$store.dispatch("refreshAssignments");
+  },
+  watch: {
+    courses(old,current) {
+      console.log("watch")
+      console.log(old);
+      console.log(current);
+      console.log("watch")
+    }
   }
 };
 </script>

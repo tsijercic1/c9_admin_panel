@@ -75,7 +75,7 @@ export default {
   },
   computed: {
     assignments() {
-      return this.$store.getters.assignmentsForCourse(this.course.id);
+      return this.$store.getters.assignmentsForCourse(this.course);
     }
   }
 };
