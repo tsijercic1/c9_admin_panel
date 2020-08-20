@@ -29,30 +29,33 @@
         </v-col>
       </v-row>
     </v-card>
-    <v-card>
-      <v-card-title class="subtitle-1 justify-center" :to="assignmentsLink()">Assignments</v-card-title>
-      <v-divider/>
-      <v-row class="pa-3">
-        <v-col
-            cols="12"
-            sm="6"
-            md="4"
-            lg="3"
-            xl="2"
-            v-for="assignment in assignments"
-            :key="assignment.id"
-        >
-          <v-card
-              class="pa-3 subtitle-2"
-              outlined
-              tile
-              :to="assignmentsLink()"
-          >
-            {{ assignment.name }}
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-card>
+    <v-expansion-panels>
+      <v-expansion-panel>
+        <v-expansion-panel-header>Assignments</v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <v-row class="pa-3">
+            <v-col
+                cols="12"
+                sm="6"
+                md="4"
+                lg="3"
+                xl="2"
+                v-for="assignment in assignments"
+                :key="assignment.id"
+            >
+              <v-card
+                  class="pa-3 subtitle-2"
+                  outlined
+                  tile
+                  :to="assignmentsLink()"
+              >
+                {{ assignment.name }}
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
   </v-card>
 </template>
 

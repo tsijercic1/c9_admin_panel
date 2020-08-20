@@ -6,7 +6,7 @@
           <v-flex xs9 sm7 md5 lg4>
             <v-card light class="pa-10 text-center">
               <v-card-title>Log in to your account</v-card-title>
-              <v-form class="mt-4">
+              <v-form class="my-4">
                 <v-text-field
                   light
                   label="Username"
@@ -24,6 +24,9 @@
                   Log in
                 </v-btn>
               </v-form>
+              <v-alert v-if="showError" type="error">
+                {{errorMessage}}
+              </v-alert>
             </v-card>
           </v-flex>
         </v-layout>
@@ -37,6 +40,8 @@
     name: "Login",
     data: () => {
       return {
+        showError: false,
+        errorMessage: "",
         username: undefined,
         password: undefined
       };
@@ -45,11 +50,17 @@
       login: async function () {
         const {username, password} = this;
         const result = await this.$store.dispatch("login", {username, password});
-        if (result === true) {
+        if (result.success === true) {
           await this.$router.push({name: "Dashboard"});
         } else {
-          console.log("Login view: --Wrong credentials--");
+          this.showError = true;
+          this.errorMessage = result.message;
+          setTimeout(()=>this.hideError(), 5000);
         }
+      },
+      hideError() {
+        this.showError = false;
+        this.errorMessage = "";
       }
     }
   };

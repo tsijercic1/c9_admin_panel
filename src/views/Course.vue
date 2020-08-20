@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1>Course {{ $route.params.course_id }}</h1>
+    <h1 class="mb-4">{{ course.name === undefined ? "" : course.name}}</h1>
     <v-expansion-panels
         :accordion="false"
         :popout="true"
@@ -14,14 +14,30 @@
         :tile="false"
     >
       <v-expansion-panel
-          v-for="group in course.groups"
+          v-for="group in groupsForCourseId(course.id)"
           :key="group.id"
       >
-        <v-expansion-panel-header>Item</v-expansion-panel-header>
+        <v-expansion-panel-header>{{group.name}}</v-expansion-panel-header>
         <v-expansion-panel-content>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat.
+          <v-row class="pa-3">
+            <v-col
+                cols="12"
+                sm="6"
+                md="4"
+                lg="3"
+                xl="2"
+                v-for="member in Object.keys(membersOfGroupByGroupIdAndCourseId(course.id, group.id))"
+                :key="member"
+            >
+              <v-card
+                  class="pa-3 subtitle-2"
+                  outlined
+                  tile
+              >
+                {{ group.members[member] }}
+              </v-card>
+            </v-col>
+          </v-row>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -30,12 +46,19 @@
 
 <script>
 
+import {mapGetters} from "vuex";
+
 export default {
   computed: {
+    ...mapGetters(["membersOfGroupByGroupIdAndCourseId", "groupsForCourseId"]),
     course() {
-      console.log(this.$store.getters.courseById(this.$route.params.course_id));
       return this.$store.getters.courseById(this.$route.params.course_id);
     }
+  },
+  mounted() {
+    this.$store.dispatch("refreshMembers", [this.course, this]);
+    console.log(this.course);
+    console.log("This was a course when it was mounted")
   }
 };
 </script>

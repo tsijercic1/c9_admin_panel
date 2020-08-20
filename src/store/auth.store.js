@@ -56,9 +56,17 @@ export default {
             realName: data.data.realname
           });
         }
-        return true;
+        return {
+          success: body.success
+        };
       } else {
-        return false;
+        if(body.success && body.role === "student"){
+          body.message = "Nedozvoljen pristup";
+        }
+        return {
+          success: false,
+          message: body.message
+        };
       }
 
     }

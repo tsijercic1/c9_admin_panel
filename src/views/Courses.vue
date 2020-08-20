@@ -22,14 +22,6 @@ export default {
   async mounted() {
     await this.$store.dispatch("refreshCourses");
     await this.$store.dispatch("refreshAssignments");
-  },
-  watch: {
-    courses(old,current) {
-      console.log("watch")
-      console.log(old);
-      console.log(current);
-      console.log("watch")
-    }
   }
 };
 </script>

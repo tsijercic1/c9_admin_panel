@@ -79,7 +79,6 @@ import {codemirror} from "vue-codemirror";
 // import base style
 import "codemirror/lib/codemirror.css";
 import "codemirror/addon/edit/closebrackets";
-// import VStickySidebar from "@/components/VueStickySidebar";
 
 export default {
   components: {
@@ -108,11 +107,6 @@ export default {
       },
       globalIdCounter: 1,
       rawEditorFileExtensions: ["c", "cpp", "java", "js", "mat", "php", "autotest", "zadaca", "json", "txt"],
-      sidebarConfig: {
-        topSpacing: 28,
-        bottomSpacing: 10,
-        innerWrapperSelector: ".inner-tile",
-      },
       active: [],
       editorText: "This is initialValue.",
       editorOptions: {
@@ -136,7 +130,8 @@ export default {
     },
     assignments() {
       const courseId = this.$route.params.course_id;
-      let result = this.$store.getters.assignmentsForCourse(courseId);
+      const course = this.$store.getters.courseById(courseId);
+      let result = this.$store.getters.assignmentsForCourse(course);
       return this.recursiveTreeArrayConstruction(result, undefined);
     },
     editorType2() {
