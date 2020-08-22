@@ -49,6 +49,11 @@
 import {mapGetters} from "vuex";
 
 export default {
+  data() {
+    return {
+      connection: {}
+    }
+  },
   computed: {
     ...mapGetters(["membersOfGroupByGroupIdAndCourseId", "groupsForCourseId"]),
     course() {
@@ -59,6 +64,13 @@ export default {
     this.$store.dispatch("refreshMembers", [this.course, this]);
     console.log(this.course);
     console.log("This was a course when it was mounted")
+
+  },
+  created() {
+    this.connection = new WebSocket("ws://" + location.host + "/websocket");
+    this.connection.onmessage = function(event) {
+      console.log(event);
+    }
   }
 };
 </script>
