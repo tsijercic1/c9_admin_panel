@@ -1,4 +1,4 @@
-npm run build --production
+npm run build --development
 rm -rf .dist/*
 cp -r dist/* .dist/
 cd .dist || exit

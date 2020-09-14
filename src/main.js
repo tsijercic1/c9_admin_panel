@@ -6,12 +6,18 @@ import vuetify from "./plugins/vuetify";
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
 Vue.config.productionTip = false;
+let app = undefined;
+(async function () {
+  await store.dispatch("refresh");
 
-const app = new Vue({
-  router,
-  store,
-  vuetify,
-  render: h => h(App)
-}).$mount("#app");
+  app = new Vue({
+    router,
+    store,
+    vuetify,
+    render: h => h(App)
+  }).$mount("#app");
 
-store.app = app;
+  store.app = app;
+})();
+
+

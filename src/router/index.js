@@ -74,6 +74,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.name !== "Login" && !store.getters.isAuthenticated) {
+    console.log("before " + to.fullPath);
     next(Login);
   } else next();
 });

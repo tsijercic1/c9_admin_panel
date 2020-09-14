@@ -60,7 +60,7 @@ export default {
           success: body.success
         };
       } else {
-        if(body.success && body.role === "student"){
+        if (body.success && body.role === "student") {
           body.message = "Nedozvoljen pristup";
         }
         return {
@@ -68,7 +68,44 @@ export default {
           message: body.message
         };
       }
+    },
+    refresh: async function (context) {
+      const response = await fetch("/services/refresh.php");
+      const body = await response.json();
+      console.log(body);
+      if ((body.success === true || body.success === "true") && (body.role === "admin" || body.role === "sysadmin")) {
+        context.commit("setUserId", 1);
+        context.commit("setSessionId", body["sid"]);
+        context.commit("setProfile", {
+          username: body.username,
+          realName: ""
+        });
+        const profileResponse = await fetch(`/services/users.php?user=${body.username}`, {
+          method: "get",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Accept: "application/json"
+          }
+        });
+        const data = await profileResponse.json();
 
+        if (data.success === true || data.success === "true") {
+          context.commit("setProfile", {
+            realName: data.data.realname
+          });
+        }
+        return {
+          success: body.success
+        };
+      } else {
+        if (body.success && body.role === "student") {
+          body.message = "Nedozvoljen pristup";
+        }
+        return {
+          success: false,
+          message: body.message
+        };
+      }
     }
   }
 };

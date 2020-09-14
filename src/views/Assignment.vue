@@ -11,8 +11,9 @@
               :items="assignments"
               return-object
               :active.sync="active"
+              @update:active="activeChanged(active)"
           >
-            <template v-slot:prepend="{ item, open }">
+            <template v-slot:prepend="{ item, open }" v->
               <v-icon v-if='!item.type.includes("File")'>
                 {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
               </v-icon>
@@ -23,18 +24,15 @@
           </v-treeview>
         </v-col>
         <v-col md="9" class="sidebar-container">
-          <div
-              :config="sidebarConfig"
-              class="sticky"
-          >
+          <div class="sticky">
             <v-card class="inner-tile"
-                    v-if='editorType2 === "none"'
+                    v-if='editorType === "none"'
                     tile
             >
               <v-card-title>Select a file or an assignment/task</v-card-title>
             </v-card>
             <v-card class="inner-tile"
-                    v-else-if='editorType2.type === "html"'
+                    v-else-if='editorType.type === "html"'
                     tile
             >
               <v-card-title>An html file has been selected</v-card-title>
@@ -49,11 +47,11 @@
               ></viewer>
             </v-card>
             <v-card class="inner-tile"
-                    v-else-if='rawEditorFileExtensions.includes(editorType2.type)'
+                    v-else-if='rawEditorFileExtensions.includes(editorType.type)'
                     tile
             >
               <v-card-title>{{ this.active[0].name }}</v-card-title>
-              <codemirror v-model="code" :options="cmOptions"/>
+              <codemirror ref="mirror" v-model="code" :options="cmOptions"/>
             </v-card>
           </div>
 
@@ -75,10 +73,8 @@ import "codemirror/theme/idea.css";
 import "codemirror/theme/darcula.css";
 import "codemirror/theme/ayu-mirage.css";
 import {codemirror} from "vue-codemirror";
-
-// import base style
-import "codemirror/lib/codemirror.css";
 import "codemirror/addon/edit/closebrackets";
+import {mapGetters} from "vuex";
 
 export default {
   components: {
@@ -103,10 +99,11 @@ export default {
         png: 'mdi-file-image',
         txt: 'mdi-file-document-outline',
         autotest: 'mdi-cog',
+        autotest2: 'mdi-cog',
         zadaca: 'mdi-arrow-top-right-thick'
       },
       globalIdCounter: 1,
-      rawEditorFileExtensions: ["c", "cpp", "java", "js", "mat", "php", "autotest", "zadaca", "json", "txt"],
+      rawEditorFileExtensions: ["c", "cpp", "java", "js", "mat", "php", "autotest", "zadaca", "json", "txt", "autotest2"],
       active: [],
       editorText: "This is initialValue.",
       editorOptions: {
@@ -125,16 +122,17 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["courseById", "assignmentsForCourse"]),
     activeSelections() {
       return this.active;
     },
     assignments() {
       const courseId = this.$route.params.course_id;
-      const course = this.$store.getters.courseById(courseId);
-      let result = this.$store.getters.assignmentsForCourse(course);
+      const course = this.courseById(courseId);
+      let result = this.assignmentsForCourse(course);
       return this.recursiveTreeArrayConstruction(result, undefined);
     },
-    editorType2() {
+    editorType() {
       if (this.active.length !== 0) {
         const selected = this.active[0];
         if (selected.type.includes("File")) {
@@ -151,10 +149,19 @@ export default {
       return selectedItem;
     }
   },
-  watch: {
-    activeSelections: "logActive",
-  },
   methods: {
+    activeChanged(active) {
+      if (active.length !== 0) {
+        this.treeItemClicked(active[0]);
+      }
+    },
+    treeItemClicked(item) {
+      if (item.type.includes("File")) {
+        console.log('FILE: ' + item.name);
+      } else {
+        console.log('FOLDER: ' + item.name);
+      }
+    },
     findInTree(root, wanted) {
       if (root.id === wanted.id && root.name === wanted.name) {
         return {
@@ -180,20 +187,72 @@ export default {
         return response;
       }
     },
-    logActive() {
+    async logActive() {
+      console.log("Logged active");
       if (this.activeSelections.length !== 0) {
+        console.log("Some are active...");
+        let result = false;
         this.assignments.forEach(element => {
-          const result = this.findInTree(element, this.activeSelections[0]);
-          if (result.success === true) {
-            console.log(result);
+          const cache = this.findInTree(element, this.activeSelections[0]);
+          if (cache) {
+            result = cache;
           }
-        })
+        });
+        console.log(result);
+        if (result) {
+          console.log("result is not false");
+          const course = this.courseById(this.$route.params.course_id);
+          const url = `/services/assignments.php`
+              + `?action=getFileContent`
+              + `&course_id=${course.id}`
+              + `&${course.external ? "X" : ""}`
+              + `&year=${course.year}`;
+          const data = {
+            filename: result.name,
+            path: result.path.substr(course.abbrev.length)
+          }
+          if (this.$refs.toaster) {
+            const response = await fetch(url,
+                {
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  method: 'post',
+                  body: JSON.stringify(data)
+                });
+            const body = await response.json();
+            const content = body.data.content
+            this.$refs.toaster.invoke("setHtml", content);
+            console.log(content);
+          } else if (this.$refs.mirror) {
+            console.log("this should be written to the console!!!");
+            const response = await fetch(url,
+                {
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  method: 'post',
+                  body: JSON.stringify(data)
+                });
+            const body = await response.json();
+            console.log(body);
+            let content = body.data.content;
+            try {
+              if (["autotest", "autotest2", "json", "zadaca"].includes(this.extensionRegex.exec(result.name)[1])) {
+                content = await JSON.stringify(await JSON.parse(content), null, 4);
+                // content = content.normalize();
+              } else {
+                console.log("Nije json!");
+              }
+            } catch (e) {
+              console.log("Nije validan json!");
+            }
+            this.code = content;
+            console.log(this.code);
+          }
+        }
       }
-      let html = "";
-      if (this.$refs.toaster) {
-        html = this.$refs.toaster.invoke("getHtml");
-      }
-      console.log(html);
+      console.log("end of logging!");
     },
     recursiveTreeArrayConstruction(nodes, parent) {
       let result = [];

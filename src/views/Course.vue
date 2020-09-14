@@ -62,15 +62,8 @@ export default {
   },
   mounted() {
     this.$store.dispatch("refreshMembers", [this.course, this]);
-    console.log(this.course);
-    console.log("This was a course when it was mounted")
-
   },
   created() {
-    this.connection = new WebSocket("ws://" + location.host + "/websocket");
-    this.connection.onmessage = function(event) {
-      console.log(event);
-    }
   }
 };
 </script>
