@@ -14,7 +14,7 @@
               @update:active="activeChanged(active)"
           >
             <template v-slot:prepend="{ item, open }" v->
-              <v-icon v-if='!item.type.includes("File")'>
+              <v-icon v-if='item.isDirectory'>
                 {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
               </v-icon>
               <v-icon v-else>
@@ -35,26 +35,39 @@
                     v-else-if='editorType.type === "html"'
                     tile
             >
-              <v-card-title>An html file has been selected</v-card-title>
-              <editor
-                  ref="toaster"
-                  :initialValue="editorText"
-                  :options="editorOptions"
-              ></editor>
-              <viewer
-                  :initialValue="editorText"
-                  :options="editorOptions"
-              ></viewer>
+              <v-card-title>
+                <span class="headline">{{ this.active[0].name }}</span>
+                <v-spacer/>
+                <v-btn @click="saveFile()">Save</v-btn>
+              </v-card-title>
+              <div class="editorWrapper">
+                <editor
+                    ref="toaster"
+                    :initialValue="editorText"
+                    :options="editorOptions"
+                    height="100%"
+                ></editor>
+              </div>
             </v-card>
             <v-card class="inner-tile"
                     v-else-if='rawEditorFileExtensions.includes(editorType.type)'
                     tile
             >
-              <v-card-title>{{ this.active[0].name }}</v-card-title>
-              <codemirror ref="mirror" v-model="code" :options="cmOptions"/>
+              <v-card-title>
+                <span class="headline">{{ this.active[0].name }}</span>
+                <v-spacer/>
+                <v-btn @click="saveFile()">Save</v-btn>
+              </v-card-title>
+              <div class="editorWrapper">
+                <codemirror
+                    ref="mirror"
+                    v-model="editorText"
+                    :options="cmOptions"
+                    id="codemirror"
+                />
+              </div>
             </v-card>
           </div>
-
         </v-col>
       </v-row>
     </v-container>
@@ -62,11 +75,12 @@
 </template>
 
 <script>
-import "codemirror/lib/codemirror.css";
+import "@/assets/styles/codemirror.css";
+
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 
-import {Editor, Viewer} from "@toast-ui/vue-editor";
+import {Editor} from "@toast-ui/vue-editor";
 import "codemirror/mode/clike/clike";
 import "codemirror/mode/javascript/javascript";
 import "codemirror/theme/idea.css";
@@ -78,9 +92,7 @@ import {mapGetters} from "vuex";
 
 export default {
   components: {
-    // VStickySidebar,
     editor: Editor,
-    viewer: Viewer,
     codemirror
   },
   mounted() {
@@ -107,10 +119,10 @@ export default {
       active: [],
       editorText: "This is initialValue.",
       editorOptions: {
-        hideModeSwitch: false
+        hideModeSwitch: false,
       },
       language: "x-csrc",
-      code: "#include<stdio.h>\n\nint main(){}",
+      code: "",
       cmOptions: {
         tabSize: 4,
         mode: "text/x-csrc",
@@ -118,6 +130,7 @@ export default {
         lineNumbers: true,
         line: true,
         autoCloseBrackets: true,
+        viewportMargin: Infinity
       }
     };
   },
@@ -129,13 +142,18 @@ export default {
     assignments() {
       const courseId = this.$route.params.course_id;
       const course = this.courseById(courseId);
-      let result = this.assignmentsForCourse(course);
-      return this.recursiveTreeArrayConstruction(result, undefined);
+      let assignments = this.assignmentsForCourse(course);
+      if (assignments === undefined) {
+        assignments = [];
+      } else {
+        assignments = assignments.children;
+      }
+      return assignments;
     },
     editorType() {
       if (this.active.length !== 0) {
         const selected = this.active[0];
-        if (selected.type.includes("File")) {
+        if (!selected.isDirectory) {
           return {
             type: this.extensionRegex.exec(selected.name)[1]
           }
@@ -150,15 +168,54 @@ export default {
     }
   },
   methods: {
+    saveFile() {
+      console.log(this.editorText);
+    },
     activeChanged(active) {
       if (active.length !== 0) {
         this.treeItemClicked(active[0]);
       }
     },
-    treeItemClicked(item) {
-      if (item.type.includes("File")) {
+    async treeItemClicked(item) {
+      if (!item.isDirectory) {
+        const courseId = this.$route.params.course_id;
+        const course = this.courseById(courseId);
+        console.log(course);
+        let response = await fetch(`/services/assignments.php?action=getFileContent&course_id=${course.id}${course.external ? "&X" : ""}&year=${course.year}`, {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'POST',
+          body: JSON.stringify({path: item.path})
+        });
+        response = await response.json();
+        if (response.success) {
+          let content = response.data.content;
+          if (this.$refs.mirror) {
+            console.log(this.$refs.mirror);
+            let tooth = this.$refs.mirror;
+            if (tooth.$refs.textarea) {
+
+              tooth.$refs.textarea.rows = 60;
+            }
+            try {
+              if (["autotest", "autotest2", "json", "zadaca"].includes(this.extensionRegex.exec(item.name)[1])) {
+                content = await JSON.stringify(await JSON.parse(content), null, 4);
+                // content = content.normalize();
+              } else {
+                console.log("Nije json!");
+              }
+            } catch (e) {
+              console.log("Nije validan json!");
+            }
+          } else if (this.$refs.toaster) {
+            this.$refs.toaster.invoke("setHtml", content);
+          }
+          this.editorText = content;
+        }
         console.log('FILE: ' + item.name);
       } else {
+        this.editorText = "";
         console.log('FOLDER: ' + item.name);
       }
     },
@@ -187,161 +244,24 @@ export default {
         return response;
       }
     },
-    async logActive() {
-      console.log("Logged active");
-      if (this.activeSelections.length !== 0) {
-        console.log("Some are active...");
-        let result = false;
-        this.assignments.forEach(element => {
-          const cache = this.findInTree(element, this.activeSelections[0]);
-          if (cache) {
-            result = cache;
-          }
-        });
-        console.log(result);
-        if (result) {
-          console.log("result is not false");
-          const course = this.courseById(this.$route.params.course_id);
-          const url = `/services/assignments.php`
-              + `?action=getFileContent`
-              + `&course_id=${course.id}`
-              + `&${course.external ? "X" : ""}`
-              + `&year=${course.year}`;
-          const data = {
-            filename: result.name,
-            path: result.path.substr(course.abbrev.length)
-          }
-          if (this.$refs.toaster) {
-            const response = await fetch(url,
-                {
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  method: 'post',
-                  body: JSON.stringify(data)
-                });
-            const body = await response.json();
-            const content = body.data.content
-            this.$refs.toaster.invoke("setHtml", content);
-            console.log(content);
-          } else if (this.$refs.mirror) {
-            console.log("this should be written to the console!!!");
-            const response = await fetch(url,
-                {
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  method: 'post',
-                  body: JSON.stringify(data)
-                });
-            const body = await response.json();
-            console.log(body);
-            let content = body.data.content;
-            try {
-              if (["autotest", "autotest2", "json", "zadaca"].includes(this.extensionRegex.exec(result.name)[1])) {
-                content = await JSON.stringify(await JSON.parse(content), null, 4);
-                // content = content.normalize();
-              } else {
-                console.log("Nije json!");
-              }
-            } catch (e) {
-              console.log("Nije validan json!");
-            }
-            this.code = content;
-            console.log(this.code);
-          }
-        }
-      }
-      console.log("end of logging!");
-    },
-    recursiveTreeArrayConstruction(nodes, parent) {
-      let result = [];
-      if (nodes === undefined) {
-        return result;
-      }
-      nodes.forEach(node => {
-        if (node.id) {
-          // It is a directory
-          let element = {
-            id: node.id,
-            type: node.type === undefined ? "folder" : node.type,
-            name: node.name,
-            path: node.path === undefined ? "global" : node.path,
-            hidden: node.hidden === undefined ? false : node.hidden,
-            children: this.constructHomogeneousArrayFromFilesProperty(node, node.type + "File")
-          };
-          element.children.push(...this.recursiveTreeArrayConstruction(node.items, node));
-          result.push(element);
-        } else {
-          // It is a file
-          if (parent === undefined) {
-            parent = {
-              id: "global/" + this.globalIdCounter,
-              path: "global",
-              type: "global"
-            };
-            this.globalIdCounter++;
-          }
-          if (typeof node === "string") {
-            result.push({
-              parentId: parent.id,
-              id: parent.path + "/" + node,
-              type: parent.type + "File",
-              name: node,
-              binary: false,
-              show: true,
-            });
-          } else {
-            result.push({
-              parentId: parent.id,
-              id: parent.path + "/" + node.filename,
-              type: parent.type + "File",
-              name: node.filename,
-              binary: node.binary,
-              show: node.show,
-            });
-          }
-        }
-      });
-      return result
-    },
-    constructHomogeneousArrayFromFilesProperty(element, fileNodeType) {
-      if (element.files) {
-        let result = [];
-        element.files.forEach(file => {
-          if (file.filename) {
-            result.push({
-              parentId: element.id,
-              id: element.path + "/" + file.filename,
-              type: fileNodeType,
-              name: file.filename,
-              binary: file.binary,
-              show: file.show,
-            });
-          } else {
-            result.push({
-              parentId: element.id,
-              id: element.path + "/" + file,
-              type: fileNodeType,
-              name: file,
-              binary: false,
-              show: true,
-            });
-          }
-        });
-        return result;
-      }
-      return [];
-    }
   }
 };
+
 </script>
 
-<style>
-
+<style lang="scss" scoped>
 .sticky {
   position: -webkit-sticky;
   position: sticky;
   top: 15px;
+}
+
+.inner-tile {
+}
+
+.editorWrapper {
+  height: 75vh;
+  overflow-y: scroll;
+  clear: both;
 }
 </style>

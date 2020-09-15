@@ -72,7 +72,6 @@ export default {
     refresh: async function (context) {
       const response = await fetch("/services/refresh.php");
       const body = await response.json();
-      console.log(body);
       if ((body.success === true || body.success === "true") && (body.role === "admin" || body.role === "sysadmin")) {
         context.commit("setUserId", 1);
         context.commit("setSessionId", body["sid"]);

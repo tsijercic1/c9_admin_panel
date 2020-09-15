@@ -25,17 +25,18 @@ export default {
       let assignments = {};
       const courses = context.getters.courses;
       for(let course of courses) {
-        const response = await fetch(`/assignment/ws.php?action=assignments&course=${course.id}${course.external?"&X":""}`, {
+        const response = await fetch(`/services/assignments.php?action=getAssignments&course_id=${course.id}${course.external?"&X":""}&year=${course.year}`, {
           method: "get",
           headers: {
             Accept: "application/json"
           }
         });
         const body = await response.json();
+        console.log(body);
         if (!body.success) {
           return false;
         }
-        assignments[Helpers.getFullCourseId(course)] = body.data;
+        assignments[Helpers.getFullCourseId(course)] = Helpers.tweakAssignmentTree(body.data);
       }
       context.commit("setAssignments", assignments);
     }

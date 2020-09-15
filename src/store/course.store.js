@@ -7,14 +7,10 @@ export default {
       state.courses = courses;
     },
     updateCourse(state, [courseId, course, vm]) {
-      console.log(course);
       let matching = state.courses.filter(c => c.id === courseId);
       if (matching.length === 0) {
-        console.log("Cannot update...");
         return;
       }
-      console.log(matching);
-      console.log(course);
       matching[0].groups = course.groups;
       vm.$forceUpdate();
     }

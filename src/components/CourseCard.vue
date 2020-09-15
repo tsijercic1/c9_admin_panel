@@ -78,7 +78,13 @@ export default {
   },
   computed: {
     assignments() {
-      return this.$store.getters.assignmentsForCourse(this.course);
+      let assignments = this.$store.getters.assignmentsForCourse(this.course);
+      if (assignments === undefined) {
+        assignments = [];
+      } else {
+        assignments = assignments.children;
+      }
+      return assignments;
     }
   }
 };
