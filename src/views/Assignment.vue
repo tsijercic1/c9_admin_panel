@@ -1,6 +1,36 @@
 <template>
   <v-container>
     <h1>Assignments</h1>
+    <div>
+      <vue-context ref="menu" v-slot="{ data }">
+        <template v-if="data!==null && data!==undefined">
+                  <li>
+                    <a v-if="assignmentEligible(data)" @click.prevent="onClick('Add assignment', data)">
+                      Add assignment
+                    </a>
+                    <a v-if="fileEligible(data)" @click.prevent="onClick('Add file', data)">
+                      Add file
+                    </a>
+                  </li>
+                  <li>
+                    <a v-if="data.isDirectory" @click.prevent="onClick('Edit assignment', data)">
+                      Edit assignment
+                    </a>
+                    <a v-else @click.prevent="onClick('Edit file', data)">
+                      Edit file
+                    </a>
+                  </li>
+                  <li>
+                    <a v-if="data.isDirectory" @click.prevent="onClick('Delete assignment', data)">
+                      Delete assignment
+                    </a>
+                    <a v-else @click.prevent="onClick('Delete file', data)">
+                      Delete file
+                    </a>
+                  </li>
+        </template>
+      </vue-context>
+    </div>
     <v-container fluid>
       <v-row>
         <v-col md="3">
@@ -13,13 +43,18 @@
               :active.sync="active"
               @update:active="activeChanged(active)"
           >
-            <template v-slot:prepend="{ item, open }" v->
-              <v-icon v-if='item.isDirectory'>
+            <template v-slot:prepend="{ item, open }">
+              <v-icon v-if='item.isDirectory' @contextmenu.prevent="$refs.menu.open($event, item )">
                 {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
               </v-icon>
-              <v-icon v-else>
+              <v-icon v-else @contextmenu.prevent="$refs.menu.open($event, item )" >
                 {{ fileTypes[extensionRegex.exec(item.name)[1]] }}
               </v-icon>
+            </template>
+            <template v-slot:label="{item}">
+              <v-list-item-title @contextmenu.prevent="$refs.menu.open($event, item )">
+                {{item.name}}
+              </v-list-item-title>
             </template>
           </v-treeview>
         </v-col>
@@ -67,6 +102,7 @@
                 />
               </div>
             </v-card>
+
           </div>
         </v-col>
       </v-row>
@@ -89,11 +125,14 @@ import "codemirror/theme/ayu-mirage.css";
 import {codemirror} from "vue-codemirror";
 import "codemirror/addon/edit/closebrackets";
 import {mapGetters} from "vuex";
+import VueContext from 'vue-context';
+import 'vue-context/src/sass/vue-context.scss'; // Alternatively import into a stylesheet instead
 
 export default {
   components: {
     editor: Editor,
-    codemirror
+    codemirror,
+    VueContext
   },
   mounted() {
   },
@@ -168,6 +207,40 @@ export default {
     }
   },
   methods: {
+    assignmentEligible(item) {
+      let result = true;
+      if (!item.isDirectory) {
+        result = false;
+      }
+      if (item.children) {
+        item.children.forEach(child => {
+          if (!child.isDirectory) {
+            result=false;
+          }});
+      }
+      return result;
+    },
+    fileEligible(item) {
+      let result = true;
+      if (!item.isDirectory) {
+        result = false;
+      }
+      if (item.children) {
+        item.children.forEach(child => {
+          if (child.isDirectory) {
+            result=false;
+          }});
+      }
+      return result;
+    },
+    onClick(text, data) {
+      alert(`You clicked "${text}"!`);
+      console.log(data);
+      // => { foo: 'bar' }
+    },
+    treeAction(element) {
+      console.log(element);
+    },
     saveFile() {
       console.log(this.editorText);
     },
