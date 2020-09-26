@@ -1,11 +1,13 @@
 <template>
   <v-container>
-    <h1>Dashboard</h1>
+    <GameBuilder/>
   </v-container>
 </template>
 
 <script>
+  import GameBuilder from "@/components/GameBuilder";
   export default {
-    name: "Dashboard"
+    name: "Dashboard",
+    components: {GameBuilder}
   };
 </script>
