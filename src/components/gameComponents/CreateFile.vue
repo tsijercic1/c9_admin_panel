@@ -7,8 +7,8 @@
       <v-checkbox label="Binary" v-model="binary"></v-checkbox>
     </v-form>
     <v-card-actions>
-      <v-btn @click="exit">Cancel</v-btn>
-      <v-btn @click="create">Create</v-btn>
+      <v-btn @click="exit" :disabled="isProcessing">Cancel</v-btn>
+      <v-btn @click="create" :disabled="isProcessing">Create</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -23,6 +23,7 @@ export default {
   },
   data() {
     return {
+      isProcessing: false,
       valid: false,
       binary: false,
       show: true,
@@ -33,6 +34,7 @@ export default {
   methods: {
     async create() {
       if(this.valid) {
+        this.isProcessing = true;
         let response = await fetch(`/services/uup_game.php?action=createTaskFile&taskId=${this.task.scrapedId}`, {
           method: "post",
           headers: {
@@ -45,6 +47,7 @@ export default {
           })
         });
         let body = await response.json();
+        this.isProcessing = false;
         if (!body.success) {
           this.$notify({
             type: "bad",

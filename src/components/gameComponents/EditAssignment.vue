@@ -7,8 +7,8 @@
       <v-text-field label="Challenge points" v-model="challengePoints"></v-text-field>
       <v-checkbox label="Active" v-model="active"></v-checkbox>
       <div class="d-flex justify-space-between mt-5">
-        <v-btn @click="exit">Cancel</v-btn>
-        <v-btn @click="submit">Update</v-btn>
+        <v-btn @click="exit" :disabled="isProcessing">Cancel</v-btn>
+        <v-btn @click="submit" :disabled="isProcessing">Update</v-btn>
       </div>
     </form>
   </v-card>
@@ -24,6 +24,7 @@ name: "EditAssignment",
   },
   data() {
     return {
+      isProcessing: false,
       name: "",
       points: 0,
       challengePoints: 0,
@@ -46,6 +47,7 @@ name: "EditAssignment",
   methods: {
     async submit() {
       if(this.valid) {
+        this.isProcessing = true;
         let response = await fetch(`/services/uup_game.php?action=editAssignment?assignmentId=${this.assignment.scrapedId}`, {
           method: "post",
           headers: {
@@ -59,6 +61,7 @@ name: "EditAssignment",
           })
         });
         let body = await response.json();
+        this.isProcessing = false;
         if (!body.success) {
           this.$notify({
             type: "bad",

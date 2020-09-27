@@ -4,8 +4,8 @@
     <v-card-subtitle>/{{task.parent.name}}/{{task.name}}/{{file.name}}</v-card-subtitle>
     <v-card-text>Are you sure you want to delete this file?</v-card-text>
     <v-card-actions>
-      <v-btn @click="exit">Cancel</v-btn>
-      <v-btn @click="submit">Delete</v-btn>
+      <v-btn @click="exit" :disabled="isProcessing">Cancel</v-btn>
+      <v-btn @click="submit" :disabled="isProcessing">Delete</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -19,8 +19,14 @@ name: "DeleteFile",
     refresh: Function,
     exit: Function
   },
+  data() {
+    return {
+      isProcessing: false
+    };
+  },
   methods: {
     async submit() {
+      this.isProcessing = true;
       let response = await fetch(`/services/uup_game.php?action=deleteTaskFile&taskId=${this.task.scrapedId}&name=${this.file.name}`, {
         method: "delete",
         headers: {
@@ -28,6 +34,7 @@ name: "DeleteFile",
         }
       });
       let body = await response.json();
+      this.isProcessing = false;
       if (!body.success) {
         this.$notify({
           type: "bad",

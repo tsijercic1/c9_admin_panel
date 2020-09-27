@@ -13,8 +13,8 @@
       ></v-select>
       <v-textarea label="Hint" v-model="hint"></v-textarea>
       <div class="d-flex justify-space-between mt-5">
-        <v-btn @click="exit">Cancel</v-btn>
-        <v-btn @click="submit">Update</v-btn>
+        <v-btn @click="exit" :disabled="isProcessing">Cancel</v-btn>
+        <v-btn @click="submit" :disabled="isProcessing">Update</v-btn>
       </div>
     </v-form>
   </v-card>
@@ -32,6 +32,7 @@ export default {
   },
   data() {
     return {
+      isProcessing: false,
       name: "",
       hint: "",
       selected: undefined,
@@ -61,6 +62,7 @@ export default {
   methods: {
     async submit() {
       if (this.valid) {
+        this.isProcessing = true;
         let response = await fetch(`/services/uup_game.php?action=editTask&taskId=${this.task.scrapedId}`, {
           method: "post",
           headers: {
@@ -73,6 +75,7 @@ export default {
           })
         });
         let body = await response.json();
+        this.isProcessing = false;
         if (!body.success) {
           this.$notify({
             type: "bad",

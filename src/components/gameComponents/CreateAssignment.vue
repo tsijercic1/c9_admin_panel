@@ -13,8 +13,8 @@
       <v-text-field label="Challenge points" v-model="challengePoints" :rules="[notEmpty,noSpaces,positive]"></v-text-field>
       <v-checkbox label="Active" v-model="active"></v-checkbox>
       <div class="d-flex justify-space-between mt-5">
-        <v-btn @click="exit">Cancel</v-btn>
-        <v-btn @click="create">Create</v-btn>
+        <v-btn @click="exit" :disabled="isProcessing">Cancel</v-btn>
+        <v-btn @click="create" :disabled="isProcessing">Create</v-btn>
       </div>
     </v-form>
   </v-card>
@@ -29,6 +29,7 @@ export default {
   },
   data() {
     return {
+      isProcessing: false,
       name: "",
       displayName: "",
       active: true,
@@ -46,6 +47,7 @@ export default {
   methods: {
     async create() {
       if(this.valid) {
+        this.isProcessing = true;
         let response = await fetch("/services/uup_game.php?action=createAssignment", {
           method: "post",
           headers: {
@@ -60,7 +62,7 @@ export default {
           })
         });
         let body = await response.json();
-        console.log(body);
+        this.isProcessing = false;
         if (!body.success) {
           this.$notify({
             type: "bad",

@@ -130,8 +130,20 @@ export default {
       let body = await response.json();
       this.isSaving = false;
       if (!body.success) {
+        this.$notify({
+          type: "bad",
+          group: "main",
+          title: "Save file",
+          text: `${body.message || 'An error has occurred.'}`
+        });
         return false;
       }
+      this.$notify({
+        type: "good",
+        group: "main",
+        title: "Save file",
+        text: `File ${this.file.name} saved.`
+      });
     },
     async refresh(file) {
       if (this.$refs.toaster) {
