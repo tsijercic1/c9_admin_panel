@@ -4,12 +4,16 @@
     <v-content>
       <router-view/>
     </v-content>
+    <notifications
+        group="main"
+        position="bottom right"
+        classes="notifications"
+    />
   </v-app>
 </template>
 
 <script>
   import Navigation from "./components/Navigation";
-
   export default {
     components: {
       Navigation
@@ -22,5 +26,28 @@
 
   * {
     font-family: "Roboto", sans-serif;
+  }
+
+  .notifications {
+    padding: 10px;
+    margin: 0 5px 5px;
+
+    font-size: 12px;
+
+    color: #212121;
+    background: #eceff1;
+    border-left: 5px solid #b2ebf2;
+    &.message {
+      background: #eceff1;
+      border-left-color: #cfd8dc;
+    }
+    &.good {
+      background: #eceff1;
+      border-left-color: #4caf50;
+    }
+    &.bad {
+      background: #eceff1;
+      border-left-color: #f44336;
+    }
   }
 </style>

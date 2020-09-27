@@ -17,6 +17,15 @@
       <template v-if="overlayAction ==='Edit task'">
         <EditTask :exit="hideOverlay" :refresh="refreshGame" :categories="categories" :assignment="modalItem.parent" :task="modalItem"/>
       </template>
+      <template v-if="overlayAction ==='Delete task'">
+        <DeleteTask :exit="hideOverlay" :refresh="refreshGame" :task="modalItem"/>
+      </template>
+      <template v-if="overlayAction ==='Create file'">
+        <CreateFile :exit="hideOverlay" :refresh="refreshGame" :task="modalItem"/>
+      </template>
+      <template v-if="overlayAction ==='Delete file'">
+        <DeleteFile :exit="hideOverlay" :refresh="refreshGame" :file="modalItem" :task="modalItem.parent"/>
+      </template>
     </v-overlay>
     <vue-context ref="menu" v-slot="{ data }">
       <template v-if="data !== null && data !== undefined">
@@ -44,8 +53,8 @@
             </a>
           </li>
           <li>
-            <a @click.prevent="onClick('Add file', data)">
-              Add file
+            <a @click.prevent="onClick('Create file', data)">
+              Create file
             </a>
           </li>
         </template>
@@ -90,9 +99,9 @@
         </v-treeview>
       </v-col>
       <v-col cols="8">
-        <div>
+        <v-card class="sticky" tile elevation="2">
           <FileEditor :service="service" ref="fileEditor" class="editorWrapper"/>
-        </div>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
@@ -106,8 +115,14 @@ import EditAssignment from "@/components/gameComponents/EditAssignment";
 import CreateTask from "@/components/gameComponents/CreateTask";
 import EditTask from "@/components/gameComponents/EditTask";
 import FileEditor from "@/components/gameComponents/FileEditor";
+import DeleteTask from "@/components/gameComponents/DeleteTask";
+import DeleteFile from "@/components/gameComponents/DeleteFile";
+import CreateFile from "@/components/gameComponents/CreateFile";
 export default {
   components: {
+    CreateFile,
+    DeleteFile,
+    DeleteTask,
     FileEditor,
     EditTask,
     CreateTask,
@@ -226,10 +241,14 @@ export default {
 </script>
 
 <style scoped>
-.editorWrapper {
+.sticky {
   position: -webkit-sticky;
   position: sticky;
+  top: 15px;
+}
+.editorWrapper {
   height: 75vh;
+  overflow-y: hidden;
   clear: both;
 }
 </style>

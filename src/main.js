@@ -4,6 +4,9 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
+import Notifications from "vue-notification";
+
+Vue.use(Notifications);
 
 Vue.config.productionTip = false;
 let app = undefined;

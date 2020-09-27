@@ -7,6 +7,10 @@
       <v-card-title>
         <span class="headline">{{ file.name }}</span>
         <v-spacer/>
+        <v-checkbox label="Binary" v-model="binary"></v-checkbox>
+        <v-spacer/>
+        <v-checkbox label="Show" v-model="show"></v-checkbox>
+        <v-spacer/>
         <v-btn @click="save()">Save</v-btn>
       </v-card-title>
       <div>
@@ -16,6 +20,10 @@
     <v-card v-else-if="rawEditorFileExtensions.includes(editable.type)" tile>
       <v-card-title>
         <span class="headline">{{ file.name }}</span>
+        <v-spacer/>
+        <v-checkbox label="Binary" v-model="binary"></v-checkbox>
+        <v-spacer/>
+        <v-checkbox label="Show" v-model="show"></v-checkbox>
         <v-spacer/>
         <v-btn @click="save()" :disabled="isSaving">Save</v-btn>
       </v-card-title>
@@ -59,6 +67,8 @@ export default {
   },
   data() {
     return {
+      binary: false,
+      show: true,
       fileContent: "",
       file: undefined,
       extensionRegex: /(?:\.([^.]+))?$/,
@@ -67,7 +77,7 @@ export default {
       },
       cmOptions: {
         tabSize: 4,
-        mode: "text/x-crsc",
+        mode: "text/x-csrc",
         theme: "idea",
         lineNumbers: true,
         line: true,
@@ -115,7 +125,7 @@ export default {
         headers: {
           Accept: "application/json"
         },
-        body: JSON.stringify({name: this.file.name, content: content})
+        body: JSON.stringify({name: this.file.name, content: content, show: this.show, binary: this.binary})
       });
       let body = await response.json();
       this.isSaving = false;
@@ -144,6 +154,8 @@ export default {
         } else if (this.$refs.mirror) {
           this.fileContent = body.data.content;
         }
+        this.binary = this.file.data.binary;
+        this.show = this.file.data.show;
       }
     }
   }

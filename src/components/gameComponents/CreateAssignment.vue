@@ -62,10 +62,22 @@ export default {
         let body = await response.json();
         console.log(body);
         if (!body.success) {
+          this.$notify({
+            type: "bad",
+            group: "main",
+            title: "Create assignment",
+            text: `${body.message || 'An error has occurred.'}`
+          });
           return false;
         }
         this.refresh();
         this.exit();
+        this.$notify({
+          type: "good",
+          group: "main",
+          title: "Create assignment",
+          text: `Assignment ${this.displayName} created.`
+        });
       }
     }
   }
