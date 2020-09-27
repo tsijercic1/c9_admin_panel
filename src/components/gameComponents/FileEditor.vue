@@ -146,7 +146,7 @@ export default {
         type: "good",
         group: "main",
         title: "Save file",
-        text: `File ${this.file.name} saved.`
+        text: `File /${this.file.parent.parent.name}/${this.file.parent.name}/${this.file.name} saved.`
       });
     },
     async refresh(file) {
