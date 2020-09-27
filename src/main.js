@@ -21,6 +21,7 @@ let app = undefined;
   }).$mount("#app");
 
   store.app = app;
+  store.$notify = app.$notify;
 })();
 
 

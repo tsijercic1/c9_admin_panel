@@ -34,6 +34,15 @@
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <v-spacer/>
+      <v-list-item @click="logout" to='/login'>
+        <v-list-item-icon>
+          <v-icon>mdi-exit-run</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title>Logout</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -71,6 +80,11 @@ export default {
   },
   mounted() {
     this.user = this.$store.getters.userProfile;
+  },
+  methods: {
+    async logout() {
+      await fetch('/services/logout.php');
+    }
   }
 };
 </script>
