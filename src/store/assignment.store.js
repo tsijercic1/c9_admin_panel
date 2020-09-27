@@ -32,9 +32,13 @@ export default {
           }
         });
         const body = await response.json();
-        console.log(body);
         if (!body.success) {
-          return false;
+          this.$notify({
+            type: "bad",
+            group: "main",
+            title: "Getting assignments",
+            text: `${body.message || 'An error has occurred.'}`
+          });
         }
         assignments[Helpers.getFullCourseId(course)] = Helpers.tweakAssignmentTree(body.data);
       }

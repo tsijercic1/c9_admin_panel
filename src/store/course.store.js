@@ -46,8 +46,13 @@ export default {
           }
         });
         const body = await response.json();
-        console.log(body.success);
         if (!body.success) {
+          this.$notify({
+            type: "bad",
+            group: "main",
+            title: "Getting members",
+            text: `${body.message || 'An error has occurred.'}`
+          });
           return false;
         }
         group.members = body.data.members;
@@ -63,6 +68,12 @@ export default {
       });
       const body = await response.json();
       if (!body.success) {
+        this.$notify({
+          type: "bad",
+          group: "main",
+          title: "Getting courses",
+          text: `${body.message || 'An error has occurred.'}`
+        });
         return false;
       }
       let courses = body.data;
@@ -75,9 +86,15 @@ export default {
         });
         const body = await response.json();
         if (!body.success) {
-          return false;
+          this.$notify({
+            type: "bad",
+            group: "main",
+            title: "Getting groups",
+            text: `${body.message || 'An error has occurred.'}`
+          });
+        } else {
+          course.groups = body.data.groups;
         }
-        course.groups = body.data.groups;
       }
       context.commit("setCourses", courses);
     }
