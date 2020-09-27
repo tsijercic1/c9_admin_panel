@@ -45,12 +45,8 @@ import "@/assets/styles/codemirror.css";
 import "codemirror/mode/clike/clike";
 import "codemirror/mode/javascript/javascript";
 import "codemirror/theme/idea.css";
-import "codemirror/theme/darcula.css";
-import "codemirror/theme/ayu-mirage.css";
-import "codemirror/mode/vue/vue.js";
 import {codemirror} from "vue-codemirror";
 import "codemirror/addon/edit/closebrackets";
-
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 
@@ -74,6 +70,14 @@ export default {
       extensionRegex: /(?:\.([^.]+))?$/,
       editorOptions: {
         hideModeSwitch: false
+      },
+      modes: {
+        c: "text/x-csrc",
+        cpp: "text/x-c++src",
+        java: "text/x-java",
+        json: "application/json",
+        javascript: "text/javascript",
+        typescript: "text/typescript"
       },
       cmOptions: {
         tabSize: 4,
@@ -168,6 +172,19 @@ export default {
         }
         this.binary = this.file.data.binary;
         this.show = this.file.data.show;
+      }
+      if(["autotest", "zadaca", "json", "autotest2"].includes(this.extensionRegex.exec(file.name)[1])) {
+        this.cmOptions.mode = this.modes.json;
+      } else if (["c"].includes(this.extensionRegex.exec(file.name)[1])) {
+        this.cmOptions.mode = this.modes.c;
+      } else if (["cpp"].includes(this.extensionRegex.exec(file.name)[1])) {
+        this.cmOptions.mode = this.modes.cpp;
+      } else if (["java"].includes(this.extensionRegex.exec(file.name)[1])) {
+        this.cmOptions.mode = this.modes.java;
+      } else if (["js"].includes(this.extensionRegex.exec(file.name)[1])) {
+        this.cmOptions.mode = this.modes.javascript;
+      } else if (["ts"].includes(this.extensionRegex.exec(file.name)[1])) {
+        this.cmOptions.mode = this.modes.typescript;
       }
     }
   }
