@@ -9,13 +9,15 @@
         <CreateAssignment :exit="hideOverlay" :refresh="refreshGame"/>
       </template>
       <template v-if="overlayAction ==='Edit assignment'">
-        <EditAssignment :exit="hideOverlay" :refresh="refreshGame" :categories="categories" :assignment="modalItem"> </EditAssignment>
+        <EditAssignment :exit="hideOverlay" :refresh="refreshGame" :categories="categories"
+                        :assignment="modalItem"></EditAssignment>
       </template>
       <template v-if="overlayAction ==='Create task'">
         <CreateTask :exit="hideOverlay" :refresh="refreshGame" :categories="categories" :assignment="modalItem"/>
       </template>
       <template v-if="overlayAction ==='Edit task'">
-        <EditTask :exit="hideOverlay" :refresh="refreshGame" :categories="categories" :assignment="modalItem.parent" :task="modalItem"/>
+        <EditTask :exit="hideOverlay" :refresh="refreshGame" :categories="categories" :assignment="modalItem.parent"
+                  :task="modalItem"/>
       </template>
       <template v-if="overlayAction ==='Delete task'">
         <DeleteTask :exit="hideOverlay" :refresh="refreshGame" :task="modalItem"/>
@@ -118,6 +120,7 @@ import FileEditor from "@/components/gameComponents/FileEditor";
 import DeleteTask from "@/components/gameComponents/DeleteTask";
 import DeleteFile from "@/components/gameComponents/DeleteFile";
 import CreateFile from "@/components/gameComponents/CreateFile";
+
 export default {
   components: {
     CreateFile,
@@ -246,6 +249,7 @@ export default {
   position: sticky;
   top: 15px;
 }
+
 .editorWrapper {
   height: 75vh;
   overflow-y: hidden;

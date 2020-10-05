@@ -1,32 +1,32 @@
 <template>
   <v-container>
     <h1>Group {{ $route.params.group_id }}</h1>
-    <v-data-table
-        :headers="headers"
-        :items="desserts"
-        :single-expand="singleExpand"
-        :expanded.sync="expanded"
-        item-key="name"
-        show-expand
-        class="elevation-1"
-    >
-      <template v-slot:top>
-        <v-toolbar flat>
-          <v-toolbar-title>Group {{ $route.params.group_id }}</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-switch v-model="singleExpand" label="Single expand" class="mt-2"></v-switch>
-        </v-toolbar>
-      </template>
-      <template v-slot:expanded-item="{ headers, item }">
-        <td :colspan="headers.length">More info about {{ item.name }}</td>
-      </template>
-    </v-data-table>
+<!--    <v-data-table-->
+<!--        :headers="headers"-->
+<!--        :items="desserts"-->
+<!--        :single-expand="singleExpand"-->
+<!--        :expanded.sync="expanded"-->
+<!--        item-key="name"-->
+<!--        show-expand-->
+<!--        class="elevation-1"-->
+<!--    >-->
+<!--      <template v-slot:top>-->
+<!--        <v-toolbar flat>-->
+<!--          <v-toolbar-title>Group {{ $route.params.group_id }}</v-toolbar-title>-->
+<!--          <v-spacer></v-spacer>-->
+<!--          <v-switch v-model="singleExpand" label="Single expand" class="mt-2"></v-switch>-->
+<!--        </v-toolbar>-->
+<!--      </template>-->
+<!--      <template v-slot:expanded-item="{ headers, item }">-->
+<!--        <td :colspan="headers.length">More info about {{ item.name }}</td>-->
+<!--      </template>-->
+<!--    </v-data-table>-->
   </v-container>
 </template>
 
 <script>
   export default {
-    computed: {
+    data() {return {
         expanded: [],
         singleExpand: false,
         headers: [
@@ -125,7 +125,7 @@
             iron: '6%',
           },
         ]
-    }
+    };}
   };
 </script>
 

@@ -3,14 +3,8 @@ import VueRouter from "vue-router";
 
 import NotFound from "../views/NotFound";
 import Dashboard from "../views/Dashboard";
-import About from "../views/About";
 import Login from "../views/Login";
-import Courses from "../views/Courses";
-import Course from "../views/Course";
-import Statistics from "../views/Statistics";
-import Group from "../views/Group";
 import store from "../store/index";
-import Assignment from "@/views/Assignment";
 
 Vue.use(VueRouter);
 const routes = [
@@ -27,7 +21,7 @@ const routes = [
   {
     path: "/about",
     name: "About",
-    component: About
+    component: () => import("@/views/About")
   },
   {
     path: "/login",
@@ -37,27 +31,27 @@ const routes = [
   {
     path: "/courses",
     name: "Courses",
-    component: Courses
+    component: () => import("@/views/Courses")
   },
   {
     path: "/courses/:course_id",
     name: "Course",
-    component: Course
+    component: () => import("@/views/Course")
   },
   {
     path: "/courses/:course_id/groups/:group_id",
     name: "Group",
-    component: Group
+    component: () => import("@/views/Group")
   },
   {
     path: "/assignments/:course_id",
     name: "Assignments",
-    component: Assignment
+    component: () => import("@/views/Assignment")
   },
   {
     path: "/statistics",
     name: "Statistics",
-    component: Statistics
+    component: () => import("@/views/Statistics")
   },
   {
     path: "*",
@@ -74,7 +68,6 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.name !== "Login" && !store.getters.isAuthenticated) {
-    console.log("before " + to.fullPath);
     next(Login);
   } else next();
 });

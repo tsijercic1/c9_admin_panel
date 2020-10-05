@@ -1,16 +1,16 @@
 <template>
   <v-card class="pa-5 px-8" dark>
     <h3 class="text-center mb-3">Edit assignment</h3>
-    <form>
-      <v-text-field label="Name" v-model="name" required></v-text-field>
-      <v-text-field label="Points" v-model="points"></v-text-field>
-      <v-text-field label="Challenge points" v-model="challengePoints"></v-text-field>
+    <v-form v-model="valid">
+      <v-text-field label="Name" v-model="name" required :rules="[notEmpty]"></v-text-field>
+      <v-text-field label="Points" v-model="points" :rules="[nonNegative,notEmpty]"></v-text-field>
+      <v-text-field label="Challenge points" v-model="challengePoints" :rules="[nonNegative,notEmpty]"></v-text-field>
       <v-checkbox label="Active" v-model="active"></v-checkbox>
       <div class="d-flex justify-space-between mt-5">
         <v-btn @click="exit" :disabled="isProcessing">Cancel</v-btn>
         <v-btn @click="submit" :disabled="isProcessing">Update</v-btn>
       </div>
-    </form>
+    </v-form>
   </v-card>
 </template>
 
@@ -34,7 +34,7 @@ name: "EditAssignment",
           'This field cannot be empty',
       noSpaces: v => (v || '').indexOf(' ') < 0 ||
           'No spaces are allowed',
-      positive: v => (v || -1) > 0 ||
+      nonNegative: v => (v || -1) >= 0 ||
           'Number must not be negative'
     };
   },
