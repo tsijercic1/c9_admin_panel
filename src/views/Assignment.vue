@@ -58,52 +58,10 @@
             </template>
           </v-treeview>
         </v-col>
-        <v-col md="9" class="sidebar-container">
-          <div class="sticky">
-            <v-card class="inner-tile"
-                    v-if='editorType === "none"'
-                    tile
-            >
-              <v-card-title>Select a file or an assignment/task</v-card-title>
-            </v-card>
-            <v-card class="inner-tile"
-                    v-else-if='editorType.type === "html"'
-                    tile
-            >
-              <v-card-title>
-                <span class="headline">{{ this.active[0].name }}</span>
-                <v-spacer/>
-                <v-btn @click="saveFile()">Save</v-btn>
-              </v-card-title>
-              <div class="editorWrapper">
-                <editor
-                    ref="toaster"
-                    :initialValue="editorText"
-                    :options="editorOptions"
-                    height="100%"
-                ></editor>
-              </div>
-            </v-card>
-            <v-card class="inner-tile"
-                    v-else-if='rawEditorFileExtensions.includes(editorType.type)'
-                    tile
-            >
-              <v-card-title>
-                <span class="headline">{{ this.active[0].name }}</span>
-                <v-spacer/>
-                <v-btn @click="saveFile()">Save</v-btn>
-              </v-card-title>
-              <div class="editorWrapper">
-                <codemirror
-                    ref="mirror"
-                    v-model="editorText"
-                    :options="cmOptions"
-                    id="codemirror"
-                />
-              </div>
-            </v-card>
-
-          </div>
+        <v-col cols="9">
+          <v-card class="sticky" tile elevation="2">
+            <FileEditor ref="fileEditor" :course="course" class="editorWrapper"/>
+          </v-card>
         </v-col>
       </v-row>
     </v-container>
@@ -116,23 +74,20 @@ import "@/assets/styles/codemirror.css";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 
-import {Editor} from "@toast-ui/vue-editor";
 import "codemirror/mode/clike/clike";
 import "codemirror/mode/javascript/javascript";
 import "codemirror/theme/idea.css";
 import "codemirror/theme/darcula.css";
 import "codemirror/theme/ayu-mirage.css";
-import {codemirror} from "vue-codemirror";
 import "codemirror/addon/edit/closebrackets";
 import {mapGetters} from "vuex";
 import VueContext from 'vue-context';
 import 'vue-context/src/sass/vue-context.scss'; // Alternatively import into a stylesheet instead
-
+import FileEditor from "@/components/assignmentComponents/FileEditor";
 export default {
   components: {
-    editor: Editor,
-    codemirror,
-    VueContext
+    VueContext,
+    FileEditor
   },
   mounted() {
   },
@@ -177,6 +132,10 @@ export default {
     ...mapGetters(["courseById", "assignmentsForCourse"]),
     activeSelections() {
       return this.active;
+    },
+    course() {
+      const courseId = this.$route.params.course_id;
+      return this.courseById(courseId);
     },
     assignments() {
       const courseId = this.$route.params.course_id;
@@ -254,38 +213,39 @@ export default {
         const courseId = this.$route.params.course_id;
         const course = this.courseById(courseId);
         console.log(course);
-        let response = await fetch(`/services/assignments.php?action=getFileContent&course_id=${course.id}${course.external ? "&X" : ""}&year=${course.year}`, {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          method: 'POST',
-          body: JSON.stringify({path: item.path})
-        });
-        response = await response.json();
-        if (response.success) {
-          let content = response.data.content;
-          if (this.$refs.mirror) {
-            console.log(this.$refs.mirror);
-            let tooth = this.$refs.mirror;
-            if (tooth.$refs.textarea) {
-
-              tooth.$refs.textarea.rows = 60;
-            }
-            try {
-              if (["autotest", "autotest2", "json", "zadaca"].includes(this.extensionRegex.exec(item.name)[1])) {
-                content = await JSON.stringify(await JSON.parse(content), null, 4);
-                // content = content.normalize();
-              } else {
-                console.log("Nije json!");
-              }
-            } catch (e) {
-              console.log("Nije validan json!");
-            }
-          } else if (this.$refs.toaster) {
-            this.$refs.toaster.invoke("setHtml", content);
-          }
-          this.editorText = content;
-        }
+        this.$refs.fileEditor.refresh(item);
+        // let response = await fetch(`/services/assignments.php?action=getFileContent&course_id=${course.id}${course.external ? "&X" : ""}&year=${course.year}`, {
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   },
+        //   method: 'POST',
+        //   body: JSON.stringify({path: item.path})
+        // });
+        // response = await response.json();
+        // if (response.success) {
+        //   let content = response.data.content;
+        //   if (this.$refs.mirror) {
+        //     console.log(this.$refs.mirror);
+        //     let tooth = this.$refs.mirror;
+        //     if (tooth.$refs.textarea) {
+        //
+        //       tooth.$refs.textarea.rows = 60;
+        //     }
+        //     try {
+        //       if (["autotest", "autotest2", "json", "zadaca"].includes(this.extensionRegex.exec(item.name)[1])) {
+        //         content = await JSON.stringify(await JSON.parse(content), null, 4);
+        //         // content = content.normalize();
+        //       } else {
+        //         console.log("Nije json!");
+        //       }
+        //     } catch (e) {
+        //       console.log("Nije validan json!");
+        //     }
+        //   } else if (this.$refs.toaster) {
+        //     this.$refs.toaster.invoke("setHtml", content);
+        //   }
+        //   this.editorText = content;
+        // }
         console.log('FILE: ' + item.name);
       } else {
         this.editorText = "";
