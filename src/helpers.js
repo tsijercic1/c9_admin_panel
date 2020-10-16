@@ -5,11 +5,13 @@ export default {
       counter.value = counter.value + 1;
       if (this.hasKey(node, "children")) {
         for (let child of node.children) {
+          child.parent = node;
           this.recursiveIdAddition(child, counter);
         }
       }
     } else if (this.hasKey(node, "children")) {
       for (let child of node.children) {
+        child.parent = node;
         this.recursiveIdAddition(child, counter);
       }
     }

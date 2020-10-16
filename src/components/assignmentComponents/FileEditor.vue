@@ -145,10 +145,14 @@ name: "FileEditor",
       });
     },
     async refresh(file) {
+      this.file = file;
       if (this.$refs.toaster) {
         this.$refs.toaster.invoke("height", "75vh");
+        this.$refs.toaster.invoke("setHtml","");
       }
-      this.file = file;
+      this.fileContent = "";
+      console.log(file);
+
       if (this.file && this.file.parent) {
         let body = await assignmentService.getFileContent(this.course,{path: this.file.path})
         if (!body.success) {
@@ -159,8 +163,8 @@ name: "FileEditor",
         } else if (this.$refs.mirror) {
           this.fileContent = body.data.content;
         }
-        this.binary = this.file.data.binary;
-        this.show = this.file.data.show;
+        this.binary = this.file.binary;
+        this.show = this.file.show;
       }
       if(["autotest", "zadaca", "json", "autotest2"].includes(this.extensionRegex.exec(file.name)[1])) {
         this.cmOptions.mode = this.modes.json;

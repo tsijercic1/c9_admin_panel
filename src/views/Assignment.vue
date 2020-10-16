@@ -213,7 +213,7 @@ export default {
         const courseId = this.$route.params.course_id;
         const course = this.courseById(courseId);
         console.log(course);
-        this.$refs.fileEditor.refresh(item);
+        await this.$refs.fileEditor.refresh(item);
         // let response = await fetch(`/services/assignments.php?action=getFileContent&course_id=${course.id}${course.external ? "&X" : ""}&year=${course.year}`, {
         //   headers: {
         //     'Content-Type': 'application/json'
