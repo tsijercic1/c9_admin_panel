@@ -62,7 +62,7 @@ export default {
     }
     return body;
   },
-  async editAssignment({id, external, year, name: courseName}, {path, name, displayName, type, hidden, homeworkId}, notify) {
+  async editAssignment({id, external, year, name: courseName}, {path, displayName, type, hidden, homeworkId}, notify) {
     const url = `/services/assignments.php?action=editAssignment&course_id=${id}${external ? "&X" : ""}&year=${year}`;
     const response = await fetch(url, {
       method: "post",
@@ -110,7 +110,7 @@ export default {
     }
     return body;
   },
-  async getFileContent({id, name: courseName, external, year}, {path}, notify) {
+  async getFileContent({id, external, year}, {path}, notify) {
     const url = `/services/assignments.php?action=getFileContent&course_id=${id}${external ? "&X" : ""}&year=${year}`;
     const response = await fetch(url, {
       method: "post",
@@ -132,7 +132,7 @@ export default {
     }
     return body;
   },
-  async createFile({id, name: courseName, external, year}, {folderPath, name, show, binary, content}, notify) {
+  async createFile({id, external, year}, {folderPath, name, show, binary, content}, notify) {
     const url = `/services/assignments.php?action=getFileContent&course_id=${id}${external ? "&X" : ""}&year=${year}`;
     const response = await fetch(url, {
       method: "post",
@@ -152,14 +152,15 @@ export default {
       notify({
         type: "bad",
         group: "main",
-        title: `Creating file ${path}`,
+        title: `Creating file ${folderPath+'/'+name}`,
         text: `${body.message || 'An error has occurred.'}`
       });
     }
     return body;
   },
-  async editFile({id, name: courseName, external, year}, {path, content, show, binary}, notify) {
+  async editFile({id, external, year}, {path, content, show, binary}, notify) {
     const url = `/services/assignments.php?action=editFile&course_id=${id}${external ? "&X" : ""}&year=${year}`;
+    console.log(content);
     const response = await fetch(url, {
       method: "post",
       headers: {
@@ -183,7 +184,7 @@ export default {
     }
     return body;
   },
-  async deleteFile({id, name: courseName, external, year}, {path}, notify) {
+  async deleteFile({id, external, year}, {path}, notify) {
     const url = `/services/assignments.php?action=deleteFile&course_id=${id}${external ? "&X" : ""}&year=${year}`;
     const response = await fetch(url, {
       method: "post",

@@ -124,9 +124,9 @@ name: "FileEditor",
       if (this.$refs.toaster) {
         content = this.$refs.toaster.invoke("getHtml");
       } else if (this.$refs.mirror) {
-        content = this.file.content;
+        content = this.fileContent;
       }
-      let body = await assignmentService.editFile(this.course, {path: this.file.path,content,show: this.show, binary: this.binary})
+      let body = await assignmentService.editFile(this.course, {path: this.file.path,content: content,show: this.show, binary: this.binary})
       this.isSaving = false;
       if (!body.success) {
         this.$notify({

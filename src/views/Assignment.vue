@@ -1,33 +1,51 @@
 <template>
   <v-container>
+    <v-overlay :value="overlay">
+<!--      <template v-if="overlayAction ==='Create assignment'">-->
+<!--        <CreateAssignment :exit="hideOverlay" :refresh="refreshAssignments" :path="'/'" :course="course"/>-->
+<!--      </template>-->
+<!--      <template v-if="overlayAction ==='Edit assignment'">-->
+<!--        <EditAssignment :exit="hideOverlay" :refresh="refreshAssignments" :categories="categories"-->
+<!--                        :assignment="modalItem"></EditAssignment>-->
+<!--      </template>-->
+<!--      <template v-if="overlayAction ==='Delete task'">-->
+<!--        <DeleteTask :exit="hideOverlay" :refresh="refreshAssignments" :task="modalItem"/>-->
+<!--      </template>-->
+<!--      <template v-if="overlayAction ==='Create file'">-->
+<!--        <CreateFile :exit="hideOverlay" :refresh="refreshAssignments" :task="modalItem"/>-->
+<!--      </template>-->
+<!--      <template v-if="overlayAction ==='Delete file'">-->
+<!--        <DeleteFile :exit="hideOverlay" :refresh="refreshAssignments" :file="modalItem" :task="modalItem.parent"/>-->
+<!--      </template>-->
+    </v-overlay>
     <h1>Assignments</h1>
     <div>
       <vue-context ref="menu" v-slot="{ data }">
         <template v-if="data!==null && data!==undefined">
-                  <li>
-                    <a v-if="assignmentEligible(data)" @click.prevent="onClick('Add assignment', data)">
-                      Add assignment
-                    </a>
-                    <a v-if="fileEligible(data)" @click.prevent="onClick('Add file', data)">
-                      Add file
-                    </a>
-                  </li>
-                  <li>
-                    <a v-if="data.isDirectory" @click.prevent="onClick('Edit assignment', data)">
-                      Edit assignment
-                    </a>
-                    <a v-else @click.prevent="onClick('Edit file', data)">
-                      Edit file
-                    </a>
-                  </li>
-                  <li>
-                    <a v-if="data.isDirectory" @click.prevent="onClick('Delete assignment', data)">
-                      Delete assignment
-                    </a>
-                    <a v-else @click.prevent="onClick('Delete file', data)">
-                      Delete file
-                    </a>
-                  </li>
+          <li>
+            <a v-if="assignmentEligible(data)" @click.prevent="onClick('Add assignment', data)">
+              Add assignment
+            </a>
+            <a v-if="fileEligible(data)" @click.prevent="onClick('Add file', data)">
+              Add file
+            </a>
+          </li>
+          <li>
+            <a v-if="data.isDirectory" @click.prevent="onClick('Edit assignment', data)">
+              Edit assignment
+            </a>
+            <a v-else @click.prevent="onClick('Edit file', data)">
+              Edit file
+            </a>
+          </li>
+          <li>
+            <a v-if="data.isDirectory" @click.prevent="onClick('Delete assignment', data)">
+              Delete assignment
+            </a>
+            <a v-else @click.prevent="onClick('Delete file', data)">
+              Delete file
+            </a>
+          </li>
         </template>
       </vue-context>
     </div>
@@ -47,13 +65,13 @@
               <v-icon v-if='item.isDirectory' @contextmenu.prevent="$refs.menu.open($event, item )">
                 {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
               </v-icon>
-              <v-icon v-else @contextmenu.prevent="$refs.menu.open($event, item )" >
+              <v-icon v-else @contextmenu.prevent="$refs.menu.open($event, item )">
                 {{ fileTypes[extensionRegex.exec(item.name)[1]] }}
               </v-icon>
             </template>
             <template v-slot:label="{item}">
               <v-list-item-title @contextmenu.prevent="$refs.menu.open($event, item )">
-                {{item.name}}
+                {{ item.name }}
               </v-list-item-title>
             </template>
           </v-treeview>
@@ -84,6 +102,7 @@ import {mapGetters} from "vuex";
 import VueContext from 'vue-context';
 import 'vue-context/src/sass/vue-context.scss'; // Alternatively import into a stylesheet instead
 import FileEditor from "@/components/assignmentComponents/FileEditor";
+
 export default {
   components: {
     VueContext,
@@ -93,6 +112,8 @@ export default {
   },
   data() {
     return {
+      overlay: false,
+      overlayAction: "",
       extensionRegex: /(?:\.([^.]+))?$/,
       fileTypes: {
         html: 'mdi-language-html5',
@@ -166,6 +187,12 @@ export default {
     }
   },
   methods: {
+    hideOverlay() {
+      this.overlay = false;
+    },
+    refreshAssignments() {
+      this.$store.dispatch("refreshAssignments");
+    },
     assignmentEligible(item) {
       let result = true;
       if (!item.isDirectory) {
@@ -174,8 +201,9 @@ export default {
       if (item.children) {
         item.children.forEach(child => {
           if (!child.isDirectory) {
-            result=false;
-          }});
+            result = false;
+          }
+        });
       }
       return result;
     },
@@ -187,8 +215,9 @@ export default {
       if (item.children) {
         item.children.forEach(child => {
           if (child.isDirectory) {
-            result=false;
-          }});
+            result = false;
+          }
+        });
       }
       return result;
     },
@@ -196,12 +225,6 @@ export default {
       alert(`You clicked "${text}"!`);
       console.log(data);
       // => { foo: 'bar' }
-    },
-    treeAction(element) {
-      console.log(element);
-    },
-    saveFile() {
-      console.log(this.editorText);
     },
     activeChanged(active) {
       if (active.length !== 0) {
@@ -214,38 +237,6 @@ export default {
         const course = this.courseById(courseId);
         console.log(course);
         await this.$refs.fileEditor.refresh(item);
-        // let response = await fetch(`/services/assignments.php?action=getFileContent&course_id=${course.id}${course.external ? "&X" : ""}&year=${course.year}`, {
-        //   headers: {
-        //     'Content-Type': 'application/json'
-        //   },
-        //   method: 'POST',
-        //   body: JSON.stringify({path: item.path})
-        // });
-        // response = await response.json();
-        // if (response.success) {
-        //   let content = response.data.content;
-        //   if (this.$refs.mirror) {
-        //     console.log(this.$refs.mirror);
-        //     let tooth = this.$refs.mirror;
-        //     if (tooth.$refs.textarea) {
-        //
-        //       tooth.$refs.textarea.rows = 60;
-        //     }
-        //     try {
-        //       if (["autotest", "autotest2", "json", "zadaca"].includes(this.extensionRegex.exec(item.name)[1])) {
-        //         content = await JSON.stringify(await JSON.parse(content), null, 4);
-        //         // content = content.normalize();
-        //       } else {
-        //         console.log("Nije json!");
-        //       }
-        //     } catch (e) {
-        //       console.log("Nije validan json!");
-        //     }
-        //   } else if (this.$refs.toaster) {
-        //     this.$refs.toaster.invoke("setHtml", content);
-        //   }
-        //   this.editorText = content;
-        // }
         console.log('FILE: ' + item.name);
       } else {
         this.editorText = "";

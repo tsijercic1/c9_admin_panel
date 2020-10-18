@@ -1,5 +1,16 @@
 <template>
   <div style="height: 100%">
+    <v-overlay :value="showOverlay">
+      <v-progress-circular v-if="loading"
+                           :size="180"
+                           :width="7"
+                           color="purple"
+                           indeterminate
+      ></v-progress-circular>
+      <v-btn @click="closeGenerator">Close</v-btn>
+      <v-card ref="autotestGeneratorRef" id="autotestGeneratorId" height="80vh" width="80vw">
+      </v-card>
+    </v-overlay>
     <v-card class="inner-tile" v-if="editable.type === 'none'" tile>
       <v-card-title>Select a file</v-card-title>
     </v-card>
@@ -25,6 +36,8 @@
         <v-spacer/>
         <v-checkbox label="Show" v-model="show"></v-checkbox>
         <v-spacer/>
+        <v-btn v-if="editable.type==='autotest2'" @click="openGenerator">Open generator</v-btn>
+        <v-spacer/>
         <v-btn @click="save()" :disabled="isSaving">Save</v-btn>
       </v-card-title>
       <div>
@@ -40,6 +53,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import "@/assets/styles/codemirror.css";
 
 import "codemirror/mode/clike/clike";
@@ -52,6 +66,8 @@ import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 
 import {Editor} from "@toast-ui/vue-editor";
 
+import GeneratorFrame from "@/components/GeneratorFrame";
+
 export default {
   name: "FileEditor",
   props: {
@@ -63,6 +79,8 @@ export default {
   },
   data() {
     return {
+      loading: false,
+      showOverlay: false,
       binary: false,
       show: true,
       fileContent: "",
@@ -116,13 +134,95 @@ export default {
     }
   },
   methods: {
+    openGenerator() {
+      if (this.editable.type === "autotest2") {
+        let config = this.fileContent;
+        if (this.file && this.file.parent && this.file.parent.parent) {
+          if (config === "") {
+            config = {
+              id: this.file.parent.scrapedId,
+              name: "Game, " + this.file.parent.parent.name + ", " + this.file.parent.name,
+              languages: [],
+              tools: {},
+              tests: []
+            };
+            config = JSON.stringify(config);
+          }
+        }
+        const saveFunction = async (content) => {
+          let response = await fetch(`/services/uup_game.php?action=editTaskFile&taskId=${this.file.parent.scrapedId}`, {
+            method: "put",
+            headers: {
+              Accept: "application/json"
+            },
+            body: JSON.stringify({name: this.file.name, content: content})
+          });
+          let body = await response.json();
+          this.isSaving = false;
+          if (!body.success) {
+            this.$notify({
+              type: "bad",
+              group: "main",
+              title: "Save file",
+              text: `${body.message || 'An error has occurred.'}`
+            });
+          } else {
+            this.$notify({
+              type: "good",
+              group: "main",
+              title: "Save file",
+              text: `Autotests updated`
+            });
+            let result = JSON.parse(content);
+            result = JSON.stringify(result, null, 4);
+            this.fileContent = result;
+          }
+          this.showOverlay = false;
+          const parent = document.getElementById("autotestGeneratorId");
+          const children = parent.childNodes;
+          for (let child of children) {
+            parent.removeChild(child);
+          }
+        };
+        const FrameClass = Vue.extend(GeneratorFrame);
+        let frame = new FrameClass({
+          propsData: {
+            save: saveFunction,
+            config: config
+          }
+        });
+        frame.$mount();
+        this.showOverlay = true;
+        this.loading = true;
+        this.insertGenerator(frame.$el);
+      }
+    },
+    insertGenerator(element) {
+      const ref = this.$refs.autotestGeneratorRef;
+      if (ref === undefined) {
+        setTimeout(() => {
+          this.insertGenerator(element)
+        }, 1);
+      } else {
+        ref.$el.appendChild(element);
+        this.loading = false;
+      }
+    },
+    closeGenerator() {
+      this.showOverlay = false;
+      const parent = document.getElementById("autotestGeneratorId");
+      const children = parent.childNodes;
+      for (let child of children) {
+        parent.removeChild(child);
+      }
+    },
     async save() {
       this.isSaving = true;
       let content = "";
       if (this.$refs.toaster) {
         content = this.$refs.toaster.invoke("getHtml");
       } else if (this.$refs.mirror) {
-        content = this.file.content;
+        content = this.fileContent;
       }
       let response = await fetch(`/services/uup_game.php?action=editTaskFile&taskId=${this.file.parent.scrapedId}`, {
         method: "put",
@@ -173,8 +273,9 @@ export default {
         this.binary = this.file.data.binary;
         this.show = this.file.data.show;
       }
-      if(["autotest", "zadaca", "json", "autotest2"].includes(this.extensionRegex.exec(file.name)[1])) {
+      if (["autotest", "zadaca", "json", "autotest2"].includes(this.extensionRegex.exec(file.name)[1])) {
         this.cmOptions.mode = this.modes.json;
+        this.fileContent = JSON.stringify(JSON.parse(this.fileContent), null, 4);
       } else if (["c"].includes(this.extensionRegex.exec(file.name)[1])) {
         this.cmOptions.mode = this.modes.c;
       } else if (["cpp"].includes(this.extensionRegex.exec(file.name)[1])) {

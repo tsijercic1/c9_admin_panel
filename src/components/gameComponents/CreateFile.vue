@@ -1,7 +1,7 @@
 <template>
-  <v-card>
+  <v-card class="pa-5 px-8" dark>
     <v-card-title>Create file</v-card-title>
-    <v-form>
+    <v-form v-model="valid">
       <v-text-field label="Name" v-model="name" :rules="[notEmpty]"></v-text-field>
       <v-checkbox label="Show" v-model="show"></v-checkbox>
       <v-checkbox label="Binary" v-model="binary"></v-checkbox>
@@ -43,7 +43,8 @@ export default {
           body: JSON.stringify({
             name: this.name,
             show: this.show,
-            binary: this.binary
+            binary: this.binary,
+            content: ""
           })
         });
         let body = await response.json();

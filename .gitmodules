@@ -1,0 +1,4 @@
+[submodule "public/assets/autotestGenerator"]
+	path = public/assets/autotestGenerator
+	url = https://github.com/mmesihovic/autotest-genv2
+	branch = v2-admin-panel
