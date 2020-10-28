@@ -48,7 +48,7 @@ name: "EditAssignment",
     async submit() {
       if(this.valid) {
         this.isProcessing = true;
-        let response = await fetch(`/services/uup_game.php?action=editAssignment?assignmentId=${this.assignment.scrapedId}`, {
+        let response = await fetch(`/services/uup_game.php?action=editAssignment&assignmentId=${this.assignment.scrapedId}`, {
           method: "post",
           headers: {
             Accept: "application/json"

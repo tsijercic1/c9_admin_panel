@@ -6,10 +6,13 @@
                            :width="7"
                            color="purple"
                            indeterminate
+                           class="position-absolute"
       ></v-progress-circular>
-      <v-btn @click="closeGenerator">Close</v-btn>
-      <v-card ref="autotestGeneratorRef" id="autotestGeneratorId" height="80vh" width="80vw">
-      </v-card>
+      <span :style="{ display: (loading?'none':'initial')}">
+        <v-btn @click="closeGenerator">Close</v-btn>
+        <v-card ref="autotestGeneratorRef" id="autotestGeneratorId" height="80vh" width="80vw">
+        </v-card>
+      </span>
     </v-overlay>
     <v-card class="inner-tile" v-if="editable.type === 'none'" tile>
       <v-card-title>Select a file</v-card-title>
@@ -104,7 +107,8 @@ export default {
         lineNumbers: true,
         line: true,
         autoCloseBrackets: true,
-        viewportMargin: Infinity
+        viewportMargin: Infinity,
+        scrollStyle: 'null'
       },
       rawEditorFileExtensions: [
         "c",
@@ -202,7 +206,7 @@ export default {
       if (ref === undefined) {
         setTimeout(() => {
           this.insertGenerator(element)
-        }, 1);
+        }, 1000);
       } else {
         ref.$el.appendChild(element);
         this.loading = false;
@@ -250,6 +254,11 @@ export default {
       });
     },
     async refresh(file) {
+      if (file === undefined) {
+        this.editable = {
+          type: 'none'
+        };
+      }
       if (this.$refs.toaster) {
         this.$refs.toaster.invoke("height", "75vh");
       }
@@ -272,20 +281,21 @@ export default {
         }
         this.binary = this.file.data.binary;
         this.show = this.file.data.show;
-      }
-      if (["autotest", "zadaca", "json", "autotest2"].includes(this.extensionRegex.exec(file.name)[1])) {
-        this.cmOptions.mode = this.modes.json;
-        this.fileContent = JSON.stringify(JSON.parse(this.fileContent), null, 4);
-      } else if (["c"].includes(this.extensionRegex.exec(file.name)[1])) {
-        this.cmOptions.mode = this.modes.c;
-      } else if (["cpp"].includes(this.extensionRegex.exec(file.name)[1])) {
-        this.cmOptions.mode = this.modes.cpp;
-      } else if (["java"].includes(this.extensionRegex.exec(file.name)[1])) {
-        this.cmOptions.mode = this.modes.java;
-      } else if (["js"].includes(this.extensionRegex.exec(file.name)[1])) {
-        this.cmOptions.mode = this.modes.javascript;
-      } else if (["ts"].includes(this.extensionRegex.exec(file.name)[1])) {
-        this.cmOptions.mode = this.modes.typescript;
+
+        if (["autotest", "zadaca", "json", "autotest2"].includes(this.extensionRegex.exec(file.name)[1])) {
+          this.cmOptions.mode = this.modes.json;
+          this.fileContent = JSON.stringify(JSON.parse(this.fileContent), null, 4);
+        } else if (["c"].includes(this.extensionRegex.exec(file.name)[1])) {
+          this.cmOptions.mode = this.modes.c;
+        } else if (["cpp"].includes(this.extensionRegex.exec(file.name)[1])) {
+          this.cmOptions.mode = this.modes.cpp;
+        } else if (["java"].includes(this.extensionRegex.exec(file.name)[1])) {
+          this.cmOptions.mode = this.modes.java;
+        } else if (["js"].includes(this.extensionRegex.exec(file.name)[1])) {
+          this.cmOptions.mode = this.modes.javascript;
+        } else if (["ts"].includes(this.extensionRegex.exec(file.name)[1])) {
+          this.cmOptions.mode = this.modes.typescript;
+        }
       }
     }
   }

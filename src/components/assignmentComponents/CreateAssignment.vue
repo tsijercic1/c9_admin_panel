@@ -10,15 +10,6 @@
           :rules="[notEmpty,noSpaces]"
       ></v-text-field>
       <v-checkbox label="Hidden" v-model="hidden"></v-checkbox>
-      <v-combobox
-          v-model="selectedType"
-          label="Type"
-          clearable
-          hide-selected
-          solo
-          return-object
-          :items="types"
-      ></v-combobox>
       <v-text-field v-if="selectedType!==undefined&&selectedType==='homework'" label="Homework ID" v-model="homeworkId"></v-text-field>
       <div class="d-flex justify-space-between mt-5">
         <v-btn @click="exit" :disabled="isProcessing">Cancel</v-btn>
@@ -29,11 +20,12 @@
 </template>
 
 <script>
-import {assignmentService} from "@/services";
+// import {assignmentService} from "@/services";
 
 export default {
   name: "CreateAssignment",
   props: {
+    path: typeof "",
     course: Object,
     refresh: Function,
     exit: Function
@@ -42,14 +34,11 @@ export default {
     return {
       homeworkId: undefined,
       hidden: false,
-      selectedType: undefined,
+      selectedType: "tutorial",
       types: ["tutorial", "homework", "independent", "exam", "folder"],
       isProcessing: false,
       name: "",
       displayName: "",
-      active: true,
-      points: 0,
-      challengePoints: 0,
       valid: false,
       notEmpty: v => (v || '').length > 0 ||
           'This field cannot be empty',
@@ -61,37 +50,42 @@ export default {
   },
   methods: {
     async create() {
-      if (this.valid) {
-        this.isProcessing = true;
-        console.log(this.path);
-        console.log(this.course);
-        const body = await assignmentService.createAssignment(this.course,{
-          path: "",
-          name: "",
-          displayName: "",
-          type: "",
-          hidden: false,
-          homeworkId: undefined
-        });
-        this.isProcessing = false;
-        if (!body.success) {
-          this.$notify({
-            type: "bad",
-            group: "main",
-            title: "Create assignment",
-            text: `${body.message || 'An error has occurred.'}`
-          });
-          return false;
-        }
-        this.refresh();
-        this.exit();
-        this.$notify({
-          type: "good",
-          group: "main",
-          title: "Create assignment",
-          text: `Assignment ${this.displayName} created.`
-        });
-      }
+      console.log(this.selectedType);
+      console.log(this.name);
+      console.log(this.displayName);
+      console.log(this.homeworkId);
+      console.log(this.hidden);
+      // if (!this.valid) {
+      //   this.isProcessing = true;
+      //   console.log(this.path);
+      //   console.log(this.course);
+      //   const body = await assignmentService.createAssignment(this.course,{
+      //     path: "",
+      //     name: "",
+      //     displayName: "",
+      //     type: "",
+      //     hidden: false,
+      //     homeworkId: undefined
+      //   });
+      //   this.isProcessing = false;
+      //   if (!body.success) {
+      //     this.$notify({
+      //       type: "bad",
+      //       group: "main",
+      //       title: "Create assignment",
+      //       text: `${body.message || 'An error has occurred.'}`
+      //     });
+      //     return false;
+      //   }
+      //   this.refresh();
+      //   this.exit();
+      //   this.$notify({
+      //     type: "good",
+      //     group: "main",
+      //     title: "Create assignment",
+      //     text: `Assignment ${this.displayName} created.`
+      //   });
+      // }
     }
   }
 };

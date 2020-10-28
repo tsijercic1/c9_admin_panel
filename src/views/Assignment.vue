@@ -1,6 +1,9 @@
 <template>
   <v-container>
-    <v-overlay :value="overlay">
+    <v-overlay :value="showOverlay">
+      <v-card ref="overlayChildRef" id="overlayChildId">
+
+      </v-card>
 <!--      <template v-if="overlayAction ==='Create assignment'">-->
 <!--        <CreateAssignment :exit="hideOverlay" :refresh="refreshAssignments" :path="'/'" :course="course"/>-->
 <!--      </template>-->
@@ -23,11 +26,11 @@
       <vue-context ref="menu" v-slot="{ data }">
         <template v-if="data!==null && data!==undefined">
           <li>
-            <a v-if="assignmentEligible(data)" @click.prevent="onClick('Add assignment', data)">
-              Add assignment
+            <a v-if="assignmentEligible(data)" @click.prevent="onClick('Create assignment', data)">
+              Create assignment
             </a>
-            <a v-if="fileEligible(data)" @click.prevent="onClick('Add file', data)">
-              Add file
+            <a v-if="fileEligible(data)" @click.prevent="onClick('Create file', data)">
+              Create file
             </a>
           </li>
           <li>
@@ -102,6 +105,8 @@ import {mapGetters} from "vuex";
 import VueContext from 'vue-context';
 import 'vue-context/src/sass/vue-context.scss'; // Alternatively import into a stylesheet instead
 import FileEditor from "@/components/assignmentComponents/FileEditor";
+// import CreateAssignment from "@/components/assignmentComponents/CreateAssignment";
+// import Vue from 'vue';
 
 export default {
   components: {
@@ -112,7 +117,8 @@ export default {
   },
   data() {
     return {
-      overlay: false,
+      loading: false,
+      showOverlay: false,
       overlayAction: "",
       extensionRegex: /(?:\.([^.]+))?$/,
       fileTypes: {
@@ -188,7 +194,24 @@ export default {
   },
   methods: {
     hideOverlay() {
-      this.overlay = false;
+      this.showOverlay = false;
+      const parent = document.getElementById("overlayChildId");
+      const children = parent.childNodes;
+      for (let child of children) {
+        parent.removeChild(child);
+      }
+    },
+    insertOverlayChild(element) {
+      const ref = this.$refs.overlayChildRef;
+      if (ref === undefined) {
+        setTimeout(() => {
+          this.insertOverlayChild(element)
+        }, 1000);
+      } else {
+        ref.$el.appendChild(element);
+        this.loading = false;
+        this.showOverlay = true;
+      }
     },
     refreshAssignments() {
       this.$store.dispatch("refreshAssignments");
@@ -222,7 +245,14 @@ export default {
       return result;
     },
     onClick(text, data) {
-      alert(`You clicked "${text}"!`);
+      this.loading = true;
+      this.showOverlay = true;
+      const instance = this.prepareInstance(text,data);
+      console.log(instance);
+      if (instance !== undefined) {
+        this.insertOverlayChild(instance.$el);
+      }
+      // alert(`You clicked "${text}"!`);
       console.log(data);
       // => { foo: 'bar' }
     },
@@ -268,6 +298,27 @@ export default {
         return response;
       }
     },
+    prepareInstance(text, data) {
+      if (text === 'Create assignment') {
+        console.log("Pre extending")
+        // const InstanceClass = Vue.extend(CreateAssignment);
+        // const instance = new InstanceClass({
+        //   propsData: {
+        //     path: data.path,
+        //     course: this.course,
+        //     exit: this.hideOverlay,
+        //     refresh: this.refreshAssignments,
+        //   }
+        // });
+        // console.log("Post extending")
+        // instance.$mount();
+        // console.log("Mounted")
+        console.log(data);
+        return undefined;
+      } else {
+        return undefined;
+      }
+    }
   }
 };
 

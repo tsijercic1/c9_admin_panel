@@ -39,8 +39,9 @@ export default {
             title: "Getting assignments",
             text: `${body.message || 'An error has occurred.'}`
           });
+        } else {
+          assignments[Helpers.getFullCourseId(course)] = Helpers.tweakAssignmentTree(body.data);
         }
-        assignments[Helpers.getFullCourseId(course)] = Helpers.tweakAssignmentTree(body.data);
       }
       context.commit("setAssignments", assignments);
     }

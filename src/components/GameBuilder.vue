@@ -180,11 +180,15 @@ export default {
       this.file = undefined;
       if (active.length !== 0) {
         this.treeItemClicked(active[0]);
+      } else {
+        this.$refs.fileEditor.refresh(undefined);
       }
     },
     async treeItemClicked(item) {
       if (!item.isDirectory) {
         this.$refs.fileEditor.refresh(item);
+      } else {
+        this.$refs.fileEditor.refresh(undefined);
       }
     },
     onClick(action, item) {
@@ -223,7 +227,7 @@ export default {
         return false;
       }
       categories = body.data;
-      response = await fetch("/services/uup_game.php?action=getAssignments", {
+      response = await fetch("/services/uup_game.php?action=getAssignments&A", {
         method: "get",
         headers: {
           Accept: "application/json"
