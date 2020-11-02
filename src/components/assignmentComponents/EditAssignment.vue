@@ -1,20 +1,15 @@
 <template>
   <v-card class="pa-5 px-8" dark>
-    <h3 class="text-center mb-3">Create assignment</h3>
+    <h3 class="text-center mb-3">Edit assignment</h3>
     <v-form v-model="valid">
       <v-text-field label="Name" v-model="displayName" required :rules="[notEmpty]"></v-text-field>
-      <v-text-field
-          label="Filesystem name"
-          v-model="name"
-          required
-          :rules="[notEmpty,noSpaces]"
-      ></v-text-field>
       <v-checkbox label="Hidden" v-model="hidden"></v-checkbox>
       <v-select return-object :items="types" v-model="selectedType"/>
-      <v-text-field v-if="selectedType!==undefined&&selectedType==='homework'" label="Homework ID" v-model="homeworkId"></v-text-field>
+      <v-text-field v-if="selectedType!==undefined&&selectedType==='homework'" label="Homework ID"
+                    v-model="homeworkId"></v-text-field>
       <div class="d-flex justify-space-between mt-5">
         <v-btn @click="exit" :disabled="isProcessing">Cancel</v-btn>
-        <v-btn @click="create" :disabled="isProcessing">Create</v-btn>
+        <v-btn @click="update" :disabled="isProcessing">Update</v-btn>
       </div>
     </v-form>
   </v-card>
@@ -24,9 +19,9 @@
 import {assignmentService} from "@/services";
 
 export default {
-  name: "CreateAssignment",
+  name: "EditAssignment",
   props: {
-    path: typeof "",
+    assignment: Object,
     course: Object,
     refresh: Function,
     exit: Function
@@ -38,7 +33,6 @@ export default {
       selectedType: "tutorial",
       types: ["tutorial", "homework", "independent", "exam", "folder","task"],
       isProcessing: false,
-      name: "",
       displayName: "",
       valid: false,
       notEmpty: v => (v || '').length > 0 ||
@@ -49,8 +43,14 @@ export default {
           'Number must not be negative'
     };
   },
+  mounted() {
+    this.displayName = this.assignment.name;
+    this.selectedType = this.assignment.type;
+    this.hidden = this.assignment.hidden;
+    this.homeworkId = this.assignment.homeworkId;
+  },
   methods: {
-    async create() {
+    async update() {
       console.log(this.selectedType);
       console.log(this.name);
       console.log(this.displayName);
@@ -60,21 +60,20 @@ export default {
         this.isProcessing = true;
         console.log(this.path);
         console.log(this.course);
-        const body = await assignmentService.createAssignment(this.course,{
+        const body = await assignmentService.editAssignment(this.course,{
           path: this.path,
-          name: this.name,
           displayName: this.displayName,
           type: this.selectedType,
           hidden: this.hidden,
           homeworkId: this.homeworkId
         });
         this.isProcessing = false;
+        console.log(body);
         if (!body.success) {
-          console.log(body);
           this.$notify({
             type: "bad",
             group: "main",
-            title: "Create assignment",
+            title: "Edit assignment",
             text: `${body.message || 'An error has occurred.'}`
           });
           return false;
@@ -84,8 +83,8 @@ export default {
         this.$notify({
           type: "good",
           group: "main",
-          title: "Create assignment",
-          text: `Assignment ${this.displayName} created.`
+          title: "Edit assignment",
+          text: `Assignment ${this.displayName} updated.`
         });
       }
     }
