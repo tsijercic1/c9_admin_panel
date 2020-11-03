@@ -1,17 +1,13 @@
 export default {
   async getAssignments({ id, external, year }) {
-    const response = await fetch(
-      `/services/assignments.php
-      ?action=getAssignments
-      &course_id=${id}${external ? "&X" : ""}
-      &year=${year}`,
-      {
-        method: "get",
-        headers: {
-          Accept: "application/json"
-        }
+    const isExternal = external ? "&X" : "";
+    const url = `/services/assignments.php?action=getAssignments&course_id=${id}${isExternal}&year=${year}`;
+    const response = await fetch(url, {
+      method: "get",
+      headers: {
+        Accept: "application/json"
       }
-    );
+    });
     const body = await response.json();
     if (!body.success) {
       if (body.message.includes("logged")) {
@@ -22,18 +18,14 @@ export default {
     return body;
   },
   async convertAssignments({ id, external, year }) {
-    const response = await fetch(
-      `/services/assignments.php
-      ?action=updateAssignments
-      &course_id=${id}${external ? "&X" : ""}
-      &year=${year}`,
-      {
-        method: "get",
-        headers: {
-          Accept: "application/json"
-        }
+    const isExternal = external ? "&X" : "";
+    const url = `/services/assignments.php?action=updateAssignments&course_id=${id}${isExternal}&year=${year}`;
+    const response = await fetch(url, {
+      method: "get",
+      headers: {
+        Accept: "application/json"
       }
-    );
+    });
     const body = await response.json();
     if (!body.success) {
       if (body.message.includes("logged")) {
@@ -47,10 +39,8 @@ export default {
     { id, external, year },
     { path, name, displayName, type, hidden, homeworkId }
   ) {
-    const url = `/services/assignments.php
-      ?action=createAssignment
-      &course_id=${id}${external ? "&X" : ""}
-      &year=${year}`;
+    const isExternal = external ? "&X" : "";
+    const url = `/services/assignments.php?action=createAssignment&course_id=${id}${isExternal}&year=${year}`;
     const response = await fetch(url, {
       method: "post",
       headers: {
@@ -78,10 +68,8 @@ export default {
     { id, external, year },
     { path, displayName, type, hidden, homeworkId }
   ) {
-    const url = `/services/assignments.php
-      ?action=editAssignment
-      &course_id=${id}${external ? "&X" : ""}
-      &year=${year}`;
+    const isExternal = external ? "&X" : "";
+    const url = `/services/assignments.php?action=editAssignment&course_id=${id}${isExternal}&year=${year}`;
     const response = await fetch(url, {
       method: "post",
       headers: {
@@ -105,9 +93,8 @@ export default {
     return body;
   },
   async deleteAssignment({ id, external, year }, { path }) {
-    const url = `/services/assignments.php?action=deleteAssignment&course_id=${id}${
-      external ? "&X" : ""
-    }&year=${year}`;
+    const isExternal = external ? "&X" : "";
+    const url = `/services/assignments.php?action=deleteAssignment&course_id=${id}${isExternal}&year=${year}`;
     const response = await fetch(url, {
       method: "post",
       headers: {
@@ -127,10 +114,8 @@ export default {
     return body;
   },
   async getFileContent({ id, external, year }, { path }) {
-    const url = `/services/assignments.php
-      ?action=getFileContent
-      &course_id=${id}${external ? "&X" : ""}
-      &year=${year}`;
+    const isExternal = external ? "&X" : "";
+    const url = `/services/assignments.php?action=getFileContent&course_id=${id}${isExternal}&year=${year}`;
     const response = await fetch(url, {
       method: "post",
       headers: {
@@ -153,9 +138,8 @@ export default {
     { id, external, year },
     { folderPath, name, show, binary, content }
   ) {
-    const url = `/services/assignments.php?action=getFileContent&course_id=${id}${
-      external ? "&X" : ""
-    }&year=${year}`;
+    const isExternal = external ? "&X" : "";
+    const url = `/services/assignments.php?action=createFile&course_id=${id}${isExternal}&year=${year}`;
     const response = await fetch(url, {
       method: "post",
       headers: {
@@ -179,9 +163,8 @@ export default {
     return body;
   },
   async editFile({ id, external, year }, { path, content, show, binary }) {
-    const url = `/services/assignments.php?action=editFile&course_id=${id}${
-      external ? "&X" : ""
-    }&year=${year}`;
+    const isExternal = external ? "&X" : "";
+    const url = `/services/assignments.php?action=editFile&course_id=${id}${isExternal}&year=${year}`;
     console.log(content);
     const response = await fetch(url, {
       method: "post",
@@ -205,9 +188,8 @@ export default {
     return body;
   },
   async deleteFile({ id, external, year }, { path }) {
-    const url = `/services/assignments.php?action=deleteFile&course_id=${id}${
-      external ? "&X" : ""
-    }&year=${year}`;
+    const isExternal = external ? "&X" : "";
+    const url = `/services/assignments.php?action=deleteFile&course_id=${id}${isExternal}&year=${year}`;
     const response = await fetch(url, {
       method: "post",
       headers: {
