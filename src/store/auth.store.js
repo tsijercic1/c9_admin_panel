@@ -2,7 +2,8 @@ export default {
   state: {
     userId: undefined,
     sessionId: undefined,
-    profile: {}
+    profile: {},
+    roles: []
   },
   mutations: {
     setUserId(state, id) {
@@ -13,6 +14,9 @@ export default {
     },
     setProfile(state, profile) {
       state.profile = { ...state.profile, ...profile };
+    },
+    setRoles(state, roles) {
+      state.roles = roles;
     }
   },
   getters: {
@@ -21,6 +25,9 @@ export default {
     },
     userProfile(state) {
       return state.profile;
+    },
+    roles(state) {
+      return state.roles;
     }
   },
   actions: {
@@ -38,7 +45,9 @@ export default {
       const body = await response.json();
       if (
         (body.success === true || body.success === "true") &&
-        (body.role === "admin" || body.role === "sysadmin")
+        (body.roles.includes("sysadmin") ||
+          body.roles.includes("admin") ||
+          body.roles.includes("game-spectator"))
       ) {
         context.commit("setUserId", 1);
         context.commit("setSessionId", body["sid"]);
@@ -46,6 +55,7 @@ export default {
           username: username,
           realName: ""
         });
+        context.commit("setRoles", body.roles);
         const profileResponse = await fetch(
           `/services/users.php?user=${username}`,
           {
@@ -80,7 +90,9 @@ export default {
       const body = await response.json();
       if (
         (body.success === true || body.success === "true") &&
-        (body.role === "admin" || body.role === "sysadmin")
+        (body.roles.includes("sysadmin") ||
+          body.roles.includes("admin") ||
+          body.roles.includes("game-spectator"))
       ) {
         context.commit("setUserId", 1);
         context.commit("setSessionId", body["sid"]);
@@ -88,6 +100,7 @@ export default {
           username: body.username,
           realName: ""
         });
+        context.commit("setRoles", body.roles());
         const profileResponse = await fetch(
           `/services/users.php?user=${body.username}`,
           {
@@ -109,7 +122,11 @@ export default {
           success: body.success
         };
       } else {
-        if (body.success && body.role === "student") {
+        if (
+          body.success &&
+          body.roles.includes("student") &&
+          body.roles.length === 1
+        ) {
           body.message = "Nedozvoljen pristup";
         }
         return {

@@ -67,9 +67,23 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.name !== "Login" && !store.getters.isAuthenticated) {
+  if (
+    store.getters.roles.includes("sysadmin") ||
+    store.getters.roles.includes("admin")
+  ) {
+    if (to.name !== "Login" && !store.getters.isAuthenticated) {
+      next(Login);
+    } else next();
+  } else if (
+    store.getters.roles.includes("game-spectators") &&
+    (to.name === "Login" || to.name === "Dashboard")
+  ) {
+    if (to.name !== "Login" && !store.getters.isAuthenticated) {
+      next(Login);
+    } else next();
+  } else {
     next(Login);
-  } else next();
+  }
 });
 
 document.addEventListener("logout", async () => {
