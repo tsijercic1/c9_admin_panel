@@ -2,9 +2,22 @@
   <v-card class="pa-5 px-8" dark>
     <h3 class="text-center mb-3">Edit assignment</h3>
     <v-form v-model="valid">
-      <v-text-field label="Name" v-model="name" required :rules="[notEmpty]"></v-text-field>
-      <v-text-field label="Points" v-model="points" :rules="[nonNegative,notEmpty]"></v-text-field>
-      <v-text-field label="Challenge points" v-model="challengePoints" :rules="[nonNegative,notEmpty]"></v-text-field>
+      <v-text-field
+        label="Name"
+        v-model="name"
+        required
+        :rules="[notEmpty]"
+      ></v-text-field>
+      <v-text-field
+        label="Points"
+        v-model="points"
+        :rules="[nonNegative, notEmpty]"
+      ></v-text-field>
+      <v-text-field
+        label="Challenge points"
+        v-model="challengePoints"
+        :rules="[nonNegative, notEmpty]"
+      ></v-text-field>
       <v-checkbox label="Active" v-model="active"></v-checkbox>
       <div class="d-flex justify-space-between mt-5">
         <v-btn @click="exit" :disabled="isProcessing">Cancel</v-btn>
@@ -15,8 +28,10 @@
 </template>
 
 <script>
+import { gameService } from "@/services";
+
 export default {
-name: "EditAssignment",
+  name: "EditAssignment",
   props: {
     assignment: Object,
     refresh: Function,
@@ -30,12 +45,9 @@ name: "EditAssignment",
       challengePoints: 0,
       active: false,
       valid: false,
-      notEmpty: v => (v || '').length > 0 ||
-          'This field cannot be empty',
-      noSpaces: v => (v || '').indexOf(' ') < 0 ||
-          'No spaces are allowed',
-      nonNegative: v => (v || -1) >= 0 ||
-          'Number must not be negative'
+      notEmpty: v => (v || "").length > 0 || "This field cannot be empty",
+      noSpaces: v => (v || "").indexOf(" ") < 0 || "No spaces are allowed",
+      nonNegative: v => (v || -1) >= 0 || "Number must not be negative"
     };
   },
   mounted() {
@@ -46,28 +58,22 @@ name: "EditAssignment",
   },
   methods: {
     async submit() {
-      if(this.valid) {
+      if (this.valid) {
         this.isProcessing = true;
-        let response = await fetch(`/services/uup_game.php?action=editAssignment&assignmentId=${this.assignment.scrapedId}`, {
-          method: "post",
-          headers: {
-            Accept: "application/json"
-          },
-          body: JSON.stringify({
-            name: this.name,
-            points: this.points,
-            challengePoints: this.challengePoints,
-            active: this.active
-          })
+        let body = await gameService.editAssignment({
+          id: this.assignment.scrapedId,
+          name: this.name,
+          points: this.points,
+          challengePoints: this.challengePoints,
+          active: this.active
         });
-        let body = await response.json();
         this.isProcessing = false;
         if (!body.success) {
           this.$notify({
             type: "bad",
             group: "main",
             title: "Edit assignment",
-            text: `${body.message || 'An error has occurred.'}`
+            text: `${body.message || "An error has occurred."}`
           });
           return false;
         }
@@ -85,6 +91,4 @@ name: "EditAssignment",
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

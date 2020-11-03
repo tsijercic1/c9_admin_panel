@@ -25,7 +25,7 @@
                 </v-btn>
               </v-form>
               <v-alert v-if="showError" type="error">
-                {{errorMessage}}
+                {{ errorMessage }}
               </v-alert>
             </v-card>
           </v-flex>
@@ -36,32 +36,35 @@
 </template>
 
 <script>
-  export default {
-    name: "Login",
-    data: () => {
-      return {
-        showError: false,
-        errorMessage: "",
-        username: undefined,
-        password: undefined
-      };
-    },
-    methods: {
-      login: async function () {
-        const {username, password} = this;
-        const result = await this.$store.dispatch("login", {username, password});
-        if (result.success === true) {
-          await this.$router.push({name: "Dashboard"});
-        } else {
-          this.showError = true;
-          this.errorMessage = result.message;
-          setTimeout(()=>this.hideError(), 5000);
-        }
-      },
-      hideError() {
-        this.showError = false;
-        this.errorMessage = "";
+export default {
+  name: "Login",
+  data: () => {
+    return {
+      showError: false,
+      errorMessage: "",
+      username: undefined,
+      password: undefined
+    };
+  },
+  methods: {
+    login: async function() {
+      const { username, password } = this;
+      const result = await this.$store.dispatch("login", {
+        username,
+        password
+      });
+      if (result.success === true) {
+        await this.$router.push({ name: "Dashboard" });
+      } else {
+        this.showError = true;
+        this.errorMessage = result.message;
+        setTimeout(() => this.hideError(), 5000);
       }
+    },
+    hideError() {
+      this.showError = false;
+      this.errorMessage = "";
     }
-  };
+  }
+};
 </script>

@@ -1,6 +1,11 @@
 <template style="width: 80vw;height: 80vh">
   <v-card tile height="100%" width="100%">
-    <iframe id="generator-frame" :src="autotestSrc" width="100%" height="100%"></iframe>
+    <iframe
+      id="generator-frame"
+      :src="autotestSrc"
+      width="100%"
+      height="100%"
+    ></iframe>
   </v-card>
 </template>
 
@@ -13,8 +18,10 @@ export default {
   },
   data() {
     return {
-      autotestSrc: window.location.origin + '/panel/assets/autotestGenerator/html/index.html'
-    }
+      autotestSrc:
+        window.location.origin +
+        "/panel/assets/autotestGenerator/html/index.html"
+    };
   },
   created() {
     window.localStorage.setItem(".autotest-content", this.config);
@@ -28,7 +35,9 @@ export default {
   },
   methods: {
     registerListener() {
-      const button = document.getElementById("generator-frame")?.contentWindow.document.getElementById("export-button");
+      const button = document
+        .getElementById("generator-frame")
+        ?.contentWindow.document.getElementById("export-button");
       if (button === null || button === undefined) {
         setTimeout(() => {
           this.registerListener();
@@ -40,12 +49,10 @@ export default {
       }
     },
     saveClicked() {
-      this.save(localStorage.getItem('.autotest-content'));
+      this.save(localStorage.getItem(".autotest-content"));
     }
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,7 +1,9 @@
 <template>
   <v-card>
     <v-card-title>Delete file</v-card-title>
-    <v-card-subtitle>/{{task.parent.name}}/{{task.name}}/{{file.name}}</v-card-subtitle>
+    <v-card-subtitle
+      >/{{ task.parent.name }}/{{ task.name }}/{{ file.name }}</v-card-subtitle
+    >
     <v-card-text>Are you sure you want to delete this file?</v-card-text>
     <v-card-actions>
       <v-btn @click="exit" :disabled="isProcessing">Cancel</v-btn>
@@ -12,7 +14,7 @@
 
 <script>
 export default {
-name: "DeleteFile",
+  name: "DeleteFile",
   props: {
     task: Object,
     file: Object,
@@ -27,12 +29,15 @@ name: "DeleteFile",
   methods: {
     async submit() {
       this.isProcessing = true;
-      let response = await fetch(`/services/uup_game.php?action=deleteTaskFile&taskId=${this.task.scrapedId}&name=${this.file.name}`, {
-        method: "delete",
-        headers: {
-          Accept: "application/json"
+      let response = await fetch(
+        `/services/uup_game.php?action=deleteTaskFile&taskId=${this.task.scrapedId}&name=${this.file.name}`,
+        {
+          method: "delete",
+          headers: {
+            Accept: "application/json"
+          }
         }
-      });
+      );
       let body = await response.json();
       this.isProcessing = false;
       if (!body.success) {
@@ -40,7 +45,7 @@ name: "DeleteFile",
           type: "bad",
           group: "main",
           title: "Delete file",
-          text: `${body.message || 'An error has occurred.'}`
+          text: `${body.message || "An error has occurred."}`
         });
         return false;
       }
@@ -54,9 +59,7 @@ name: "DeleteFile",
       });
     }
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

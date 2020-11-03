@@ -2,7 +2,11 @@
   <v-card class="pa-5 px-8" dark>
     <v-card-title>Create file</v-card-title>
     <v-form v-model="valid">
-      <v-text-field label="Name" v-model="name" :rules="[notEmpty]"></v-text-field>
+      <v-text-field
+        label="Name"
+        v-model="name"
+        :rules="[notEmpty]"
+      ></v-text-field>
       <v-checkbox label="Show" v-model="show"></v-checkbox>
       <v-checkbox label="Binary" v-model="binary"></v-checkbox>
     </v-form>
@@ -27,26 +31,28 @@ export default {
       valid: false,
       binary: false,
       show: true,
-      notEmpty: v => (v || '').length > 0 ||
-          'This field cannot be empty'
+      notEmpty: v => (v || "").length > 0 || "This field cannot be empty"
     };
   },
   methods: {
     async create() {
-      if(this.valid) {
+      if (this.valid) {
         this.isProcessing = true;
-        let response = await fetch(`/services/uup_game.php?action=createTaskFile&taskId=${this.task.scrapedId}`, {
-          method: "post",
-          headers: {
-            Accept: "application/json"
-          },
-          body: JSON.stringify({
-            name: this.name,
-            show: this.show,
-            binary: this.binary,
-            content: ""
-          })
-        });
+        let response = await fetch(
+          `/services/uup_game.php?action=createTaskFile&taskId=${this.task.scrapedId}`,
+          {
+            method: "post",
+            headers: {
+              Accept: "application/json"
+            },
+            body: JSON.stringify({
+              name: this.name,
+              show: this.show,
+              binary: this.binary,
+              content: ""
+            })
+          }
+        );
         let body = await response.json();
         this.isProcessing = false;
         if (!body.success) {
@@ -54,7 +60,7 @@ export default {
             type: "bad",
             group: "main",
             title: "Create file",
-            text: `${body.message || 'An error has occurred.'}`
+            text: `${body.message || "An error has occurred."}`
           });
           return false;
         }
@@ -69,9 +75,7 @@ export default {
       }
     }
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

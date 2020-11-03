@@ -2,15 +2,26 @@
   <v-card class="pa-5 px-8" dark>
     <v-card-title class="text-center">Create task</v-card-title>
     <v-form v-model="valid">
-      <v-text-field label="Name" v-model="displayName" required :rules="[notEmpty]"></v-text-field>
       <v-text-field
-          label="Filesystem name"
-          v-model="name"
-          :rules="[notEmpty,noSpaces]"
-          required
+        label="Name"
+        v-model="displayName"
+        required
+        :rules="[notEmpty]"
       ></v-text-field>
-      <v-select label="Category" v-model="selected" :items="categories" :rules="[isSelected]" item-text="name"
-                return-object></v-select>
+      <v-text-field
+        label="Filesystem name"
+        v-model="name"
+        :rules="[notEmpty, noSpaces]"
+        required
+      ></v-text-field>
+      <v-select
+        label="Category"
+        v-model="selected"
+        :items="categories"
+        :rules="[isSelected]"
+        item-text="name"
+        return-object
+      ></v-select>
       <v-textarea label="Hint" v-model="hint"></v-textarea>
       <v-card-actions class="justify-space-between">
         <v-btn @click="exit" :disabled="isProcessing">Cancel</v-btn>
@@ -37,30 +48,30 @@ export default {
       displayName: "",
       hint: "",
       selected: undefined,
-      notEmpty: v => (v || '').length > 0 ||
-          'This field cannot be empty',
-      noSpaces: v => (v || '').indexOf(' ') < 0 ||
-          'No spaces are allowed',
-      isSelected: v => (v !== undefined) ||
-          'Number must not be negative'
+      notEmpty: v => (v || "").length > 0 || "This field cannot be empty",
+      noSpaces: v => (v || "").indexOf(" ") < 0 || "No spaces are allowed",
+      isSelected: v => v !== undefined || "Number must not be negative"
     };
   },
   methods: {
     async create() {
       if (this.valid) {
         this.isProcessing = true;
-        let response = await fetch(`/services/uup_game.php?action=createTask&assignmentId=${this.assignment.scrapedId}`, {
-          method: "post",
-          headers: {
-            Accept: "application/json"
-          },
-          body: JSON.stringify({
-            name: this.name,
-            displayName: this.displayName,
-            category: this.selected.id,
-            hint: this.hint
-          })
-        });
+        let response = await fetch(
+          `/services/uup_game.php?action=createTask&assignmentId=${this.assignment.scrapedId}`,
+          {
+            method: "post",
+            headers: {
+              Accept: "application/json"
+            },
+            body: JSON.stringify({
+              name: this.name,
+              displayName: this.displayName,
+              category: this.selected.id,
+              hint: this.hint
+            })
+          }
+        );
         let body = await response.json();
         this.isProcessing = false;
         if (!body.success) {
@@ -68,7 +79,7 @@ export default {
             type: "bad",
             group: "main",
             title: "Create task",
-            text: `${body.message || 'An error has occurred.'}`
+            text: `${body.message || "An error has occurred."}`
           });
           return false;
         }

@@ -2,7 +2,12 @@
   <v-card class="pa-5 px-8" dark>
     <h3 class="text-center mb-3">Edit task</h3>
     <v-form v-model="valid">
-      <v-text-field label="Name" v-model="name" required :rules="[notEmpty]"></v-text-field>
+      <v-text-field
+        label="Name"
+        v-model="name"
+        required
+        :rules="[notEmpty]"
+      ></v-text-field>
       <v-select
         label="Category"
         v-model="selected"
@@ -37,12 +42,9 @@ export default {
       hint: "",
       selected: undefined,
       valid: false,
-      notEmpty: v => (v || '').length > 0 ||
-          'This field cannot be empty',
-      noSpaces: v => (v || '').indexOf(' ') < 0 ||
-          'No spaces are allowed',
-      isSelected: v => (v !== undefined) ||
-          'Number must not be negative'
+      notEmpty: v => (v || "").length > 0 || "This field cannot be empty",
+      noSpaces: v => (v || "").indexOf(" ") < 0 || "No spaces are allowed",
+      isSelected: v => v !== undefined || "Number must not be negative"
     };
   },
   mounted() {
@@ -63,17 +65,20 @@ export default {
     async submit() {
       if (this.valid) {
         this.isProcessing = true;
-        let response = await fetch(`/services/uup_game.php?action=editTask&taskId=${this.task.scrapedId}`, {
-          method: "post",
-          headers: {
-            Accept: "application/json"
-          },
-          body: JSON.stringify({
-            name: this.name,
-            category: this.selected.id,
-            hint: this.hint
-          })
-        });
+        let response = await fetch(
+          `/services/uup_game.php?action=editTask&taskId=${this.task.scrapedId}`,
+          {
+            method: "post",
+            headers: {
+              Accept: "application/json"
+            },
+            body: JSON.stringify({
+              name: this.name,
+              category: this.selected.id,
+              hint: this.hint
+            })
+          }
+        );
         let body = await response.json();
         this.isProcessing = false;
         if (!body.success) {
@@ -81,7 +86,7 @@ export default {
             type: "bad",
             group: "main",
             title: "Edit task",
-            text: `${body.message || 'An error has occurred.'}`
+            text: `${body.message || "An error has occurred."}`
           });
           return false;
         }

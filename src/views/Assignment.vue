@@ -1,49 +1,83 @@
 <template>
   <v-container>
     <v-overlay :value="showOverlay">
-      <template v-if="overlayAction ==='Create assignment'">
-        <CreateAssignment :exit="hideOverlay" :refresh="refreshAssignments" :path="selectedNode.path" :course="course"/>
+      <template v-if="overlayAction === 'Create assignment'">
+        <CreateAssignment
+          :exit="hideOverlay"
+          :refresh="refreshAssignments"
+          :path="selectedNode.path"
+          :course="course"
+        />
       </template>
-      <template v-if="overlayAction ==='Edit assignment'">
+      <template v-if="overlayAction === 'Edit assignment'">
         <EditAssignment
-            :exit="hideOverlay"
-            :refresh="refreshAssignments"
-            :assignment="selectedNode"
-            :course="course"
+          :exit="hideOverlay"
+          :refresh="refreshAssignments"
+          :assignment="selectedNode"
+          :course="course"
         ></EditAssignment>
       </template>
-      <template v-if="overlayAction ==='Delete assignment'">
-        <DeleteAssignment :exit="hideOverlay" :refresh="refreshAssignments" :assignment="selectedNode"
-                          :course="course"/>
+      <template v-if="overlayAction === 'Delete assignment'">
+        <DeleteAssignment
+          :exit="hideOverlay"
+          :refresh="refreshAssignments"
+          :assignment="selectedNode"
+          :course="course"
+        />
       </template>
-      <template v-if="overlayAction ==='Create file'">
-        <CreateFile :exit="hideOverlay" :refresh="refreshAssignments" :assignment="selectedNode" :course="course"/>
+      <template v-if="overlayAction === 'Create file'">
+        <CreateFile
+          :exit="hideOverlay"
+          :refresh="refreshAssignments"
+          :assignment="selectedNode"
+          :course="course"
+        />
       </template>
-      <template v-if="overlayAction ==='Delete file'">
-        <DeleteFile :exit="hideOverlay" :refresh="refreshAssignments" :file="selectedNode" :course="course"/>
+      <template v-if="overlayAction === 'Delete file'">
+        <DeleteFile
+          :exit="hideOverlay"
+          :refresh="refreshAssignments"
+          :file="selectedNode"
+          :course="course"
+        />
       </template>
     </v-overlay>
-    <h1>Assignments
-      <v-icon @click="onClick('Create assignment', {path:''})">mdi-plus</v-icon>
+    <h1>
+      Assignments
+      <v-icon @click="onClick('Create assignment', { path: '' })"
+        >mdi-plus</v-icon
+      >
     </h1>
     <div>
       <vue-context ref="menu" v-slot="{ data }">
-        <template v-if="data!==null && data!==undefined">
+        <template v-if="data !== null && data !== undefined">
           <li>
-            <a v-if="assignmentEligible(data)" @click.prevent="onClick('Create assignment', data)">
+            <a
+              v-if="assignmentEligible(data)"
+              @click.prevent="onClick('Create assignment', data)"
+            >
               Create assignment
             </a>
-            <a v-if="fileEligible(data)" @click.prevent="onClick('Create file', data)">
+            <a
+              v-if="fileEligible(data)"
+              @click.prevent="onClick('Create file', data)"
+            >
               Create file
             </a>
           </li>
           <li>
-            <a v-if="data.isDirectory" @click.prevent="onClick('Edit assignment', data)">
+            <a
+              v-if="data.isDirectory"
+              @click.prevent="onClick('Edit assignment', data)"
+            >
               Edit assignment
             </a>
           </li>
           <li>
-            <a v-if="data.isDirectory" @click.prevent="onClick('Delete assignment', data)">
+            <a
+              v-if="data.isDirectory"
+              @click.prevent="onClick('Delete assignment', data)"
+            >
               Delete assignment
             </a>
             <a v-else @click.prevent="onClick('Delete file', data)">
@@ -57,24 +91,32 @@
       <v-row>
         <v-col md="3">
           <v-treeview
-              activatable
-              dense
-              hoverable
-              :items="assignments"
-              return-object
-              :active.sync="active"
-              @update:active="activeChanged(active)"
+            activatable
+            dense
+            hoverable
+            :items="assignments"
+            return-object
+            :active.sync="active"
+            @update:active="activeChanged(active)"
           >
             <template v-slot:prepend="{ item, open }">
-              <v-icon v-if='item.isDirectory' @contextmenu.prevent="$refs.menu.open($event, item )">
-                {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
+              <v-icon
+                v-if="item.isDirectory"
+                @contextmenu.prevent="$refs.menu.open($event, item)"
+              >
+                {{ open ? "mdi-folder-open" : "mdi-folder" }}
               </v-icon>
-              <v-icon v-else @contextmenu.prevent="$refs.menu.open($event, item )">
+              <v-icon
+                v-else
+                @contextmenu.prevent="$refs.menu.open($event, item)"
+              >
                 {{ fileTypes[extensionRegex.exec(item.name)[1]] }}
               </v-icon>
             </template>
-            <template v-slot:label="{item}">
-              <v-list-item-title @contextmenu.prevent="$refs.menu.open($event, item )">
+            <template v-slot:label="{ item }">
+              <v-list-item-title
+                @contextmenu.prevent="$refs.menu.open($event, item)"
+              >
                 {{ item.name }}
               </v-list-item-title>
             </template>
@@ -82,7 +124,11 @@
         </v-col>
         <v-col cols="9">
           <v-card class="sticky" tile elevation="2">
-            <FileEditor ref="fileEditor" :course="course" class="editorWrapper"/>
+            <FileEditor
+              ref="fileEditor"
+              :course="course"
+              class="editorWrapper"
+            />
           </v-card>
         </v-col>
       </v-row>
@@ -102,9 +148,9 @@ import "codemirror/theme/idea.css";
 import "codemirror/theme/darcula.css";
 import "codemirror/theme/ayu-mirage.css";
 import "codemirror/addon/edit/closebrackets";
-import {mapGetters} from "vuex";
-import VueContext from 'vue-context';
-import 'vue-context/src/sass/vue-context.scss'; // Alternatively import into a stylesheet instead
+import { mapGetters } from "vuex";
+import VueContext from "vue-context";
+import "vue-context/src/sass/vue-context.scss"; // Alternatively import into a stylesheet instead
 import FileEditor from "@/components/assignmentComponents/FileEditor";
 import CreateAssignment from "@/components/assignmentComponents/CreateAssignment";
 import EditAssignment from "@/components/assignmentComponents/EditAssignment";
@@ -123,8 +169,7 @@ export default {
     EditAssignment,
     CreateAssignment
   },
-  mounted() {
-  },
+  mounted() {},
   data() {
     return {
       selectedNode: undefined,
@@ -133,25 +178,37 @@ export default {
       overlayAction: "",
       extensionRegex: /(?:\.([^.]+))?$/,
       fileTypes: {
-        html: 'mdi-language-html5',
-        c: 'mdi-language-c',
-        cpp: 'mdi-language-cpp',
-        js: 'mdi-nodejs',
-        json: 'mdi-code-json',
-        md: 'mdi-language-markdown',
-        pdf: 'mdi-file-pdf',
-        png: 'mdi-file-image',
-        txt: 'mdi-file-document-outline',
-        autotest: 'mdi-cog',
-        autotest2: 'mdi-cog',
-        zadaca: 'mdi-arrow-top-right-thick'
+        html: "mdi-language-html5",
+        c: "mdi-language-c",
+        cpp: "mdi-language-cpp",
+        js: "mdi-nodejs",
+        json: "mdi-code-json",
+        md: "mdi-language-markdown",
+        pdf: "mdi-file-pdf",
+        png: "mdi-file-image",
+        txt: "mdi-file-document-outline",
+        autotest: "mdi-cog",
+        autotest2: "mdi-cog",
+        zadaca: "mdi-arrow-top-right-thick"
       },
       globalIdCounter: 1,
-      rawEditorFileExtensions: ["c", "cpp", "java", "js", "mat", "php", "autotest", "zadaca", "json", "txt", "autotest2"],
+      rawEditorFileExtensions: [
+        "c",
+        "cpp",
+        "java",
+        "js",
+        "mat",
+        "php",
+        "autotest",
+        "zadaca",
+        "json",
+        "txt",
+        "autotest2"
+      ],
       active: [],
       editorText: "This is initialValue.",
       editorOptions: {
-        hideModeSwitch: false,
+        hideModeSwitch: false
       },
       language: "x-csrc",
       code: "",
@@ -192,7 +249,7 @@ export default {
         if (!selected.isDirectory) {
           return {
             type: this.extensionRegex.exec(selected.name)[1]
-          }
+          };
         } else {
           return "none";
         }
@@ -243,7 +300,6 @@ export default {
       this.loading = true;
       this.overlayAction = text;
       this.showOverlay = true;
-
     },
     activeChanged(active) {
       if (active.length !== 0) {
@@ -256,10 +312,10 @@ export default {
         const course = this.courseById(courseId);
         console.log(course);
         await this.$refs.fileEditor.refresh(item);
-        console.log('FILE: ' + item.name);
+        console.log("FILE: " + item.name);
       } else {
         this.editorText = "";
-        console.log('FOLDER: ' + item.name);
+        console.log("FOLDER: " + item.name);
       }
     },
     findInTree(root, wanted) {
@@ -273,23 +329,20 @@ export default {
           return false;
         }
         let response = false;
-        root.children.forEach(
-            element => {
-              let result = this.findInTree(element, wanted);
-              if (result.success === true) {
-                if (!result.path) {
-                  result.path = root.path;
-                }
-                response = result;
-              }
+        root.children.forEach(element => {
+          let result = this.findInTree(element, wanted);
+          if (result.success === true) {
+            if (!result.path) {
+              result.path = root.path;
             }
-        );
+            response = result;
+          }
+        });
         return response;
       }
     }
   }
 };
-
 </script>
 
 <style lang="scss" scoped>

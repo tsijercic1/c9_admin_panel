@@ -12,7 +12,7 @@ export default {
       state.sessionId = id;
     },
     setProfile(state, profile) {
-      state.profile = {...state.profile, ...profile};
+      state.profile = { ...state.profile, ...profile };
     }
   },
   getters: {
@@ -24,7 +24,7 @@ export default {
     }
   },
   actions: {
-    login: async function (context, {username, password}) {
+    login: async function(context, { username, password }) {
       const response = await fetch(`/services/auth.php`, {
         method: "post",
         body: `login=${encodeURIComponent(
@@ -36,20 +36,26 @@ export default {
         }
       });
       const body = await response.json();
-      if ((body.success === true || body.success === "true") && (body.role === "admin" || body.role === "sysadmin")) {
+      if (
+        (body.success === true || body.success === "true") &&
+        (body.role === "admin" || body.role === "sysadmin")
+      ) {
         context.commit("setUserId", 1);
         context.commit("setSessionId", body["sid"]);
         context.commit("setProfile", {
           username: username,
           realName: ""
         });
-        const profileResponse = await fetch(`/services/users.php?user=${username}`, {
-          method: "get",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Accept: "application/json"
+        const profileResponse = await fetch(
+          `/services/users.php?user=${username}`,
+          {
+            method: "get",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              Accept: "application/json"
+            }
           }
-        });
+        );
         const data = await profileResponse.json();
         if (data.success === true || data.success === "true") {
           context.commit("setProfile", {
@@ -69,23 +75,29 @@ export default {
         };
       }
     },
-    refresh: async function (context) {
+    refresh: async function(context) {
       const response = await fetch("/services/refresh.php");
       const body = await response.json();
-      if ((body.success === true || body.success === "true") && (body.role === "admin" || body.role === "sysadmin")) {
+      if (
+        (body.success === true || body.success === "true") &&
+        (body.role === "admin" || body.role === "sysadmin")
+      ) {
         context.commit("setUserId", 1);
         context.commit("setSessionId", body["sid"]);
         context.commit("setProfile", {
           username: body.username,
           realName: ""
         });
-        const profileResponse = await fetch(`/services/users.php?user=${body.username}`, {
-          method: "get",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Accept: "application/json"
+        const profileResponse = await fetch(
+          `/services/users.php?user=${body.username}`,
+          {
+            method: "get",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              Accept: "application/json"
+            }
           }
-        });
+        );
         const data = await profileResponse.json();
 
         if (data.success === true || data.success === "true") {

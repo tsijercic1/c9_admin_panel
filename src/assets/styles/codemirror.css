@@ -182,13 +182,12 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #a22;}
    flickering artifacts. */
 .CodeMirror-vscrollbar, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
   position: absolute;
-  z-index: 6;
-  display: none;
+  z-index: 3;
 }
 .CodeMirror-vscrollbar {
   right: 0; top: 0;
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: scroll;
 }
 .CodeMirror-hscrollbar {
   bottom: 0; left: 0;

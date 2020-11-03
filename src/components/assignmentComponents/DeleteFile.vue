@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import {assignmentService} from "@/services";
+import { assignmentService } from "@/services";
 
 export default {
   name: "DeleteFile",
@@ -36,7 +36,7 @@ export default {
           type: "bad",
           group: "main",
           title: "Delete assignment",
-          text: `${body.message || 'An error has occurred.'}`
+          text: `${body.message || "An error has occurred."}`
         });
         return false;
       }
@@ -50,9 +50,7 @@ export default {
       });
     }
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

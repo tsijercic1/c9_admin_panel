@@ -1,16 +1,22 @@
 <template>
   <div style="height: 100%">
     <v-overlay :value="showOverlay">
-      <v-progress-circular v-if="loading"
-                           :size="180"
-                           :width="7"
-                           color="purple"
-                           indeterminate
-                           class="position-absolute"
+      <v-progress-circular
+        v-if="loading"
+        :size="180"
+        :width="7"
+        color="purple"
+        indeterminate
+        class="position-absolute"
       ></v-progress-circular>
-      <span :style="{ display: (loading?'none':'initial')}">
+      <span :style="{ display: loading ? 'none' : 'initial' }">
         <v-btn @click="closeGenerator">Close</v-btn>
-        <v-card ref="autotestGeneratorRef" id="autotestGeneratorId" height="80vh" width="80vw">
+        <v-card
+          ref="autotestGeneratorRef"
+          id="autotestGeneratorId"
+          height="80vh"
+          width="80vw"
+        >
         </v-card>
       </span>
     </v-overlay>
@@ -20,11 +26,11 @@
     <v-card class="inner-tile" v-else-if="editable.type === 'html'" tile>
       <v-card-title>
         <span class="headline">{{ file.name }}</span>
-        <v-spacer/>
+        <v-spacer />
         <v-checkbox label="Binary" v-model="binary"></v-checkbox>
-        <v-spacer/>
+        <v-spacer />
         <v-checkbox label="Show" v-model="show"></v-checkbox>
-        <v-spacer/>
+        <v-spacer />
         <v-btn @click="save()">Save</v-btn>
       </v-card-title>
       <div>
@@ -34,21 +40,23 @@
     <v-card v-else-if="rawEditorFileExtensions.includes(editable.type)" tile>
       <v-card-title>
         <span class="headline">{{ file.name }}</span>
-        <v-spacer/>
+        <v-spacer />
         <v-checkbox label="Binary" v-model="binary"></v-checkbox>
-        <v-spacer/>
+        <v-spacer />
         <v-checkbox label="Show" v-model="show"></v-checkbox>
-        <v-spacer/>
-        <v-btn v-if="editable.type==='autotest2'" @click="openGenerator">Open generator</v-btn>
-        <v-spacer/>
+        <v-spacer />
+        <v-btn v-if="editable.type === 'autotest2'" @click="openGenerator"
+          >Open generator</v-btn
+        >
+        <v-spacer />
         <v-btn @click="save()" :disabled="isSaving">Save</v-btn>
       </v-card-title>
       <div>
         <codemirror
-            ref="mirror"
-            v-model="fileContent"
-            :options="cmOptions"
-            id="codemirror"
+          ref="mirror"
+          v-model="fileContent"
+          :options="cmOptions"
+          id="codemirror"
         />
       </div>
     </v-card>
@@ -56,18 +64,18 @@
 </template>
 
 <script>
-import Vue from 'vue';
+import Vue from "vue";
 import "@/assets/styles/codemirror.css";
 
 import "codemirror/mode/clike/clike";
 import "codemirror/mode/javascript/javascript";
 import "codemirror/theme/idea.css";
-import {codemirror} from "vue-codemirror";
+import { codemirror } from "vue-codemirror";
 import "codemirror/addon/edit/closebrackets";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 
-import {Editor} from "@toast-ui/vue-editor";
+import { Editor } from "@toast-ui/vue-editor";
 
 import GeneratorFrame from "@/components/GeneratorFrame";
 
@@ -108,7 +116,7 @@ export default {
         line: true,
         autoCloseBrackets: true,
         viewportMargin: Infinity,
-        scrollStyle: 'null'
+        scrollStyle: "null"
       },
       rawEditorFileExtensions: [
         "c",
@@ -133,7 +141,7 @@ export default {
           type: this.extensionRegex.exec(this.file.name)[1]
         };
       } else {
-        return {type: "none"};
+        return { type: "none" };
       }
     }
   },
@@ -145,7 +153,11 @@ export default {
           if (config === "") {
             config = {
               id: this.file.parent.scrapedId,
-              name: "Game, " + this.file.parent.parent.name + ", " + this.file.parent.name,
+              name:
+                "Game, " +
+                this.file.parent.parent.name +
+                ", " +
+                this.file.parent.name,
               languages: [],
               tools: {},
               tests: []
@@ -153,14 +165,17 @@ export default {
             config = JSON.stringify(config);
           }
         }
-        const saveFunction = async (content) => {
-          let response = await fetch(`/services/uup_game.php?action=editTaskFile&taskId=${this.file.parent.scrapedId}`, {
-            method: "put",
-            headers: {
-              Accept: "application/json"
-            },
-            body: JSON.stringify({name: this.file.name, content: content})
-          });
+        const saveFunction = async content => {
+          let response = await fetch(
+            `/services/uup_game.php?action=editTaskFile&taskId=${this.file.parent.scrapedId}`,
+            {
+              method: "put",
+              headers: {
+                Accept: "application/json"
+              },
+              body: JSON.stringify({ name: this.file.name, content: content })
+            }
+          );
           let body = await response.json();
           this.isSaving = false;
           if (!body.success) {
@@ -168,7 +183,7 @@ export default {
               type: "bad",
               group: "main",
               title: "Save file",
-              text: `${body.message || 'An error has occurred.'}`
+              text: `${body.message || "An error has occurred."}`
             });
           } else {
             this.$notify({
@@ -205,7 +220,7 @@ export default {
       const ref = this.$refs.autotestGeneratorRef;
       if (ref === undefined) {
         setTimeout(() => {
-          this.insertGenerator(element)
+          this.insertGenerator(element);
         }, 1000);
       } else {
         ref.$el.appendChild(element);
@@ -228,13 +243,21 @@ export default {
       } else if (this.$refs.mirror) {
         content = this.fileContent;
       }
-      let response = await fetch(`/services/uup_game.php?action=editTaskFile&taskId=${this.file.parent.scrapedId}`, {
-        method: "put",
-        headers: {
-          Accept: "application/json"
-        },
-        body: JSON.stringify({name: this.file.name, content: content, show: this.show, binary: this.binary})
-      });
+      let response = await fetch(
+        `/services/uup_game.php?action=editTaskFile&taskId=${this.file.parent.scrapedId}`,
+        {
+          method: "put",
+          headers: {
+            Accept: "application/json"
+          },
+          body: JSON.stringify({
+            name: this.file.name,
+            content: content,
+            show: this.show,
+            binary: this.binary
+          })
+        }
+      );
       let body = await response.json();
       this.isSaving = false;
       if (!body.success) {
@@ -242,7 +265,7 @@ export default {
           type: "bad",
           group: "main",
           title: "Save file",
-          text: `${body.message || 'An error has occurred.'}`
+          text: `${body.message || "An error has occurred."}`
         });
         return false;
       }
@@ -256,7 +279,7 @@ export default {
     async refresh(file) {
       if (file === undefined) {
         this.editable = {
-          type: 'none'
+          type: "none"
         };
       }
       if (this.$refs.toaster) {
@@ -264,12 +287,15 @@ export default {
       }
       this.file = file;
       if (this.file && this.file.parent) {
-        let response = await fetch(`/services/uup_game.php?action=getTaskFileContent&taskId=${this.file.parent.scrapedId}&name=${this.file.name}`, {
-          method: "get",
-          headers: {
-            Accept: "application/json"
+        let response = await fetch(
+          `/services/uup_game.php?action=getTaskFileContent&taskId=${this.file.parent.scrapedId}&name=${this.file.name}`,
+          {
+            method: "get",
+            headers: {
+              Accept: "application/json"
+            }
           }
-        });
+        );
         let body = await response.json();
         if (!body.success) {
           return false;
@@ -282,9 +308,17 @@ export default {
         this.binary = this.file.data.binary;
         this.show = this.file.data.show;
 
-        if (["autotest", "zadaca", "json", "autotest2"].includes(this.extensionRegex.exec(file.name)[1])) {
+        if (
+          ["autotest", "zadaca", "json", "autotest2"].includes(
+            this.extensionRegex.exec(file.name)[1]
+          )
+        ) {
           this.cmOptions.mode = this.modes.json;
-          this.fileContent = JSON.stringify(JSON.parse(this.fileContent), null, 4);
+          this.fileContent = JSON.stringify(
+            JSON.parse(this.fileContent),
+            null,
+            4
+          );
         } else if (["c"].includes(this.extensionRegex.exec(file.name)[1])) {
           this.cmOptions.mode = this.modes.c;
         } else if (["cpp"].includes(this.extensionRegex.exec(file.name)[1])) {
@@ -305,7 +339,7 @@ export default {
 <style lang="scss" scoped>
 #codemirror {
   height: 75vh;
-  overflow-y: scroll;
+  overflow-y: hidden;
   clear: both;
 }
 </style>

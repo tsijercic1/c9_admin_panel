@@ -5,28 +5,55 @@
       <v-icon @click="onClick('Create assignment', undefined)">mdi-plus</v-icon>
     </h1>
     <v-overlay :value="overlay">
-      <template v-if="overlayAction ==='Create assignment'">
-        <CreateAssignment :exit="hideOverlay" :refresh="refreshGame"/>
+      <template v-if="overlayAction === 'Create assignment'">
+        <CreateAssignment :exit="hideOverlay" :refresh="refreshGame" />
       </template>
-      <template v-if="overlayAction ==='Edit assignment'">
-        <EditAssignment :exit="hideOverlay" :refresh="refreshGame" :categories="categories"
-                        :assignment="modalItem"></EditAssignment>
+      <template v-if="overlayAction === 'Edit assignment'">
+        <EditAssignment
+          :exit="hideOverlay"
+          :refresh="refreshGame"
+          :categories="categories"
+          :assignment="modalItem"
+        ></EditAssignment>
       </template>
-      <template v-if="overlayAction ==='Create task'">
-        <CreateTask :exit="hideOverlay" :refresh="refreshGame" :categories="categories" :assignment="modalItem"/>
+      <template v-if="overlayAction === 'Create task'">
+        <CreateTask
+          :exit="hideOverlay"
+          :refresh="refreshGame"
+          :categories="categories"
+          :assignment="modalItem"
+        />
       </template>
-      <template v-if="overlayAction ==='Edit task'">
-        <EditTask :exit="hideOverlay" :refresh="refreshGame" :categories="categories" :assignment="modalItem.parent"
-                  :task="modalItem"/>
+      <template v-if="overlayAction === 'Edit task'">
+        <EditTask
+          :exit="hideOverlay"
+          :refresh="refreshGame"
+          :categories="categories"
+          :assignment="modalItem.parent"
+          :task="modalItem"
+        />
       </template>
-      <template v-if="overlayAction ==='Delete task'">
-        <DeleteTask :exit="hideOverlay" :refresh="refreshGame" :task="modalItem"/>
+      <template v-if="overlayAction === 'Delete task'">
+        <DeleteTask
+          :exit="hideOverlay"
+          :refresh="refreshGame"
+          :task="modalItem"
+        />
       </template>
-      <template v-if="overlayAction ==='Create file'">
-        <CreateFile :exit="hideOverlay" :refresh="refreshGame" :task="modalItem"/>
+      <template v-if="overlayAction === 'Create file'">
+        <CreateFile
+          :exit="hideOverlay"
+          :refresh="refreshGame"
+          :task="modalItem"
+        />
       </template>
-      <template v-if="overlayAction ==='Delete file'">
-        <DeleteFile :exit="hideOverlay" :refresh="refreshGame" :file="modalItem" :task="modalItem.parent"/>
+      <template v-if="overlayAction === 'Delete file'">
+        <DeleteFile
+          :exit="hideOverlay"
+          :refresh="refreshGame"
+          :file="modalItem"
+          :task="modalItem.parent"
+        />
       </template>
     </v-overlay>
     <vue-context ref="menu" v-slot="{ data }">
@@ -72,18 +99,18 @@
     <v-row>
       <v-col cols="4">
         <v-treeview
-            activatable
-            dense
-            hoverable
-            :items="assignments"
-            return-object
-            :active.sync="active"
-            @update:active="activeChanged(active)"
+          activatable
+          dense
+          hoverable
+          :items="assignments"
+          return-object
+          :active.sync="active"
+          @update:active="activeChanged(active)"
         >
           <template v-slot:prepend="{ item, open }">
             <v-icon
-                v-if="item.isDirectory"
-                @contextmenu.prevent="$refs.menu.open($event, item)"
+              v-if="item.isDirectory"
+              @contextmenu.prevent="$refs.menu.open($event, item)"
             >
               {{ open ? "mdi-folder-open" : "mdi-folder" }}
             </v-icon>
@@ -93,7 +120,7 @@
           </template>
           <template v-slot:label="{ item }">
             <v-list-item-title
-                @contextmenu.prevent="$refs.menu.open($event, item)"
+              @contextmenu.prevent="$refs.menu.open($event, item)"
             >
               {{ item.name }}
             </v-list-item-title>
@@ -102,7 +129,11 @@
       </v-col>
       <v-col cols="8">
         <v-card class="sticky" tile elevation="2">
-          <FileEditor :service="service" ref="fileEditor" class="editorWrapper"/>
+          <FileEditor
+            :service="service"
+            ref="fileEditor"
+            class="editorWrapper"
+          />
         </v-card>
       </v-col>
     </v-row>
@@ -216,12 +247,15 @@ export default {
       let assignments = [];
       let categories = [];
 
-      let response = await fetch("/services/uup_game.php?action=getTaskCategories", {
-        method: "get",
-        headers: {
-          Accept: "application/json"
+      let response = await fetch(
+        "/services/uup_game.php?action=getTaskCategories",
+        {
+          method: "get",
+          headers: {
+            Accept: "application/json"
+          }
         }
-      });
+      );
       let body = await response.json();
       if (!body.success) {
         return false;

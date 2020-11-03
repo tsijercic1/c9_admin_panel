@@ -1,39 +1,37 @@
 <template>
   <v-container>
-    <h1 class="mb-4">{{ course.name === undefined ? "" : course.name}}</h1>
+    <h1 class="mb-4">{{ course.name === undefined ? "" : course.name }}</h1>
     <v-expansion-panels
-        :accordion="false"
-        :popout="true"
-        :inset="false"
-        :multiple="false"
-        :focusable="true"
-        :disabled="false"
-        :readonly="false"
-        :flat="false"
-        :hover="true"
-        :tile="false"
+      :accordion="false"
+      :popout="true"
+      :inset="false"
+      :multiple="false"
+      :focusable="true"
+      :disabled="false"
+      :readonly="false"
+      :flat="false"
+      :hover="true"
+      :tile="false"
     >
       <v-expansion-panel
-          v-for="group in groupsForCourseId(course.id)"
-          :key="group.id"
+        v-for="group in groupsForCourseId(course.id)"
+        :key="group.id"
       >
-        <v-expansion-panel-header>{{group.name}}</v-expansion-panel-header>
+        <v-expansion-panel-header>{{ group.name }}</v-expansion-panel-header>
         <v-expansion-panel-content>
           <v-row class="pa-3">
             <v-col
-                cols="12"
-                sm="6"
-                md="4"
-                lg="3"
-                xl="2"
-                v-for="member in Object.keys(membersOfGroupByGroupIdAndCourseId(course.id, group.id))"
-                :key="member"
+              cols="12"
+              sm="6"
+              md="4"
+              lg="3"
+              xl="2"
+              v-for="member in Object.keys(
+                membersOfGroupByGroupIdAndCourseId(course.id, group.id)
+              )"
+              :key="member"
             >
-              <v-card
-                  class="pa-3 subtitle-2"
-                  outlined
-                  tile
-              >
+              <v-card class="pa-3 subtitle-2" outlined tile>
                 {{ group.members[member] }}
               </v-card>
             </v-col>
@@ -45,14 +43,13 @@
 </template>
 
 <script>
-
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
     return {
       connection: {}
-    }
+    };
   },
   computed: {
     ...mapGetters(["membersOfGroupByGroupIdAndCourseId", "groupsForCourseId"]),
@@ -63,8 +60,7 @@ export default {
   mounted() {
     this.$store.dispatch("refreshMembers", [this.course, this]);
   },
-  created() {
-  }
+  created() {}
 };
 </script>
 

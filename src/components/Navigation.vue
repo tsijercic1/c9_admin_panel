@@ -1,15 +1,20 @@
 <template>
   <v-navigation-drawer
-      v-model="drawer"
-      dark
-      app
-      :mini-variant.sync="mini"
-      permanent
+    v-model="drawer"
+    dark
+    app
+    :mini-variant.sync="mini"
+    permanent
   >
     <v-list dense nav class="py-0">
       <v-list-item two-line class="px-0">
         <v-list-item-avatar>
-          <v-icon>{{ "mdi-alpha-" + (user.username === undefined ? "x" : user.username.charAt(0)) + "-circle" }}
+          <v-icon
+            >{{
+              "mdi-alpha-" +
+                (user.username === undefined ? "x" : user.username.charAt(0)) +
+                "-circle"
+            }}
           </v-icon>
         </v-list-item-avatar>
 
@@ -34,7 +39,7 @@
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-spacer/>
+      <v-spacer />
       <v-list-item @click="logout">
         <v-list-item-icon>
           <v-icon>mdi-exit-run</v-icon>
@@ -83,7 +88,7 @@ export default {
   },
   methods: {
     async logout() {
-      await fetch('/services/logout.php');
+      await fetch("/services/logout.php");
       await this.$router.push("/login");
     }
   }

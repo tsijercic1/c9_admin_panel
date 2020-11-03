@@ -1,4 +1,4 @@
-import Helpers from '@/helpers';
+import Helpers from "@/helpers";
 
 export default {
   state: {
@@ -10,14 +10,20 @@ export default {
         state.statistics[course] = {};
       }
     },
-    addStudentToCourse(state, {course, student}) {
-      if (Helpers.hasKey(state.statistics, course) && !Helpers.hasKey(state.statistics[course], student)) {
+    addStudentToCourse(state, { course, student }) {
+      if (
+        Helpers.hasKey(state.statistics, course) &&
+        !Helpers.hasKey(state.statistics[course], student)
+      ) {
         state.statistics[course][student] = {};
       }
     },
-    addInfoToCourseSubPath(state, {pathArray, student, info}) {
+    addInfoToCourseSubPath(state, { pathArray, student, info }) {
       const course = pathArray[0];
-      if (Helpers.hasKey(state.statistics, course) && Helpers.hasKey(state.statistics[course], student)) {
+      if (
+        Helpers.hasKey(state.statistics, course) &&
+        Helpers.hasKey(state.statistics[course], student)
+      ) {
         let target = state.statistics[course][student];
         target.path = course;
         if (pathArray.length > 1) {
@@ -41,4 +47,4 @@ export default {
     }
   },
   getters: {}
-}
+};

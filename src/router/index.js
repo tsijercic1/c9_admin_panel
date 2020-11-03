@@ -72,4 +72,10 @@ router.beforeEach((to, from, next) => {
   } else next();
 });
 
+document.addEventListener("logout", async () => {
+  if (router.currentRoute.path !== "/login") {
+    await router.push("/login");
+  }
+});
+
 export default router;

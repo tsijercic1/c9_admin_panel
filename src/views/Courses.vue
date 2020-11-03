@@ -2,14 +2,14 @@
   <v-container>
     <h1>Courses</h1>
     <v-container>
-      <CourseCard v-for="course in courses" :key="course.id" :course="course"/>
+      <CourseCard v-for="course in courses" :key="course.id" :course="course" />
     </v-container>
   </v-container>
 </template>
 
 <script>
 import CourseCard from "../components/CourseCard";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Courses",
@@ -17,7 +17,7 @@ export default {
     CourseCard
   },
   computed: {
-    ...mapGetters(["courses"]),
+    ...mapGetters(["courses"])
   },
   async mounted() {
     await this.$store.dispatch("refreshCourses");

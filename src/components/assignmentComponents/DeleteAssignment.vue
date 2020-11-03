@@ -1,7 +1,9 @@
 <template>
   <v-card>
     <v-card-title>Delete assignment</v-card-title>
-    <v-card-subtitle>{{ assignment.name }} ({{ assignment.path }})</v-card-subtitle>
+    <v-card-subtitle
+      >{{ assignment.name }} ({{ assignment.path }})</v-card-subtitle
+    >
     <v-card-text>Are you sure you want to delete this task?</v-card-text>
     <v-card-actions>
       <v-btn @click="exit" :disabled="isProcessing">Cancel</v-btn>
@@ -11,7 +13,7 @@
 </template>
 
 <script>
-import {assignmentService} from "@/services";
+import { assignmentService } from "@/services";
 
 export default {
   name: "DeleteAssignment",
@@ -29,14 +31,17 @@ export default {
   methods: {
     async submit() {
       this.isProcessing = true;
-      const body = await assignmentService.deleteAssignment(this.course, this.assignment);
+      const body = await assignmentService.deleteAssignment(
+        this.course,
+        this.assignment
+      );
       this.isProcessing = false;
       if (!body.success) {
         this.$notify({
           type: "bad",
           group: "main",
           title: "Delete assignment",
-          text: `${body.message || 'An error has occurred.'}`
+          text: `${body.message || "An error has occurred."}`
         });
         return false;
       }
@@ -50,9 +55,7 @@ export default {
       });
     }
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
