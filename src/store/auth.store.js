@@ -100,7 +100,7 @@ export default {
           username: body.username,
           realName: ""
         });
-        context.commit("setRoles", body.roles());
+        context.commit("setRoles", body.roles);
         const profileResponse = await fetch(
           `/services/users.php?user=${body.username}`,
           {
