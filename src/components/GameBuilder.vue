@@ -122,7 +122,7 @@
             <v-list-item-title
               @contextmenu.prevent="$refs.menu.open($event, item)"
             >
-              {{ item.name }}{{ item.type !== "file" ? `(${item.path})` : "" }}
+              {{ item.name + (item.type !== "file" ? ` (${item.path})` : "") }}
             </v-list-item-title>
           </template>
         </v-treeview>

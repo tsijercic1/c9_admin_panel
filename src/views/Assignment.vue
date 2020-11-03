@@ -117,8 +117,7 @@
               <v-list-item-title
                 @contextmenu.prevent="$refs.menu.open($event, item)"
               >
-                {{ item.name }}
-                {{ item.isDirectory === true ? `(${item.path})` : "" }}
+                {{ item.name + (item.isDirectory === true ? ` (${item.path})` : "") }}
               </v-list-item-title>
             </template>
           </v-treeview>
