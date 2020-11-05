@@ -6,53 +6,53 @@
     </h1>
     <v-overlay :value="overlay">
       <template v-if="overlayAction === 'Create assignment'">
-        <CreateAssignment :exit="hideOverlay" :refresh="refreshGame" />
+        <CreateAssignment :exit="hideOverlay" :refresh="refreshGame"/>
       </template>
       <template v-if="overlayAction === 'Edit assignment'">
         <EditAssignment
-          :exit="hideOverlay"
-          :refresh="refreshGame"
-          :categories="categories"
-          :assignment="modalItem"
+            :exit="hideOverlay"
+            :refresh="refreshGame"
+            :categories="categories"
+            :assignment="modalItem"
         ></EditAssignment>
       </template>
       <template v-if="overlayAction === 'Create task'">
         <CreateTask
-          :exit="hideOverlay"
-          :refresh="refreshGame"
-          :categories="categories"
-          :assignment="modalItem"
+            :exit="hideOverlay"
+            :refresh="refreshGame"
+            :categories="categories"
+            :assignment="modalItem"
         />
       </template>
       <template v-if="overlayAction === 'Edit task'">
         <EditTask
-          :exit="hideOverlay"
-          :refresh="refreshGame"
-          :categories="categories"
-          :assignment="modalItem.parent"
-          :task="modalItem"
+            :exit="hideOverlay"
+            :refresh="refreshGame"
+            :categories="categories"
+            :assignment="modalItem.parent"
+            :task="modalItem"
         />
       </template>
       <template v-if="overlayAction === 'Delete task'">
         <DeleteTask
-          :exit="hideOverlay"
-          :refresh="refreshGame"
-          :task="modalItem"
+            :exit="hideOverlay"
+            :refresh="refreshGame"
+            :task="modalItem"
         />
       </template>
       <template v-if="overlayAction === 'Create file'">
         <CreateFile
-          :exit="hideOverlay"
-          :refresh="refreshGame"
-          :task="modalItem"
+            :exit="hideOverlay"
+            :refresh="refreshGame"
+            :task="modalItem"
         />
       </template>
       <template v-if="overlayAction === 'Delete file'">
         <DeleteFile
-          :exit="hideOverlay"
-          :refresh="refreshGame"
-          :file="modalItem"
-          :task="modalItem.parent"
+            :exit="hideOverlay"
+            :refresh="refreshGame"
+            :file="modalItem"
+            :task="modalItem.parent"
         />
       </template>
     </v-overlay>
@@ -99,18 +99,19 @@
     <v-row>
       <v-col cols="4">
         <v-treeview
-          activatable
-          dense
-          hoverable
-          :items="assignments"
-          return-object
-          :active.sync="active"
-          @update:active="activeChanged(active)"
+            activatable
+            dense
+            hoverable
+            :items="assignments"
+            return-object
+            :active.sync="active"
+            @update:active="activeChanged(active)"
         >
           <template v-slot:prepend="{ item, open }">
             <v-icon
-              v-if="item.isDirectory"
-              @contextmenu.prevent="$refs.menu.open($event, item)"
+                v-if="item.isDirectory"
+                @contextmenu.prevent="$refs.menu.open($event, item)"
+                :color="getColorOfIcon(item)"
             >
               {{ open ? "mdi-folder-open" : "mdi-folder" }}
             </v-icon>
@@ -120,9 +121,20 @@
           </template>
           <template v-slot:label="{ item }">
             <v-list-item-title
-              @contextmenu.prevent="$refs.menu.open($event, item)"
+                @contextmenu.prevent="$refs.menu.open($event, item)"
             >
               {{ item.name + (item.type !== "file" ? ` (${item.path})` : "") }}
+              <template v-if="item.type === 'assignment'">
+                <v-avatar color="blue lighten-4" style="font-size: smaller" size="24" class="ml-2 my-auto">
+                  {{ getNumberOfTasksInCategory(item, 'Easy') }}
+                </v-avatar>
+                <v-avatar color="green lighten-4" style="font-size: smaller" size="24" class="ml-2 my-auto">
+                  {{ getNumberOfTasksInCategory(item, 'Moderate') }}
+                </v-avatar>
+                <v-avatar color="red lighten-4" style="font-size: smaller" size="24" class="ml-2 my-auto">
+                  {{ getNumberOfTasksInCategory(item, 'Hard') }}
+                </v-avatar>
+              </template>
             </v-list-item-title>
           </template>
         </v-treeview>
@@ -130,9 +142,9 @@
       <v-col cols="8">
         <v-card class="sticky" tile elevation="2">
           <FileEditor
-            :service="service"
-            ref="fileEditor"
-            class="editorWrapper"
+              :service="service"
+              ref="fileEditor"
+              class="editorWrapper"
           />
         </v-card>
       </v-col>
@@ -248,13 +260,13 @@ export default {
       let categories = [];
 
       let response = await fetch(
-        "/services/uup_game.php?action=getTaskCategories",
-        {
-          method: "get",
-          headers: {
-            Accept: "application/json"
+          "/services/uup_game.php?action=getTaskCategories",
+          {
+            method: "get",
+            headers: {
+              Accept: "application/json"
+            }
           }
-        }
       );
       let body = await response.json();
       if (!body.success) {
@@ -276,6 +288,36 @@ export default {
       this.assignments = assignments;
       this.categories = categories;
       return true;
+    },
+    getNumberOfTasksInCategory(assignment, category) {
+      if (assignment.type === "assignment") {
+        let id = 1;
+        this.categories.forEach(c => c.name === category ? id = c.id : "");
+        let numberOfTasks = 0;
+        assignment.children.forEach(task => {
+          if (task.data.category === id) {
+            numberOfTasks++;
+          }
+        });
+        return numberOfTasks;
+      }
+      return 0;
+    },
+    getColorOfIcon(node) {
+      if (node.type === 'task') {
+        const id = node.data.category;
+        for (const category of this.categories) {
+          if (category.id === id) {
+            if (category.name === "Easy") {
+              return "blue lighten-4";
+            } else if (category.name === "Moderate") {
+              return "green lighten-4";
+            }
+            return "red lighten-4";
+          }
+        }
+        return "";
+      }
     }
   }
 };
