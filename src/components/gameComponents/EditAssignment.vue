@@ -1,7 +1,7 @@
 <template>
   <v-card class="pa-5 px-8" dark>
     <h3 class="text-center mb-3">Edit assignment</h3>
-    <v-form v-model="valid">
+    <v-form ref="form" v-model="valid">
       <v-text-field
         label="Name"
         v-model="name"
@@ -55,6 +55,7 @@ export default {
     this.points = this.assignment.data.points;
     this.challengePoints = this.assignment.data.challengePoints;
     this.active = this.assignment.data.active;
+    this.valid = this.$refs.form.validate();
   },
   methods: {
     async submit() {
