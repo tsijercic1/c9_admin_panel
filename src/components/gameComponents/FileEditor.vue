@@ -78,6 +78,7 @@ import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 import { Editor } from "@toast-ui/vue-editor";
 
 import GeneratorFrame from "@/components/GeneratorFrame";
+import { gameService } from "@/services";
 
 export default {
   name: "FileEditor",
@@ -166,17 +167,11 @@ export default {
           }
         }
         const saveFunction = async content => {
-          let response = await fetch(
-            `/services/uup_game.php?action=editTaskFile&taskId=${this.file.parent.scrapedId}`,
-            {
-              method: "put",
-              headers: {
-                Accept: "application/json"
-              },
-              body: JSON.stringify({ name: this.file.name, content: content })
-            }
-          );
-          let body = await response.json();
+          let body = await gameService.editFile({
+            taskId: this.file.parent.scrapedId,
+            name: this.file.name,
+            content: content
+          });
           this.isSaving = false;
           if (!body.success) {
             this.$notify({
@@ -243,22 +238,13 @@ export default {
       } else if (this.$refs.mirror) {
         content = this.fileContent;
       }
-      let response = await fetch(
-        `/services/uup_game.php?action=editTaskFile&taskId=${this.file.parent.scrapedId}`,
-        {
-          method: "put",
-          headers: {
-            Accept: "application/json"
-          },
-          body: JSON.stringify({
-            name: this.file.name,
-            content: content,
-            show: this.show,
-            binary: this.binary
-          })
-        }
-      );
-      let body = await response.json();
+      let body = await gameService.editFile({
+        taskId: this.file.parent.scrapedId,
+        name: this.file.name,
+        show: this.show,
+        binary: this.binary,
+        content: content
+      });
       this.isSaving = false;
       if (!body.success) {
         this.$notify({
@@ -287,16 +273,10 @@ export default {
       }
       this.file = file;
       if (this.file && this.file.parent) {
-        let response = await fetch(
-          `/services/uup_game.php?action=getTaskFileContent&taskId=${this.file.parent.scrapedId}&name=${this.file.name}`,
-          {
-            method: "get",
-            headers: {
-              Accept: "application/json"
-            }
-          }
-        );
-        let body = await response.json();
+        let body = await gameService.getFileContent({
+          taskId: this.file.parent.scrapedId,
+          filename: this.file.name
+        });
         if (!body.success) {
           return false;
         }

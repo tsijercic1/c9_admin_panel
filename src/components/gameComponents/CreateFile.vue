@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { gameService } from "@/services";
+
 export default {
   name: "CreateFile",
   props: {
@@ -38,22 +40,13 @@ export default {
     async create() {
       if (this.valid) {
         this.isProcessing = true;
-        let response = await fetch(
-          `/services/uup_game.php?action=createTaskFile&taskId=${this.task.scrapedId}`,
-          {
-            method: "post",
-            headers: {
-              Accept: "application/json"
-            },
-            body: JSON.stringify({
-              name: this.name,
-              show: this.show,
-              binary: this.binary,
-              content: ""
-            })
-          }
-        );
-        let body = await response.json();
+        let body = await gameService.createFile({
+          taskId: this.task.scrapedId,
+          name: this.name,
+          show: this.show,
+          binary: this.binary,
+          content: ""
+        });
         this.isProcessing = false;
         if (!body.success) {
           this.$notify({

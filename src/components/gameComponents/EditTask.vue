@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { gameService } from "@/services";
+
 export default {
   name: "EditTask",
   props: {
@@ -65,21 +67,12 @@ export default {
     async submit() {
       if (this.valid) {
         this.isProcessing = true;
-        let response = await fetch(
-          `/services/uup_game.php?action=editTask&taskId=${this.task.scrapedId}`,
-          {
-            method: "post",
-            headers: {
-              Accept: "application/json"
-            },
-            body: JSON.stringify({
-              name: this.name,
-              category: this.selected.id,
-              hint: this.hint
-            })
-          }
-        );
-        let body = await response.json();
+        let body = await gameService.editTask({
+          id: this.task.scrapedId,
+          name: this.name,
+          categoryId: this.selected.id,
+          hint: this.hint
+        });
         this.isProcessing = false;
         if (!body.success) {
           this.$notify({

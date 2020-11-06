@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import { gameService } from "@/services";
+
 export default {
   name: "DeleteFile",
   props: {
@@ -29,16 +31,10 @@ export default {
   methods: {
     async submit() {
       this.isProcessing = true;
-      let response = await fetch(
-        `/services/uup_game.php?action=deleteTaskFile&taskId=${this.task.scrapedId}&name=${this.file.name}`,
-        {
-          method: "delete",
-          headers: {
-            Accept: "application/json"
-          }
-        }
-      );
-      let body = await response.json();
+      let body = await gameService.deleteFile({
+        taskId: this.task.scrapedId,
+        filename: this.file.name
+      });
       this.isProcessing = false;
       if (!body.success) {
         this.$notify({

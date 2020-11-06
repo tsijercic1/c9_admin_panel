@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import { gameService } from "@/services";
+
 export default {
   name: "DeleteTask",
   props: {
@@ -26,16 +28,7 @@ export default {
   methods: {
     async submit() {
       this.isProcessing = true;
-      let response = await fetch(
-        `/services/uup_game.php?action=deleteTask&taskId=${this.task.scrapedId}`,
-        {
-          method: "delete",
-          headers: {
-            Accept: "application/json"
-          }
-        }
-      );
-      let body = await response.json();
+      let body = await gameService.deleteTask(this.task.scrapedId);
       this.isProcessing = false;
       if (!body.success) {
         this.$notify({

@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import { gameService } from "@/services";
+
 export default {
   name: "CreateTask",
   props: {
@@ -57,22 +59,13 @@ export default {
     async create() {
       if (this.valid) {
         this.isProcessing = true;
-        let response = await fetch(
-          `/services/uup_game.php?action=createTask&assignmentId=${this.assignment.scrapedId}`,
-          {
-            method: "post",
-            headers: {
-              Accept: "application/json"
-            },
-            body: JSON.stringify({
-              name: this.name,
-              displayName: this.displayName,
-              category: this.selected.id,
-              hint: this.hint
-            })
-          }
-        );
-        let body = await response.json();
+        let body = await gameService.createTask({
+          assignmentId: this.assignment.scrapedId,
+          name: this.name,
+          displayName: this.displayName,
+          category: this.selected.id,
+          hint: this.hint
+        });
         this.isProcessing = false;
         if (!body.success) {
           this.$notify({
