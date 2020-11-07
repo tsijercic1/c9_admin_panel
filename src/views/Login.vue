@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-content class="grey darken-4">
+    <v-main class="grey darken-4">
       <v-container fill-height>
         <v-layout align-center justify-center>
           <v-flex xs9 sm7 md5 lg4>
@@ -31,7 +31,7 @@
           </v-flex>
         </v-layout>
       </v-container>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 

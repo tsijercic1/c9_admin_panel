@@ -55,7 +55,7 @@ export default {
     this.points = this.assignment.data.points;
     this.challengePoints = this.assignment.data.challengePoints;
     this.active = this.assignment.data.active;
-    this.valid = this.$refs.form.validate();
+    this.$refs.form.resetValidation();
   },
   methods: {
     async submit() {

@@ -1,9 +1,9 @@
 <template>
   <v-app>
     <navigation v-if="this.$router.history.current.name !== 'Login'" />
-    <v-content>
+    <v-main>
       <router-view />
-    </v-content>
+    </v-main>
     <notifications
       group="main"
       position="bottom right"
