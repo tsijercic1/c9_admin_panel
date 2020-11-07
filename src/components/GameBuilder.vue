@@ -294,11 +294,13 @@ export default {
         let id = 1;
         this.categories.forEach(c => c.name === category ? id = c.id : "");
         let numberOfTasks = 0;
-        assignment.children.forEach(task => {
-          if (task.data.category === id) {
-            numberOfTasks++;
-          }
-        });
+        if (assignment.children) {
+          assignment.children.forEach(task => {
+            if (task.data.category === id) {
+              numberOfTasks++;
+            }
+          });
+        }
         return numberOfTasks;
       }
       return 0;
