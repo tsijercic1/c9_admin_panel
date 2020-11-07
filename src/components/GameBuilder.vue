@@ -163,6 +163,7 @@ import FileEditor from "@/components/gameComponents/FileEditor";
 import DeleteTask from "@/components/gameComponents/DeleteTask";
 import DeleteFile from "@/components/gameComponents/DeleteFile";
 import CreateFile from "@/components/gameComponents/CreateFile";
+import {gameService} from "@/services";
 
 export default {
   components: {
@@ -259,27 +260,12 @@ export default {
       let assignments = [];
       let categories = [];
 
-      let response = await fetch(
-          "/services/uup_game.php?action=getTaskCategories",
-          {
-            method: "get",
-            headers: {
-              Accept: "application/json"
-            }
-          }
-      );
-      let body = await response.json();
+      let body = await gameService.getTaskCategories();
       if (!body.success) {
         return false;
       }
       categories = body.data;
-      response = await fetch("/services/uup_game.php?action=getAssignments&A", {
-        method: "get",
-        headers: {
-          Accept: "application/json"
-        }
-      });
-      body = await response.json();
+      body = await gameService.getAssignments();
       if (!body.success) {
         return false;
       }
