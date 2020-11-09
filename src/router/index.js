@@ -54,6 +54,21 @@ const routes = [
     component: () => import("@/views/Statistics")
   },
   {
+    path: "/game",
+    name: "Game",
+    component: () => import("@/views/Game")
+  },
+  {
+    path: "/game/builder",
+    name: "GameBuilder",
+    component: () => import("@/components/GameBuilder")
+  },
+  {
+    path: "/game/statistics",
+    name: "GameStatistics",
+    component: () => import("@/components/GameStatistics")
+  },
+  {
     path: "*",
     name: "NotFound",
     component: NotFound
@@ -66,21 +81,20 @@ const router = new VueRouter({
   routes
 });
 
-router.beforeEach((to, from, next) => {
-  if (
-    store.getters.roles.includes("sysadmin") ||
-    store.getters.roles.includes("admin")
-  ) {
-    if (to.name !== "Login" && !store.getters.isAuthenticated) {
+router.beforeEach(async (to, from, next) => {
+  if (store.getters.isAuthenticated) {
+    if (
+      store.getters.roles.includes("game-spectators") &&
+      (["Login", "Dashboard", "Game", "GameStatistics"].includes(to.name))
+    ) {
+      next();
+    } else if(store.getters.roles.includes("admin")||store.getters.roles.includes("sysadmin")) {
+      next();
+    } else {
+      store.actions.dispatch("resetState");
+      await fetch("/services/logout.php");
       next(Login);
-    } else next();
-  } else if (
-    store.getters.roles.includes("game-spectators") &&
-    (to.name === "Login" || to.name === "Dashboard")
-  ) {
-    if (to.name !== "Login" && !store.getters.isAuthenticated) {
-      next(Login);
-    } else next();
+    }
   } else {
     next(Login);
   }
@@ -88,6 +102,8 @@ router.beforeEach((to, from, next) => {
 
 document.addEventListener("logout", async () => {
   if (router.currentRoute.path !== "/login") {
+    store.actions.dispatch("resetState");
+    await fetch("/services/logout.php");
     await router.push("/login");
   }
 });

@@ -134,6 +134,10 @@ export default {
           message: body.message
         };
       }
+    },
+    resetState: function (context) {
+      context.commit("setSessionId", undefined);
+      context.commit("setRoles", []);
     }
   }
 };
