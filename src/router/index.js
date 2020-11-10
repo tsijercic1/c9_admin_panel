@@ -82,6 +82,9 @@ const router = new VueRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  if (to.name === "Login") {
+    next();
+  }
   console.log("TO");
   console.log(to);
   console.log("FROM");
