@@ -1,12 +1,15 @@
 <template>
   <v-card>
-    Game statistics...
+    <v-card-title>Game statistics</v-card-title>
+    <GeneralStatistics/>
   </v-card>
 </template>
 
 <script>
+import GeneralStatistics from "@/components/gameStatisticsComponents/GeneralStatistics";
 export default {
-  name: "GameStatistics"
+  name: "GameStatistics",
+  components: {GeneralStatistics}
 };
 </script>
 

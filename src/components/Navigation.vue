@@ -62,6 +62,11 @@ export default {
           title: "Dashboard",
           icon: "mdi-view-dashboard",
           link: "/dashboard"
+        },
+        {
+          title: "Game",
+          icon: "mdi-gamepad-variant-outline",
+          link: "/game"
         }
       ],
       mini: true,
