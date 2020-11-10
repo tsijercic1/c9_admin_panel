@@ -82,20 +82,36 @@ const router = new VueRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  console.log("TO");
+  console.log(to);
+  console.log("FROM");
+  console.log(from);
+  console.log("NEXT");
+  console.log(next);
+  const isAuthenticated = store.getters.isAuthenticated;
+  if (isAuthenticated === undefined) {
+    console.log("UNDEFINED")
+  }
+  console.log(isAuthenticated);
   if (store.getters.isAuthenticated) {
+    console.log("IS AUTHENTICATED");
     if (
       store.getters.roles.includes("game-spectators") &&
       (["Login", "Dashboard", "Game", "GameStatistics"].includes(to.name))
     ) {
+      console.log("SPECTaTOR");
       next();
     } else if(store.getters.roles.includes("admin")||store.getters.roles.includes("sysadmin")) {
+      console.log("ADMIN");
       next();
     } else {
+      console.log("RESET STATE");
       store.actions.dispatch("resetState");
       await fetch("/services/logout.php");
       next(Login);
     }
   } else {
+    console.log("ELSE --- LOGIN");
     next(Login);
   }
 });
