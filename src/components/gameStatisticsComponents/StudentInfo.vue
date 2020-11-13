@@ -74,7 +74,10 @@ export default {
     if (Object.keys(query).includes("username")) {
       const body = await gameStatisticsService.getStudentInfo();
       const assignmentBody = await gameStatisticsService.getAssignments();
+      console.log(body);
+      console.log(assignmentBody);
       if (body.success === true && assignmentBody.success === true) {
+        console.log("StudentInfo - Line 80 - OK");
         this.realName = body.student.realName;
         this.points = body.student.totalPoints;
         let assignmentDescriptions = assignmentBody.data.children;
@@ -87,6 +90,7 @@ export default {
           assignmentMap[assignmentDescription.id] = assignmentDescription;
         });
         let assignments = [];
+        console.log(Object.keys(body.data))
         for (let assignmentId of Object.keys(body.data)) {
           let assignment = {
             id: 'assignment'+assignmentId,
@@ -118,6 +122,7 @@ export default {
             assignment
           );
         }
+        console.log(assignments);
         this.assignments = assignments;
       }
     } else {
