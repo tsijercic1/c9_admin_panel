@@ -74,8 +74,7 @@ export default {
     if (Object.keys(query).includes("username")) {
       const body = await gameStatisticsService.getStudentInfo(query.username);
       const assignmentBody = await gameStatisticsService.getAssignments();
-      console.log(body);
-      console.log(assignmentBody);
+      console.log("StudentInfo - Line 77 - OK");
       if (body.success === true && assignmentBody.success === true) {
         console.log("StudentInfo - Line 80 - OK");
         this.realName = body.student.realName;
@@ -83,7 +82,8 @@ export default {
         let assignmentDescriptions = assignmentBody.data.children;
         let assignmentMap = {};
         assignmentDescriptions.forEach(assignmentDescription => {
-          assignmentDescription.children.forEach(child => {
+          console.log(assignmentDescription);
+          assignmentDescription.children?.forEach(child => {
             assignmentDescription[child.id] = child;
           });
           assignmentDescription.children = undefined;
