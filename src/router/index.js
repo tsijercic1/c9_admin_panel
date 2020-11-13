@@ -69,6 +69,11 @@ const routes = [
     component: () => import("@/components/GameStatistics")
   },
   {
+    path: "/game/statistics/student",
+    name: "StudentInfo",
+    component: () => import("@/components/gameStatisticsComponents/StudentInfo")
+  },
+  {
     path: "*",
     name: "NotFound",
     component: NotFound
