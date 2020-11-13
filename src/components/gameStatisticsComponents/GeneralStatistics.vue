@@ -85,16 +85,20 @@ export default {
           value: body.data.players
         },
         {
+          label: "Number of tokens in the game: ",
+          value: body.data.tokensInGame
+        },
+        {
           label: "Number of power-ups in the game:",
-          value: body.data.powerupsInGame
+          value: body.data.powerUpsInGame
         },
         {
           label: "Number of used power-ups in the game:",
-          value: body.data.usedPowerups
+          value: body.data.usedPowerUps
         },
         {
           label: "Number of unused power-ups in the game:",
-          value: body.data.unusedPowerups
+          value: body.data.unusedPowerUps
         }
       ]);
       this.bestStudents = body.data.bestStudents;

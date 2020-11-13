@@ -164,6 +164,7 @@ import DeleteTask from "@/components/gameComponents/DeleteTask";
 import DeleteFile from "@/components/gameComponents/DeleteFile";
 import CreateFile from "@/components/gameComponents/CreateFile";
 import {gameService} from "@/services";
+import {fileTypes,extensionRegex} from "@/constants";
 
 export default {
   components: {
@@ -192,22 +193,9 @@ export default {
       overlayAction: "",
       assignments: [],
       active: [],
-      extensionRegex: /(?:\.([^.]+))?$/,
-      fileTypes: {
-        html: "mdi-language-html5",
-        c: "mdi-language-c",
-        cpp: "mdi-language-cpp",
-        js: "mdi-nodejs",
-        json: "mdi-code-json",
-        md: "mdi-language-markdown",
-        pdf: "mdi-file-pdf",
-        png: "mdi-file-image",
-        txt: "mdi-file-document-outline",
-        autotest: "mdi-cog",
-        autotest2: "mdi-cog",
-        zadaca: "mdi-arrow-top-right-thick"
-      },
-      categories: []
+      categories: [],
+      fileTypes,
+      extensionRegex
     };
   },
   async mounted() {

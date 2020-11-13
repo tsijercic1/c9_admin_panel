@@ -157,7 +157,7 @@ import EditAssignment from "@/components/assignmentComponents/EditAssignment";
 import DeleteAssignment from "@/components/assignmentComponents/DeleteAssignment";
 import CreateFile from "@/components/assignmentComponents/CreateFile";
 import DeleteFile from "@/components/assignmentComponents/DeleteFile";
-// import Vue from 'vue';
+import {extensionRegex, fileTypes} from "@/constants";
 
 export default {
   components: {
@@ -176,21 +176,8 @@ export default {
       loading: false,
       showOverlay: false,
       overlayAction: "",
-      extensionRegex: /(?:\.([^.]+))?$/,
-      fileTypes: {
-        html: "mdi-language-html5",
-        c: "mdi-language-c",
-        cpp: "mdi-language-cpp",
-        js: "mdi-nodejs",
-        json: "mdi-code-json",
-        md: "mdi-language-markdown",
-        pdf: "mdi-file-pdf",
-        png: "mdi-file-image",
-        txt: "mdi-file-document-outline",
-        autotest: "mdi-cog",
-        autotest2: "mdi-cog",
-        zadaca: "mdi-arrow-top-right-thick"
-      },
+      extensionRegex,
+      fileTypes,
       globalIdCounter: 1,
       rawEditorFileExtensions: [
         "c",
