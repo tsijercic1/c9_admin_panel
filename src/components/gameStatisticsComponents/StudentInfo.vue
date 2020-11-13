@@ -70,7 +70,7 @@ export default {
     }
   },
   async mounted() {
-    const query = this.username;
+    const query = this.$route.query;
     if (Object.keys(query).includes("username")) {
       const body = await gameStatisticsService.getStudentInfo(query.username);
       const assignmentBody = await gameStatisticsService.getAssignments();
