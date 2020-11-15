@@ -15,6 +15,25 @@ export default {
     }
     return body;
   },
+  async getGroupMembers(groupId) {
+    let response = await fetch(
+      `/services/game_statistics.php?action=groupMembers&groupId=${groupId}`,
+      {
+        method: "get",
+        headers: {
+          Accept: "application/json"
+        }
+      }
+    );
+    let body = await response.json();
+    if (!body.success) {
+      if (body.message.includes("logged")) {
+        const event = new Event("logout");
+        document.dispatchEvent(event);
+      }
+    }
+    return body;
+  },
   async getStudentInfo(username) {
     let response = await fetch(
       `/services/game_statistics.php?action=studentInfo&student=${username}`,

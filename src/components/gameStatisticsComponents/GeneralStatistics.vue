@@ -1,6 +1,5 @@
 <template>
-  <v-card>
-    <v-card-title>General</v-card-title>
+  <v-container>
     <v-row>
       <v-col>
         <v-card tile>
@@ -61,7 +60,7 @@
         </v-card>
       </v-col>
     </v-row>
-  </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -78,8 +77,7 @@ export default {
   async mounted() {
     const body = await gameStatisticsService.getGeneral();
     if (body.success === true) {
-      this.numbers = [];
-      this.numbers.push(...[
+      this.numbers = [
         {
           label: "Number of players",
           value: body.data.players
@@ -100,7 +98,7 @@ export default {
           label: "Number of unused power-ups in the game:",
           value: body.data.unusedPowerUps
         }
-      ]);
+      ];
       this.bestStudents = body.data.bestStudents;
     }
   }

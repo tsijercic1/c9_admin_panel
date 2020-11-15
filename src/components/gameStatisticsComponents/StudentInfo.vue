@@ -8,7 +8,7 @@
       <strong>{{ points }}</strong>
     </v-progress-linear>
     <v-row>
-      <v-col cols="5">
+      <v-col cols="6">
         <v-treeview
             activatable
             dense
@@ -30,18 +30,16 @@
             </v-icon>
           </template>
           <template v-slot:label="{ item }">
-            <v-list-item-title>
               {{ item.name + (item.type !== "file" ? ` (${item.path})` : "") }}
-            </v-list-item-title>
-            <v-icon v-if="item.type==='assignment' && isAssignmentDone(item)" color="green">mdi-check-bold</v-icon>
-            <v-chip v-if="item.type === 'task'" :color="getTaskChipColor(item)">{{item.status}}</v-chip>
-            <v-list-item-title v-if="item.type === 'assignment'">
-              {{ `${getAssignmentPoints(item)} / ${item.totalPoints}` }}
-            </v-list-item-title>
+              <v-icon v-if="item.type==='assignment' && isAssignmentDone(item)" color="green">mdi-check-bold</v-icon>
+              <v-chip v-if="item.type === 'task'" :color="getTaskChipColor(item)">{{item.status}}</v-chip>
+              <template v-if="item.type === 'assignment'">
+                {{ `${getAssignmentPoints(item).toFixed(2)} / ${item.totalPoints}` }}
+              </template>
           </template>
         </v-treeview>
       </v-col>
-      <v-col cols="7">
+      <v-col cols="6">
         In development
       </v-col>
     </v-row>
@@ -110,6 +108,7 @@ export default {
               path: descriptor.path,
               name: descriptor.name,
               type: descriptor.type,
+              isDirectory: descriptor.isDirectory,
               status: task.status,
               taskNumber: task.task_number,
               points: task.points,

@@ -1,25 +1,55 @@
 <template>
-  <v-card>
-    <v-card-title>Game</v-card-title>
-    <GameStatistics/>
-    <GameBuilder v-if="isAdmin"></GameBuilder>
-  </v-card>
+  <v-container>
+    <v-card-title class="justify-center">Game</v-card-title>
+      <v-tabs
+          v-model="activeTab"
+          color="deep-purple"
+          centered
+      >
+        <v-tab>Leaderboard</v-tab>
+        <v-tab>Groups</v-tab>
+        <v-tab>General</v-tab>
+        <v-tab v-if="isAdmin">Builder</v-tab>
+
+        <v-tab-item>
+          <leaderboard/>
+        </v-tab-item>
+        <v-tab-item>
+          <groups/>
+        </v-tab-item>
+        <v-tab-item>
+          <general-statistics/>
+        </v-tab-item>
+        <v-tab-item>
+          <game-builder/>
+        </v-tab-item>
+      </v-tabs>
+  </v-container>
 </template>
 
 <script>
-import GameStatistics from "@/components/GameStatistics";
-import GameBuilder from "@/components/GameBuilder";
 
+
+import Leaderboard from "@/components/gameStatisticsComponents/Leaderboard";
+import GeneralStatistics from "@/components/gameStatisticsComponents/GeneralStatistics";
+import Groups from "@/components/gameStatisticsComponents/Groups";
+import GameBuilder from "@/components/GameBuilder";
 export default {
   name: "Game",
-  components: {GameBuilder, GameStatistics},
+  components: {GameBuilder, Groups, GeneralStatistics, Leaderboard},
   data() {
     return {
-      isAdmin: false
+      isAdmin: false,
+      activeTab: undefined
     };
   },
   mounted() {
     this.isAdmin = this.$store.getters.roles.includes("admin") || this.$store.getters.roles.includes("sysadmin");
+  },
+  watch: {
+    activeTab(tab) {
+      console.log(tab);
+    }
   }
 }
 </script>

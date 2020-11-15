@@ -59,17 +59,12 @@ const routes = [
     component: () => import("@/views/Game")
   },
   {
-    path: "/game/builder",
-    name: "GameBuilder",
-    component: () => import("@/components/GameBuilder")
+    path: "/game/group",
+    name: "GameGroup",
+    component: () => import("@/components/gameStatisticsComponents/Group")
   },
   {
-    path: "/game/statistics",
-    name: "GameStatistics",
-    component: () => import("@/components/GameStatistics")
-  },
-  {
-    path: "/game/statistics/student",
+    path: "/game/student",
     name: "StudentInfo",
     component: () => import("@/components/gameStatisticsComponents/StudentInfo")
   },
@@ -105,7 +100,7 @@ router.beforeEach(async (to, from, next) => {
     console.log("IS AUTHENTICATED");
     if (
       store.getters.roles.includes("game-spectators") &&
-      (["Login", "Dashboard", "Game", "GameStatistics"].includes(to.name))
+      (["Login", "Dashboard"].includes(to.name) || to.path.includes("/game"))
     ) {
       console.log("SPECTaTOR");
       next();
