@@ -39,7 +39,7 @@ export default {
     ];
     const groupId = this.$route.query.groupId;
     console.log(groupId);
-    this.getAssignmentInfo();
+    await this.getAssignmentInfo();
     if (groupId) {
       this.groupId = groupId;
       const body = await gameStatisticsService.getGroupMembers(groupId);
@@ -47,7 +47,7 @@ export default {
         this.group = body.data;
         this.members = body.data.members;
         for (const [index, member] of this.members.entries()) {
-          this.getStudentInfo(index, member);
+          await this.getStudentInfo(index, member);
         }
       }
     }
@@ -68,6 +68,8 @@ export default {
       const body = await gameStatisticsService.getStudentInfo(student.login);
       if (body.success === true) {
         for (const [key, value] of Object.entries(body.data)) {
+          console.log(key);
+          console.log(typeof key);
           this.members[index][key + ""] = value.reduce((result, task) => result + task.points, 0);
         }
       }
