@@ -71,9 +71,12 @@ export default {
           console.log(key);
           console.log(typeof key);
           this.members[index][key + ""] = value.reduce((result, task) => result + task.points, 0);
+          console.log(typeof value);
         }
       }
       console.log(student);
+      console.log(this.headers);
+      console.log(this.members);
     },
     studentClicked(student) {
       this.$router.push(`/game/student?username=${student.login}`);
