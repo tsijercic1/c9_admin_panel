@@ -50,6 +50,7 @@
               <tr
                   v-for="student in bestStudents"
                   :key="student.username"
+                  @click="studentClicked(student.username)"
               >
                 <td>{{ student.realName }}</td>
                 <td>{{ student.points }}</td>
@@ -100,6 +101,11 @@ export default {
         }
       ];
       this.bestStudents = body.data.bestStudents;
+    }
+  },
+  methods: {
+    studentClicked(username) {
+      this.$router.push(`/game/student?username=${username}`);
     }
   }
 }

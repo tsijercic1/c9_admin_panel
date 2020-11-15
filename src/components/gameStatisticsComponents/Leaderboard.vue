@@ -19,6 +19,7 @@
         <tr
             v-for="(student, index) in students"
             :key="student.username"
+            @click="studentClicked(student.username)"
         >
           <td>{{index+1}}.</td>
           <td>{{ student.realName }}</td>
@@ -45,6 +46,11 @@ name: "Leaderboard",
     if (body.success === true) {
       const students = body.data;
       this.students = students.filter(student => student.points !== null);
+    }
+  },
+  methods: {
+    studentClicked(username) {
+      this.$router.push(`/game/student?username=${username}`);
     }
   }
 }

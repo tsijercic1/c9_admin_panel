@@ -35,7 +35,7 @@ export default {
       {
         "text": "Name",
         "value": "realName"
-      },
+      }
     ];
     const groupId = this.$route.query.groupId;
     console.log(groupId);
@@ -59,7 +59,7 @@ export default {
           assignment => {
             this.headers.push({
               text: assignment.path,
-              value: assignment.id + ""
+              value: "lesson" + assignment.id
             });
           }
       );
@@ -70,7 +70,9 @@ export default {
         for (const [key, value] of Object.entries(body.data)) {
           console.log(key);
           console.log(typeof key);
-          this.members[index][key + ""] = value.reduce((result, task) => result + task.points, 0);
+          const object = {...this.members[index]};
+          object["lesson" + key] = value.reduce((result, task) => result + task.points, 0);
+          this.members.splice(index,1,object);
           console.log(typeof value);
         }
       }
