@@ -226,7 +226,16 @@ export default {
       if (!item.isDirectory) {
         this.$refs.fileEditor.refresh(item);
       } else {
-        this.$refs.fileEditor.refresh(undefined);
+        if (item.type === "task") {
+          const children = item.children?.filter(child => extensionRegex.exec(child.name)[1] === "html");
+          if (children && children.length > 0) {
+            this.$refs.fileEditor.refresh(children[0]);
+          } else {
+            this.$refs.fileEditor.refresh(undefined);
+          }
+        } else {
+          this.$refs.fileEditor.refresh(undefined);
+        }
       }
     },
     onClick(action, item) {
