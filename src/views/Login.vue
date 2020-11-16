@@ -12,6 +12,7 @@
                   label="Username"
                   prepend-icon="mdi-account"
                   v-model="username"
+                  v-on:keyup.enter="login"
                 />
                 <v-text-field
                   light
@@ -19,6 +20,7 @@
                   label="Password"
                   prepend-icon="mdi-lock"
                   v-model="password"
+                  v-on:keyup.enter="login"
                 />
                 <v-btn large width="100%" class="mt-6" dark @click="login">
                   Log in
