@@ -18,8 +18,8 @@
         <tbody>
         <tr
             v-for="(student, index) in students"
-            :key="student.username"
-            @click="studentClicked(student.username)"
+            :key="student.student"
+            @click="studentClicked(student.student)"
         >
           <td>{{index+1}}.</td>
           <td>{{ student.realName }}</td>
