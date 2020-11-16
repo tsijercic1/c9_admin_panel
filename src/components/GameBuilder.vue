@@ -108,16 +108,22 @@
             @update:active="activeChanged(active)"
         >
           <template v-slot:prepend="{ item, open }">
-            <v-icon
-                v-if="item.isDirectory"
-                @contextmenu.prevent="$refs.menu.open($event, item)"
-                :color="getColorOfIcon(item)"
+            <v-badge
+                overlap
+                dot
+                :color="getTaskHintColor(item)"
             >
-              {{ open ? "mdi-folder-open" : "mdi-folder" }}
-            </v-icon>
-            <v-icon v-else @contextmenu.prevent="$refs.menu.open($event, item)">
-              {{ fileTypes[extensionRegex.exec(item.name)[1]] }}
-            </v-icon>
+              <v-icon
+                  v-if="item.isDirectory"
+                  @contextmenu.prevent="$refs.menu.open($event, item)"
+                  :color="getColorOfIcon(item)"
+              >
+                {{ open ? "mdi-folder-open" : "mdi-folder" }}
+              </v-icon>
+              <v-icon v-else @contextmenu.prevent="$refs.menu.open($event, item)">
+                {{ fileTypes[extensionRegex.exec(item.name)[1]] }}
+              </v-icon>
+            </v-badge>
           </template>
           <template v-slot:label="{ item }">
             <v-list-item-title
@@ -164,7 +170,7 @@ import DeleteTask from "@/components/gameComponents/DeleteTask";
 import DeleteFile from "@/components/gameComponents/DeleteFile";
 import CreateFile from "@/components/gameComponents/CreateFile";
 import {gameService} from "@/services";
-import {fileTypes,extensionRegex} from "@/constants";
+import {fileTypes, extensionRegex} from "@/constants";
 
 export default {
   components: {
@@ -294,6 +300,12 @@ export default {
         }
         return "";
       }
+    },
+    getTaskHintColor(item) {
+      if (item.type === "task" && item.data.hint.trim().length > 0) {
+        return "orange lighten-2";
+      }
+      return "transparent"
     }
   }
 };
