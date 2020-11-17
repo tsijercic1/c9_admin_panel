@@ -215,26 +215,41 @@ export default {
       this.overlay = true;
     },
     activeChanged(active) {
+      console.log(`Active changed ${Date.now()}`);
       this.file = undefined;
       if (active.length !== 0) {
+        console.log(`Calling treeItemClicked ${Date.now()}`);
         this.treeItemClicked(active[0]);
       } else {
+        console.log(`Calling file editor refresh ${Date.now()}`);
         this.$refs.fileEditor.refresh(undefined);
       }
     },
     async treeItemClicked(item) {
+      console.log(`Tree item clicked ${Date.now()}`);
       if (!item.isDirectory) {
+        console.log(`Is not directory ${Date.now()}`);
         this.$refs.fileEditor.refresh(item);
+        console.log(`After file editor refresh invocation 233 ${Date.now()}`);
       } else {
+        console.log(`It is a directory ${Date.now()}`);
         if (item.type === "task") {
+          console.log(`It is a task ${Date.now()}`);
           const children = item.children?.filter(child => extensionRegex.exec(child.name)[1] === "html");
+          console.log(`Filtered shit ${Date.now()}`);
           if (children && children.length > 0) {
+            console.log(`show the first html file ${Date.now()}`);
             this.$refs.fileEditor.refresh(children[0]);
+            console.log(`After invoking the first html showing ${Date.now()}`);
           } else {
+            console.log(`Just refresh the thing 245 ${Date.now()}`);
             this.$refs.fileEditor.refresh(undefined);
+            console.log(`After refresh invocation 247 ${Date.now()}`);
           }
         } else {
+          console.log(`Last refresh ${Date.now()}`);
           this.$refs.fileEditor.refresh(undefined);
+          console.log(`Tokyo drift 252 ${Date.now()}`);
         }
       }
     },

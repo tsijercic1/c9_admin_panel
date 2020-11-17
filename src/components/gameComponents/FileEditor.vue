@@ -263,31 +263,43 @@ export default {
       });
     },
     async refresh(file) {
+      console.log(`refreshing file ${Date.now()}`);
+      console.log(file);
       if (file === undefined) {
         this.editable = {
           type: "none"
         };
       }
+      console.log(`After first if ${Date.now()}`);
       if (this.$refs.toaster) {
         this.$refs.toaster.invoke("height", "75vh");
       }
+      console.log(`After second if ${Date.now()}`);
       this.file = file;
       if (this.file && this.file.parent) {
+        console.log(`Getting content ${Date.now()}`);
         let body = await gameService.getFileContent({
           taskId: this.file.parent.scrapedId,
           filename: this.file.name
         });
+        console.log(`Content retrieved ${Date.now()}`);
         if (!body.success) {
           return false;
         }
+        console.log(`Request successful ${Date.now()}`);
         if (this.$refs.toaster) {
+          console.log(`Toaster present ${Date.now()}`);
           this.$refs.toaster.invoke("setHtml", body.data.content);
+          console.log(`Toaster function invoked ${Date.now()}`);
         } else if (this.$refs.mirror) {
+          console.log(`Codemirror present ${Date.now()}`);
           this.fileContent = body.data.content;
+          console.log(`Content updated for codemirror ${Date.now()}`);
         }
+        console.log(`OK 299 ${Date.now()}`);
         this.binary = this.file.data.binary;
         this.show = this.file.data.show;
-
+        console.log(`OK 302 ${Date.now()}`);
         if (
           ["autotest", "zadaca", "json", "autotest2"].includes(
             this.extensionRegex.exec(file.name)[1]
@@ -310,7 +322,9 @@ export default {
         } else if (["ts"].includes(this.extensionRegex.exec(file.name)[1])) {
           this.cmOptions.mode = this.modes.typescript;
         }
+        console.log(`OK 325 ${Date.now()}`);
       }
+      console.log(`After third if ${Date.now()}`);
     }
   }
 };

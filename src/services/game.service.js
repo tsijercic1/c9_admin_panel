@@ -229,6 +229,7 @@ export default {
     return body;
   },
   async getFileContent({ taskId, filename }) {
+    console.log(`Getting ${filename} ${Date.now()}`);
     const response = await fetch(
       `/services/uup_game.php?action=getTaskFileContent&taskId=${taskId}&name=${filename}`,
       {
@@ -238,13 +239,16 @@ export default {
         }
       }
     );
+    console.log(`Response got here ${Date.now()}`);
     const body = await response.json();
+    console.log(`Converted to json ${Date.now()}`);
     if (!body.success) {
       if (body.message.includes("logged")) {
         const event = new Event("logout");
         document.dispatchEvent(event);
       }
     }
+    console.log(`Checked the body ${Date.now()}`)
     return body;
   }
 };
