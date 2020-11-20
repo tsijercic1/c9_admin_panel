@@ -62,6 +62,8 @@ export default {
     };
     document.addEventListener('keydown', this._keyListener.bind(this));
     this.$refs.form.reset()
+    console.log("Form Validation");
+    console.log(this.valid);
     this.name = this.assignment.name;
     this.points = this.assignment.data.points;
     this.challengePoints = this.assignment.data.challengePoints;
