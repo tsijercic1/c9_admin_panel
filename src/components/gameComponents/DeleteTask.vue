@@ -48,6 +48,21 @@ export default {
         text: `Task ${this.task.name} deleted.`
       });
     }
+  },
+  mounted() {
+    this._keyListener = function(e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        this.submit();
+      } else if (e.key === "Escape") {
+        e.preventDefault();
+        this.exit();
+      }
+    };
+    document.addEventListener('keydown', this._keyListener.bind(this));
+  },
+  beforeDestroy() {
+    document.removeEventListener('keydown', this._keyListener);
   }
 };
 </script>

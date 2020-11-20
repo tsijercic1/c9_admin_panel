@@ -51,6 +51,19 @@ export default {
     };
   },
   mounted() {
+    this._keyListener = function(e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        this.submit();
+      } else if (e.key === "Escape") {
+        e.preventDefault();
+        this.exit();
+      }
+    };
+    document.addEventListener('keydown', this._keyListener.bind(this));
+    this.$refs.form.reset()
+    console.log("Form Validation");
+    console.log(this.valid);
     this.name = this.assignment.name;
     this.points = this.assignment.data.points;
     this.challengePoints = this.assignment.data.challengePoints;
@@ -88,6 +101,9 @@ export default {
         });
       }
     }
+  },
+  beforeDestroy() {
+    document.removeEventListener('keydown', this._keyListener);
   }
 };
 </script>
