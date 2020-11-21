@@ -8,7 +8,7 @@ export default {
     });
     let body = await response.json();
     if (!body.success) {
-      if (body.message.includes("logged")) {
+      if (body.message && body.message.includes("logged")) {
         const event = new Event("logout");
         document.dispatchEvent(event);
       }
@@ -27,7 +27,7 @@ export default {
     );
     let body = await response.json();
     if (!body.success) {
-      if (body.message.includes("logged")) {
+      if (body.message && body.message.includes("logged")) {
         const event = new Event("logout");
         document.dispatchEvent(event);
       }
@@ -46,7 +46,7 @@ export default {
     );
     let body = await response.json();
     if (!body.success) {
-      if (body.message.includes("logged")) {
+      if (body.message && body.message.includes("logged")) {
         const event = new Event("logout");
         document.dispatchEvent(event);
       }
@@ -65,7 +65,7 @@ export default {
     );
     let body = await response.json();
     if (!body.success) {
-      if (body.message.includes("logged")) {
+      if (body.message && body.message.includes("logged")) {
         const event = new Event("logout");
         document.dispatchEvent(event);
       }
@@ -81,7 +81,7 @@ export default {
     });
     let body = await response.json();
     if (!body.success) {
-      if (body.message.includes("logged")) {
+      if (body.message && body.message.includes("logged")) {
         const event = new Event("logout");
         document.dispatchEvent(event);
       }
@@ -97,7 +97,7 @@ export default {
     });
     let body = await response.json();
     if (!body.success) {
-      if (body.message.includes("logged")) {
+      if (body.message && body.message.includes("logged")) {
         const event = new Event("logout");
         document.dispatchEvent(event);
       }
