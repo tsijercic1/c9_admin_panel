@@ -9,7 +9,7 @@
       <template v-if="overlayAction === 'Create assignment'">
         <CreateAssignment :exit="hideOverlay" :refresh="refreshGame"/>
       </template>
-      <template v-if="overlayAction === 'Edit assignment'">
+      <template v-else-if="overlayAction === 'Edit assignment'">
         <EditAssignment
             :exit="hideOverlay"
             :refresh="refreshGame"
@@ -17,7 +17,7 @@
             :assignment="modalItem"
         ></EditAssignment>
       </template>
-      <template v-if="overlayAction === 'Create task'">
+      <template v-else-if="overlayAction === 'Create task'">
         <CreateTask
             :exit="hideOverlay"
             :refresh="refreshGame"
@@ -25,7 +25,7 @@
             :assignment="modalItem"
         />
       </template>
-      <template v-if="overlayAction === 'Edit task'">
+      <template v-else-if="overlayAction === 'Edit task'">
         <EditTask
             :exit="hideOverlay"
             :refresh="refreshGame"
@@ -34,21 +34,21 @@
             :task="modalItem"
         />
       </template>
-      <template v-if="overlayAction === 'Delete task'">
+      <template v-else-if="overlayAction === 'Delete task'">
         <DeleteTask
             :exit="hideOverlay"
             :refresh="refreshGame"
             :task="modalItem"
         />
       </template>
-      <template v-if="overlayAction === 'Create file'">
+      <template v-else-if="overlayAction === 'Create file'">
         <CreateFile
             :exit="hideOverlay"
             :refresh="refreshGame"
             :task="modalItem"
         />
       </template>
-      <template v-if="overlayAction === 'Delete file'">
+      <template v-else-if="overlayAction === 'Delete file'">
         <DeleteFile
             :exit="hideOverlay"
             :refresh="refreshGame"
@@ -56,6 +56,7 @@
             :task="modalItem.parent"
         />
       </template>
+      <template v-else/>
     </v-overlay>
     <vue-context ref="menu" v-slot="{ data }">
       <template v-if="data !== null && data !== undefined">
@@ -211,6 +212,7 @@ export default {
   methods: {
     hideOverlay() {
       this.overlay = false;
+      this.overlayAction = "";
     },
     showOverLay() {
       this.overlay = true;
