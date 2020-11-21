@@ -71,7 +71,7 @@ export default {
           console.log(key);
           console.log(typeof key);
           const object = {...this.members[index]};
-          object["lesson" + key] = value.reduce((result, task) => result + task.points, 0);
+          object["lesson" + key] = value.reduce((result, task) => result + task.points, 0).toFixed(2);
           this.members.splice(index,1,object);
           console.log(typeof value);
         }
