@@ -67,12 +67,10 @@ export default {
     document.addEventListener('keydown', this._keyListener);
     console.log("Form Validation");
     console.log(this.valid);
-    setTimeout(() => {
-      this.name = this.assignment.name;
-      this.points = this.assignment.data.points;
-      this.challengePoints = this.assignment.data.challengePoints;
-      this.active = this.assignment.data.active;
-    }, 500);
+    this.name = this.assignment.name;
+    this.points = this.assignment.data.points;
+    this.challengePoints = this.assignment.data.challengePoints;
+    this.active = this.assignment.data.active;
   },
   methods: {
     async submit() {
