@@ -44,7 +44,7 @@ export default {
       points: 0,
       challengePoints: 0,
       active: false,
-      valid: false,
+      valid: true,
       notEmpty: v => (v || "").length > 0 || "This field cannot be empty",
       noSpaces: v => (v || "").indexOf(" ") < 0 || "No spaces are allowed",
       nonNegative: v => (v || -1) >= 0 || "Number must not be negative"
@@ -61,14 +61,12 @@ export default {
       }
     };
     document.addEventListener('keydown', this._keyListener);
-    this.$refs.form.reset()
     console.log("Form Validation");
     console.log(this.valid);
     this.name = this.assignment.name;
     this.points = this.assignment.data.points;
     this.challengePoints = this.assignment.data.challengePoints;
     this.active = this.assignment.data.active;
-    this.$refs.form.resetValidation();
   },
   methods: {
     async submit() {

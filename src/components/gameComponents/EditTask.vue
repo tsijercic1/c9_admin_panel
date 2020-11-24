@@ -43,7 +43,7 @@ export default {
       name: "",
       hint: "",
       selected: undefined,
-      valid: false,
+      valid: true,
       notEmpty: v => (v || "").length > 0 || "This field cannot be empty",
       noSpaces: v => (v || "").indexOf(" ") < 0 || "No spaces are allowed",
       isSelected: v => v !== undefined || "Number must not be negative"
