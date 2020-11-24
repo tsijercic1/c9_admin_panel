@@ -3,20 +3,24 @@
     <h3 class="text-center mb-3">Edit assignment</h3>
     <v-form ref="form" v-model="valid">
       <v-text-field
-        label="Name"
-        v-model="name"
-        required
-        :rules="[notEmpty]"
+          label="Name"
+          v-model="name"
+          required
+          :rules="[notEmpty]"
       ></v-text-field>
       <v-text-field
-        label="Points"
-        v-model="points"
-        :rules="[nonNegative, notEmpty]"
+          type="number"
+          step="0.5"
+          label="Points"
+          v-model="points"
+          :rules="[nonNegative]"
       ></v-text-field>
       <v-text-field
-        label="Challenge points"
-        v-model="challengePoints"
-        :rules="[nonNegative, notEmpty]"
+          type="number"
+          step="0.5"
+          label="Challenge points"
+          v-model="challengePoints"
+          :rules="[nonNegative]"
       ></v-text-field>
       <v-checkbox label="Active" v-model="active"></v-checkbox>
       <div class="d-flex justify-space-between mt-5">
@@ -28,7 +32,7 @@
 </template>
 
 <script>
-import { gameService } from "@/services";
+import {gameService} from "@/services";
 
 export default {
   name: "EditAssignment",
@@ -47,7 +51,7 @@ export default {
       valid: true,
       notEmpty: v => (v || "").length > 0 || "This field cannot be empty",
       noSpaces: v => (v || "").indexOf(" ") < 0 || "No spaces are allowed",
-      nonNegative: v => (v || -1) >= 0 || "Number must not be negative"
+      nonNegative: v => v >= 0 || "Number must not be negative"
     };
   },
   mounted() {
@@ -68,7 +72,7 @@ export default {
       this.points = this.assignment.data.points;
       this.challengePoints = this.assignment.data.challengePoints;
       this.active = this.assignment.data.active;
-    },500);
+    }, 500);
   },
   methods: {
     async submit() {
