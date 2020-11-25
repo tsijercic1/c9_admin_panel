@@ -11,17 +11,10 @@ export default {
   components: { GameBuilder },
   data() {
     return {
-      inTheGame: false
+      inTheGame: true
     };
   },
   async mounted() {
-    let response = await fetch("/services/uup_game.php?action=check");
-    let body = await response.json();
-    console.log(body);
-    if (body.success && body.roles.includes("admin")) {
-      console.log("yes");
-    }
-    this.inTheGame = body.success;
   }
 };
 </script>

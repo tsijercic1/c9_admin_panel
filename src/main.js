@@ -11,7 +11,6 @@ Vue.use(Notifications);
 Vue.config.productionTip = false;
 let app = undefined;
 (async function() {
-  await store.dispatch("refresh");
 
   app = new Vue({
     router,

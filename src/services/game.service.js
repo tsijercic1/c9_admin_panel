@@ -1,254 +1,147 @@
 export default {
   async getTaskCategories() {
-    const response = await fetch(
-      "/services/uup_game.php?action=getTaskCategories",
-      {
-        method: "get",
-        headers: {
-          Accept: "application/json"
+    return {
+      "success": true,
+      "code": 200,
+      "data": [
+        {
+          "id": 1,
+          "name": "Easy",
+          "points_percent": 0.06667,
+          "tokens": 20,
+          "tasks_per_category": 5
+        },
+        {
+          "id": 2,
+          "name": "Moderate",
+          "points_percent": 0.06667,
+          "tokens": 20,
+          "tasks_per_category": 5
+        },
+        {
+          "id": 3,
+          "name": "Hard",
+          "points_percent": 0.06667,
+          "tokens": 20,
+          "tasks_per_category": 5
         }
-      }
-    );
-    const body = await response.json();
-    if (!body.success) {
-      if (body.message.includes("logged")) {
-        const event = new Event("logout");
-        document.dispatchEvent(event);
-      }
-    }
-    return body;
+      ]
+    };
   },
   async getAssignments() {
-    const response = await fetch("/services/uup_game.php?action=getAssignments&A", {
-      method: "get",
-      headers: {
-        Accept: "application/json"
+    return {
+      "success": true, "code": 200, "data": {
+        "name": "Game", "isDirectory": true, "type": "Root", "children": [{
+          "id": 2,
+          "path": "/L1",
+          "name": "Lekcija 1: Ulaz/izlaz i grananje",
+          "isDirectory": true,
+          "type": "assignment",
+          "children": [
+            {
+              "id": 6,
+              "path": "/L1/Z1",
+              "name": "Ime i prezime",
+              "isDirectory": true,
+              "type": "task",
+              "children": [{
+                "path": "/L1/Z1/task.html",
+                "name": "task.html",
+                "isDirectory": false,
+                "type": "file",
+                "data": {"binary": false, "show": true}
+              }, {
+                "path": "/L1/Z1/main.c",
+                "name": "main.c",
+                "isDirectory": false,
+                "type": "file",
+                "data": {"binary": false, "show": true}
+              }, {
+                "path": "/L1/Z1/.autotest2",
+                "name": ".autotest2",
+                "isDirectory": false,
+                "type": "file",
+                "data": {"binary": false, "show": false}
+              }],
+              "data": {"category": 1, "hint": "Koristite printf da ispi\u0161ete tra\u017eenu poruku na ekranu."}
+            }],
+          "data": {"active": true, "points": 4, "challengePoints": 2}
+        }
+        ]
       }
-    });
-    const body = await response.json();
-    if (!body.success) {
-      if (body.message.includes("logged")) {
-        const event = new Event("logout");
-        document.dispatchEvent(event);
-      }
-    }
-    return body;
+    };
   },
   async createAssignment({
-    name,
-    displayName,
-    points,
-    challengePoints,
-    active
-  }) {
-    const response = await fetch(
-      "/services/uup_game.php?action=createAssignment",
-      {
-        method: "post",
-        headers: {
-          Accept: "application/json"
-        },
-        body: JSON.stringify({
-          name,
-          displayName,
-          points,
-          challengePoints,
-          active
-        })
-      }
-    );
-    const body = await response.json();
-    if (!body.success) {
-      if (body.message.includes("logged")) {
-        const event = new Event("logout");
-        document.dispatchEvent(event);
-      }
+                           name,
+                           displayName,
+                           points,
+                           challengePoints,
+                           active
+                         }) {
+    return {
+      success: true,
+      code: 200,
+      message: `Successfully created ${displayName} ${name} ${points} ${challengePoints} ${active}`
     }
-    return body;
   },
-  async editAssignment({ id, name, points, challengePoints, active }) {
-    const response = await fetch(
-      `/services/uup_game.php?action=editAssignment&assignmentId=${id}`,
-      {
-        method: "post",
-        headers: {
-          Accept: "application/json"
-        },
-        body: JSON.stringify({
-          name,
-          points,
-          challengePoints,
-          active
-        })
-      }
-    );
-    const body = await response.json();
-    if (!body.success) {
-      if (body.message.includes("logged")) {
-        const event = new Event("logout");
-        document.dispatchEvent(event);
-      }
+  async editAssignment({id, name, points, challengePoints, active}) {
+    return {
+      success: true,
+      code: 200,
+      message: `Successfully edited ${id} ${name} ${points} ${challengePoints} ${active}`
     }
-    return body;
   },
-  async createTask({ assignmentId, name, displayName, category, hint }) {
-    const response = await fetch(
-      `/services/uup_game.php?action=createTask&assignmentId=${assignmentId}`,
-      {
-        method: "post",
-        headers: {
-          Accept: "application/json"
-        },
-        body: JSON.stringify({
-          name,
-          displayName,
-          category,
-          hint
-        })
-      }
-    );
-    const body = await response.json();
-    if (!body.success) {
-      if (body.message.includes("logged")) {
-        const event = new Event("logout");
-        document.dispatchEvent(event);
-      }
-    }
-    return body;
+  async createTask({assignmentId, name, displayName, category, hint}) {
+    return {
+      success: true,
+      code: 200,
+      message: `Successfully edited ${assignmentId} ${name} ${displayName} ${category} ${hint}`
+    };
   },
-  async editTask({ id, name, categoryId, hint }) {
-    const response = await fetch(
-      `/services/uup_game.php?action=editTask&taskId=${id}`,
-      {
-        method: "post",
-        headers: {
-          Accept: "application/json"
-        },
-        body: JSON.stringify({
-          name: name,
-          category: categoryId,
-          hint: hint
-        })
-      }
-    );
-    const body = await response.json();
-    if (!body.success) {
-      if (body.message.includes("logged")) {
-        const event = new Event("logout");
-        document.dispatchEvent(event);
-      }
+  async editTask({id, name, categoryId, hint}) {
+    return {
+      success: true,
+      code: 200,
+      message: `Successfully edited ${id} ${name} ${categoryId} ${hint}`
     }
-    return body;
   },
   async deleteTask(id) {
-    const response = await fetch(
-      `/services/uup_game.php?action=deleteTask&taskId=${id}`,
-      {
-        method: "delete",
-        headers: {
-          Accept: "application/json"
-        }
-      }
-    );
-    const body = await response.json();
-    if (!body.success) {
-      if (body.message.includes("logged")) {
-        const event = new Event("logout");
-        document.dispatchEvent(event);
-      }
+    return {
+      success: true,
+      code: 200,
+      message: `Successfully deleted ${id}`
     }
-    return body;
   },
-  async createFile({ taskId, name, show, binary, content }) {
-    const response = await fetch(
-      `/services/uup_game.php?action=createTaskFile&taskId=${taskId}`,
-      {
-        method: "post",
-        headers: {
-          Accept: "application/json"
-        },
-        body: JSON.stringify({
-          name: name,
-          show: show,
-          binary: binary,
-          content: content
-        })
-      }
-    );
-    const body = await response.json();
-    if (!body.success) {
-      if (body.message.includes("logged")) {
-        const event = new Event("logout");
-        document.dispatchEvent(event);
-      }
+  async createFile({taskId, name, show, binary, content}) {
+    return {
+      success: true,
+      code: 200,
+      message: `Successfully created ${taskId} ${name} ${show} ${binary} ${content}`
     }
-    return body;
   },
-  async editFile({ taskId, name, show, binary, content }) {
-    const response = await fetch(
-      `/services/uup_game.php?action=editTaskFile&taskId=${taskId}`,
-      {
-        method: "post",
-        headers: {
-          Accept: "application/json"
-        },
-        body: JSON.stringify({
-          name: name,
-          show: show,
-          binary: binary,
-          content: content
-        })
-      }
-    );
-    const body = await response.json();
-    if (!body.success) {
-      if (body.message.includes("logged")) {
-        const event = new Event("logout");
-        document.dispatchEvent(event);
-      }
+  async editFile({taskId, name, show, binary, content}) {
+    return {
+      success: true,
+      code: 200,
+      message: `Successfully edited ${taskId} ${name} ${show} ${binary} ${content}`
     }
-    return body;
   },
-  async deleteFile({ taskId, filename }) {
-    const response = await fetch(
-      `/services/uup_game.php?action=deleteTaskFile&taskId=${taskId}&name=${filename}`,
-      {
-        method: "delete",
-        headers: {
-          Accept: "application/json"
-        }
-      }
-    );
-    const body = await response.json();
-    if (!body.success) {
-      if (body.message.includes("logged")) {
-        const event = new Event("logout");
-        document.dispatchEvent(event);
-      }
+  async deleteFile({taskId, filename}) {
+    return {
+      success: true,
+      code: 200,
+      message: `Successfully deleted ${taskId} ${filename}`
     }
-    return body;
   },
-  async getFileContent({ taskId, filename }) {
-    console.log(`Getting ${filename} ${Date.now()}`);
-    const response = await fetch(
-      `/services/uup_game.php?action=getTaskFileContent&taskId=${taskId}&name=${filename}`,
-      {
-        method: "get",
-        headers: {
-          Accept: "application/json"
-        }
-      }
-    );
-    console.log(`Response got here ${Date.now()}`);
-    const body = await response.json();
-    console.log(`Converted to json ${Date.now()}`);
-    if (!body.success) {
-      if (body.message.includes("logged")) {
-        const event = new Event("logout");
-        document.dispatchEvent(event);
+  async getFileContent({taskId, filename}) {
+    console.log(taskId);
+    console.log(filename);
+    return {
+      "success": true,
+      "code": 200,
+      "data": {
+        "content": "<h1>Zadatak</h1>\n<p>Napišite funkciju pod imenom daj_prost koja nema parametara, a svaki put kada se pozove vraća sljedeći prost broj. Kada prvi put pozovete funkciju, ona treba vratiti broj 2, drugi put treba vratiti broj 3, zatim broj 5, 7, 11 itd.</p>\n<p>Ovu funkciju iskoristite u programu koji omogućuje korisniku da unese prirodne brojeve A i B takve da je A&lt;B, a zatim ispisuje sumu svih prostih brojeva strogo većih od A a strogo manjih od B. U ovom programu se obavezno mora iskoristiti napravljena funkcija daj_prost, ne smiju se računati prosti brojevi na neki drugi način.</p>\n<p>Primjer ulaza i izlaza:</p>\n<pre><code>    \n\tUnesite brojeve A i B: 0 15\n\tA nije prirodan broj.\n\tUnesite brojeve A i B: 5 -5\n\tA nije manje od B.\n\tUnesite brojeve A i B: 10 10\n\tA nije manje od B.\n\tUnesite brojeve A i B: -5 -7\n\tA nije prirodan broj.\n\tUnesite brojeve A i B: 2 10\n\tSuma prostih brojeva izmedju 2 i 10 je 15.\n</code></pre>\n<p>Objašnjenje: 3+5+7 = 15.</p>\n"
       }
     }
-    console.log(`Checked the body ${Date.now()}`)
-    return body;
   }
 };

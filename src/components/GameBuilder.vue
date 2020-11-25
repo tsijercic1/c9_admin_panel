@@ -5,7 +5,6 @@
       <v-icon @click="onClick('Create assignment', undefined)">mdi-plus</v-icon>
     </h1>
     <v-overlay :value="overlay" v-if="overlay">
-
       <template v-if="overlayAction === 'Create assignment'">
         <CreateAssignment :exit="hideOverlay" :refresh="refreshGame"/>
       </template>

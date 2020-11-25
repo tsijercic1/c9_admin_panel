@@ -62,11 +62,6 @@ export default {
           title: "Dashboard",
           icon: "mdi-view-dashboard",
           link: "/dashboard"
-        },
-        {
-          title: "Game",
-          icon: "mdi-gamepad-variant-outline",
-          link: "/game"
         }
       ],
       mini: true,
@@ -74,29 +69,7 @@ export default {
     };
   },
   mounted() {
-    this.user = this.$store.getters.userProfile;
-    const roles = this.$store.getters.roles;
-    if (roles.includes("admin") || roles.includes("sysadmin")) {
-      this.items.push(
-        ...[
-          {
-            title: "Courses",
-            icon: "mdi-school",
-            link: "/courses"
-          },
-          {
-            title: "Usage Statistics",
-            icon: "mdi-chart-areaspline-variant",
-            link: "/statistics"
-          },
-          {
-            title: "About",
-            icon: "mdi-help-box",
-            link: "/about"
-          }
-        ]
-      );
-    }
+
   },
   methods: {
     async logout() {
