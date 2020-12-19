@@ -49,6 +49,8 @@
           >Open generator</v-btn
         >
         <v-spacer />
+        <v-btn @click="deployFile()" :disabled="isSaving">Deploy</v-btn>
+        <v-spacer />
         <v-btn @click="save()" :disabled="isSaving">Save</v-btn>
       </v-card-title>
       <div>
@@ -325,6 +327,11 @@ export default {
         console.log(`OK 325 ${Date.now()}`);
       }
       console.log(`After third if ${Date.now()}`);
+    },
+    async deployFile() {
+      const taskId = this.file.parent.scrapedId;
+      console.log(`Deploying file ${this.file.name} of task ${taskId}`);
+      await gameService.deployFile(taskId, this.file.name);
     }
   },
   mounted() {

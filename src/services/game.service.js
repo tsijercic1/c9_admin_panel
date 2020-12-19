@@ -250,5 +250,17 @@ export default {
     }
     console.log(`Checked the body ${Date.now()}`)
     return body;
+  },
+  async deployFile(taskId, fileName) {
+    const response = await fetch(
+      `/services/uup_game.php?action=deployFile&taskId=${taskId}&fileName=${fileName}`,
+      {
+        method: "post",
+        headers: {
+          Accept: "application/json"
+        }
+      }
+    );
+    console.log(`Deployment responose: ${JSON.stringify(response)}`);
   }
 };
