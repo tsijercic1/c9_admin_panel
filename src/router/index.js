@@ -15,7 +15,6 @@ const routes = [
   },
   {
     path: "/",
-    name: "Dashboard",
     component: Dashboard
   },
   {
@@ -46,7 +45,7 @@ const routes = [
   {
     path: "/assignments/:course_id",
     name: "Assignments",
-    component: () => import("@/views/Assignment")
+    component: () => import("@/components/course/Assignment")
   },
   {
     path: "/statistics",
@@ -85,27 +84,15 @@ router.beforeEach(async (to, from, next) => {
   if (to.name === "Login") {
     next();
   }
-  console.log("TO");
-  console.log(to);
-  console.log("FROM");
-  console.log(from);
-  console.log("NEXT");
-  console.log(next);
   const isAuthenticated = store.getters.isAuthenticated;
-  if (isAuthenticated === undefined) {
-    console.log("UNDEFINED")
-  }
-  console.log(isAuthenticated);
-  if (store.getters.isAuthenticated) {
-    console.log("IS AUTHENTICATED");
-    if (
-      store.getters.roles.includes("game-spectators") &&
-      (["Login", "Dashboard"].includes(to.name) || to.path.includes("/game"))
-    ) {
-      console.log("SPECTaTOR");
-      next();
-    } else if(store.getters.roles.includes("admin")||store.getters.roles.includes("sysadmin")) {
-      console.log("ADMIN");
+  const isGameSpectatorRoute =
+    ["Login", "Dashboard"].includes(to.name) || to.path.includes("/game");
+  if (isAuthenticated) {
+    const isSpectator = store.getters.roles.includes("game-spectators");
+    const isAdmin =
+      store.getters.roles.includes("admin") ||
+      store.getters.roles.includes("sysadmin");
+    if ((isSpectator && isGameSpectatorRoute) || isAdmin) {
       next();
     } else {
       console.log("RESET STATE");
@@ -114,14 +101,13 @@ router.beforeEach(async (to, from, next) => {
       next(Login);
     }
   } else {
-    console.log("ELSE --- LOGIN");
     next(Login);
   }
 });
 
 document.addEventListener("logout", async () => {
   if (router.currentRoute.path !== "/login") {
-    store.actions.dispatch("resetState");
+    await store.dispatch("resetState");
     await fetch("/services/logout.php");
     await router.push("/login");
   }
