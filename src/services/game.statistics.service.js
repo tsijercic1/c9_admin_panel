@@ -89,12 +89,15 @@ export default {
     return body;
   },
   async getAssignments() {
-    let response = await fetch("/services/game_statistics.php?action=getAssignments", {
-      method: "get",
-      headers: {
-        Accept: "application/json"
+    let response = await fetch(
+      "/services/game_statistics.php?action=getAssignments",
+      {
+        method: "get",
+        headers: {
+          Accept: "application/json"
+        }
       }
-    });
+    );
     let body = await response.json();
     if (!body.success) {
       if (body.message && body.message.includes("logged")) {

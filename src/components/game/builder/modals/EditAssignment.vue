@@ -3,24 +3,24 @@
     <h3 class="text-center mb-3">Edit assignment</h3>
     <v-form ref="form" v-model="valid">
       <v-text-field
-          label="Name"
-          v-model="name"
-          required
-          :rules="[notEmpty]"
+        label="Name"
+        v-model="name"
+        required
+        :rules="[notEmpty]"
       ></v-text-field>
       <v-text-field
-          type="number"
-          step="0.5"
-          label="Points"
-          v-model="points"
-          :rules="[nonNegative]"
+        type="number"
+        step="0.5"
+        label="Points"
+        v-model="points"
+        :rules="[nonNegative]"
       ></v-text-field>
       <v-text-field
-          type="number"
-          step="0.5"
-          label="Challenge points"
-          v-model="challengePoints"
-          :rules="[nonNegative]"
+        type="number"
+        step="0.5"
+        label="Challenge points"
+        v-model="challengePoints"
+        :rules="[nonNegative]"
       ></v-text-field>
       <v-checkbox label="Active" v-model="active"></v-checkbox>
       <div class="d-flex justify-space-between mt-5">
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import {gameService} from "@/services";
+import { gameService } from "@/services";
 
 export default {
   name: "EditAssignment",
@@ -55,7 +55,7 @@ export default {
     };
   },
   mounted() {
-    this._keyListener = (e) => {
+    this._keyListener = e => {
       if (e.key === "Enter") {
         e.preventDefault();
         this.submit();
@@ -64,7 +64,7 @@ export default {
         this.exit();
       }
     };
-    document.addEventListener('keydown', this._keyListener);
+    document.addEventListener("keydown", this._keyListener);
     console.log("Form Validation");
     console.log(this.valid);
     this.name = this.assignment.name;
@@ -105,7 +105,7 @@ export default {
     }
   },
   beforeDestroy() {
-    document.removeEventListener('keydown', this._keyListener);
+    document.removeEventListener("keydown", this._keyListener);
     this._keyListener = undefined;
   }
 };

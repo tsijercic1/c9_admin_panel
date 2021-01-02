@@ -22,4 +22,4 @@ export const getCategoryColor = category => {
     return "red lighten-4";
   }
   return "";
-}
+};

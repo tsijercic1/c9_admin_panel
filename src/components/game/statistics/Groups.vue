@@ -1,22 +1,22 @@
 <template>
   <v-container>
     <v-data-table
-        @mouseover.native="registerListener()"
-        @mouseleave.native="removeListener()"
-        id="groupsTable"
-        :headers="headers"
-        :items="groups"
-        group-by="course"
-        hide-default-footer
-        :items-per-page="groups.length"
-        @click:row="groupClicked"
+      @mouseover.native="registerListener()"
+      @mouseleave.native="removeListener()"
+      id="groupsTable"
+      :headers="headers"
+      :items="groups"
+      group-by="course"
+      hide-default-footer
+      :items-per-page="groups.length"
+      @click:row="groupClicked"
     >
     </v-data-table>
   </v-container>
 </template>
 
 <script>
-import {gameStatisticsService} from "@/services";
+import { gameStatisticsService } from "@/services";
 
 export default {
   name: "Groups",
@@ -25,11 +25,15 @@ export default {
       headers: [],
       groups: [],
       registered: false
-    }
+    };
   },
   async mounted() {
     const body = await gameStatisticsService.getGroups();
-    this.headers = [{text: 'ID', value: 'id'}, {text: 'Name', value: 'name'}, {text: 'Course', value: 'course'}];
+    this.headers = [
+      { text: "ID", value: "id" },
+      { text: "Name", value: "name" },
+      { text: "Course", value: "course" }
+    ];
     if (body.success === true) {
       this.groups = body.data;
     }
@@ -55,9 +59,7 @@ export default {
       window.removeEventListener("keydown", this.keyListener);
     }
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

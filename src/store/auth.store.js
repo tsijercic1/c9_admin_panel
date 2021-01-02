@@ -135,7 +135,7 @@ export default {
         };
       }
     },
-    resetState: function (context) {
+    resetState: function(context) {
       context.commit("setSessionId", undefined);
       context.commit("setRoles", []);
     }

@@ -2,8 +2,8 @@
   <v-card>
     <v-card-title>Delete file</v-card-title>
     <v-card-subtitle
-      >/{{ task.parent.name }}/{{ task.name }}/{{ file.name }}</v-card-subtitle
-    >
+      >/{{ task.parent.name }}/{{ task.name }}/{{ file.name }}
+    </v-card-subtitle>
     <v-card-text>Are you sure you want to delete this file?</v-card-text>
     <v-card-actions>
       <v-btn @click="exit" :disabled="isProcessing">Cancel</v-btn>
@@ -56,7 +56,7 @@ export default {
     }
   },
   mounted() {
-    this._keyListener = (e) => {
+    this._keyListener = e => {
       if (e.key === "Enter") {
         e.preventDefault();
         this.submit();
@@ -65,10 +65,10 @@ export default {
         this.exit();
       }
     };
-    document.addEventListener('keydown', this._keyListener);
+    document.addEventListener("keydown", this._keyListener);
   },
   beforeDestroy() {
-    document.removeEventListener('keydown', this._keyListener);
+    document.removeEventListener("keydown", this._keyListener);
     this._keyListener = undefined;
   }
 };

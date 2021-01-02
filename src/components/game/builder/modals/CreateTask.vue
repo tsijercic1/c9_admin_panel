@@ -88,7 +88,7 @@ export default {
     }
   },
   mounted() {
-    this._keyListener = (e) => {
+    this._keyListener = e => {
       if (e.key === "Enter") {
         e.preventDefault();
         this.create();
@@ -97,10 +97,10 @@ export default {
         this.exit();
       }
     };
-    document.addEventListener('keydown', this._keyListener);
+    document.addEventListener("keydown", this._keyListener);
   },
   beforeDestroy() {
-    document.removeEventListener('keydown', this._keyListener);
+    document.removeEventListener("keydown", this._keyListener);
     this._keyListener = undefined;
   }
 };

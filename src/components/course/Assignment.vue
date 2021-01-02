@@ -45,8 +45,8 @@
     <h1>
       Assignments
       <v-icon @click="onClick('Create assignment', { path: '' })"
-        >mdi-plus</v-icon
-      >
+        >mdi-plus
+      </v-icon>
     </h1>
     <div>
       <vue-context ref="menu" v-slot="{ data }">
@@ -117,7 +117,10 @@
               <v-list-item-title
                 @contextmenu.prevent="$refs.menu.open($event, item)"
               >
-                {{ item.name + (item.isDirectory === true ? ` (${item.path})` : "") }}
+                {{
+                  item.name +
+                    (item.isDirectory === true ? ` (${item.path})` : "")
+                }}
               </v-list-item-title>
             </template>
           </v-treeview>
@@ -157,7 +160,7 @@ import EditAssignment from "@/components/course/assignment/EditAssignment";
 import DeleteAssignment from "@/components/course/assignment/DeleteAssignment";
 import CreateFile from "@/components/course/assignment/CreateFile";
 import DeleteFile from "@/components/course/assignment/DeleteFile";
-import {extensionRegex, fileTypes} from "@/constants";
+import { extensionRegex, fileTypes } from "@/constants";
 
 export default {
   components: {

@@ -19,12 +19,15 @@ export default {
     return body;
   },
   async getAssignments() {
-    const response = await fetch("/services/uup_game.php?action=getAssignments&A", {
-      method: "get",
-      headers: {
-        Accept: "application/json"
+    const response = await fetch(
+      "/services/uup_game.php?action=getAssignments&A",
+      {
+        method: "get",
+        headers: {
+          Accept: "application/json"
+        }
       }
-    });
+    );
     const body = await response.json();
     if (!body.success) {
       if (body.message.includes("logged")) {
@@ -248,7 +251,7 @@ export default {
         document.dispatchEvent(event);
       }
     }
-    console.log(`Checked the body ${Date.now()}`)
+    console.log(`Checked the body ${Date.now()}`);
     return body;
   },
   async deployFile(taskId, fileName) {

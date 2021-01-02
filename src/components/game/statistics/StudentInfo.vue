@@ -1,28 +1,22 @@
 <template>
   <v-card>
     <v-card-title>{{ realName }}</v-card-title>
-    <v-progress-linear
-        height="25"
-        :value="pointPercentage"
-    >
+    <v-progress-linear height="25" :value="pointPercentage">
       <strong>{{ points }}</strong>
     </v-progress-linear>
     <v-row>
       <v-col cols="6">
         <v-treeview
-            activatable
-            dense
-            hoverable
-            :items="assignments"
-            return-object
-            :active.sync="active"
-            @update:active="activeChanged(active)"
+          activatable
+          dense
+          hoverable
+          :items="assignments"
+          return-object
+          :active.sync="active"
+          @update:active="activeChanged(active)"
         >
           <template v-slot:prepend="{ item, open }">
-            <v-icon
-                v-if="item.isDirectory"
-                :color="getColorOfIcon(item)"
-            >
+            <v-icon v-if="item.isDirectory" :color="getColorOfIcon(item)">
               {{ open ? "mdi-folder-open" : "mdi-folder" }}
             </v-icon>
             <v-icon v-else>
@@ -30,12 +24,22 @@
             </v-icon>
           </template>
           <template v-slot:label="{ item }">
-              {{ item.name + (item.type !== "file" ? ` (${item.path})` : "") }}
-              <v-icon v-if="item.type==='assignment' && isAssignmentDone(item)" color="green">mdi-check-bold</v-icon>
-              <v-chip v-if="item.type === 'task'" :color="getTaskChipColor(item)">{{item.status}}</v-chip>
-              <template v-if="item.type === 'assignment'">
-                {{ `${getAssignmentPoints(item).toFixed(2)} / ${item.totalPoints}` }}
-              </template>
+            {{ item.name + (item.type !== "file" ? ` (${item.path})` : "") }}
+            <v-icon
+              v-if="item.type === 'assignment' && isAssignmentDone(item)"
+              color="green"
+              >mdi-check-bold</v-icon
+            >
+            <v-chip
+              v-if="item.type === 'task'"
+              :color="getTaskChipColor(item)"
+              >{{ item.status }}</v-chip
+            >
+            <template v-if="item.type === 'assignment'">
+              {{
+                `${getAssignmentPoints(item).toFixed(2)} / ${item.totalPoints}`
+              }}
+            </template>
           </template>
         </v-treeview>
       </v-col>
@@ -47,8 +51,8 @@
 </template>
 
 <script>
-import {gameStatisticsService} from "@/services";
-import {fileTypes, extensionRegex, getCategoryColor} from "@/constants";
+import { gameStatisticsService } from "@/services";
+import { fileTypes, extensionRegex, getCategoryColor } from "@/constants";
 
 export default {
   name: "StudentInfo",
@@ -60,11 +64,11 @@ export default {
       active: undefined,
       fileTypes,
       extensionRegex
-    }
+    };
   },
   computed: {
     pointPercentage() {
-      return this.points * 100 / 40;
+      return (this.points * 100) / 40;
     }
   },
   async mounted() {
@@ -88,10 +92,10 @@ export default {
           assignmentMap[assignmentDescription.id] = assignmentDescription;
         });
         let assignments = [];
-        console.log(Object.keys(body.data))
+        console.log(Object.keys(body.data));
         for (let assignmentId of Object.keys(body.data)) {
           let assignment = {
-            id: 'assignment'+assignmentId,
+            id: "assignment" + assignmentId,
             scrapedId: assignmentId,
             name: assignmentMap[assignmentId].name,
             path: assignmentMap[assignmentId].path,
@@ -117,9 +121,7 @@ export default {
             children.push(element);
           });
           assignment.children = children;
-          assignments.push(
-            assignment
-          );
+          assignments.push(assignment);
         }
         console.log(assignments);
         this.assignments = assignments;
@@ -159,19 +161,17 @@ export default {
       } else if (task.status === "CURRENT TASK") {
         return "green lighten-3";
       } else if (task.status === "NOT TURNED IN") {
-        return "purple lighten-3"
+        return "purple lighten-3";
       }
       return "";
     },
     getAssignmentPoints(assignment) {
       let result = 0;
-      assignment.children.forEach(task => result += task.points);
+      assignment.children.forEach(task => (result += task.points));
       return result;
     }
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

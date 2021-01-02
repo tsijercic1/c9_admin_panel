@@ -5,58 +5,57 @@
       <v-icon @click="onClick('Create assignment', undefined)">mdi-plus</v-icon>
     </h1>
     <v-overlay :value="overlay" v-if="overlay">
-
       <template v-if="overlayAction === 'Create assignment'">
-        <CreateAssignment :exit="hideOverlay" :refresh="refreshGame"/>
+        <CreateAssignment :exit="hideOverlay" :refresh="refreshGame" />
       </template>
       <template v-else-if="overlayAction === 'Edit assignment'">
         <EditAssignment
-            :exit="hideOverlay"
-            :refresh="refreshGame"
-            :categories="categories"
-            :assignment="modalItem"
+          :exit="hideOverlay"
+          :refresh="refreshGame"
+          :categories="categories"
+          :assignment="modalItem"
         ></EditAssignment>
       </template>
       <template v-else-if="overlayAction === 'Create task'">
         <CreateTask
-            :exit="hideOverlay"
-            :refresh="refreshGame"
-            :categories="categories"
-            :assignment="modalItem"
+          :exit="hideOverlay"
+          :refresh="refreshGame"
+          :categories="categories"
+          :assignment="modalItem"
         />
       </template>
       <template v-else-if="overlayAction === 'Edit task'">
         <EditTask
-            :exit="hideOverlay"
-            :refresh="refreshGame"
-            :categories="categories"
-            :assignment="modalItem.parent"
-            :task="modalItem"
+          :exit="hideOverlay"
+          :refresh="refreshGame"
+          :categories="categories"
+          :assignment="modalItem.parent"
+          :task="modalItem"
         />
       </template>
       <template v-else-if="overlayAction === 'Delete task'">
         <DeleteTask
-            :exit="hideOverlay"
-            :refresh="refreshGame"
-            :task="modalItem"
+          :exit="hideOverlay"
+          :refresh="refreshGame"
+          :task="modalItem"
         />
       </template>
       <template v-else-if="overlayAction === 'Create file'">
         <CreateFile
-            :exit="hideOverlay"
-            :refresh="refreshGame"
-            :task="modalItem"
+          :exit="hideOverlay"
+          :refresh="refreshGame"
+          :task="modalItem"
         />
       </template>
       <template v-else-if="overlayAction === 'Delete file'">
         <DeleteFile
-            :exit="hideOverlay"
-            :refresh="refreshGame"
-            :file="modalItem"
-            :task="modalItem.parent"
+          :exit="hideOverlay"
+          :refresh="refreshGame"
+          :file="modalItem"
+          :task="modalItem.parent"
         />
       </template>
-      <template v-else/>
+      <template v-else />
     </v-overlay>
     <vue-context ref="menu" v-slot="{ data }">
       <template v-if="data !== null && data !== undefined">
@@ -101,46 +100,60 @@
     <v-row>
       <v-col cols="4">
         <v-treeview
-            activatable
-            dense
-            hoverable
-            :items="assignments"
-            return-object
-            :active.sync="active"
-            @update:active="activeChanged(active)"
+          activatable
+          dense
+          hoverable
+          :items="assignments"
+          return-object
+          :active.sync="active"
+          @update:active="activeChanged(active)"
         >
           <template v-slot:prepend="{ item, open }">
-            <v-badge
-                overlap
-                dot
-                :color="getTaskHintColor(item)"
-            >
+            <v-badge overlap dot :color="getTaskHintColor(item)">
               <v-icon
-                  v-if="item.isDirectory"
-                  @contextmenu.prevent="$refs.menu.open($event, item)"
-                  :color="getColorOfIcon(item)"
+                v-if="item.isDirectory"
+                @contextmenu.prevent="$refs.menu.open($event, item)"
+                :color="getColorOfIcon(item)"
               >
                 {{ open ? "mdi-folder-open" : "mdi-folder" }}
               </v-icon>
-              <v-icon v-else @contextmenu.prevent="$refs.menu.open($event, item)">
+              <v-icon
+                v-else
+                @contextmenu.prevent="$refs.menu.open($event, item)"
+              >
                 {{ fileTypes[extensionRegex.exec(item.name)[1]] }}
               </v-icon>
             </v-badge>
           </template>
           <template v-slot:label="{ item }">
             <v-list-item-title
-                @contextmenu.prevent="$refs.menu.open($event, item)"
+              @contextmenu.prevent="$refs.menu.open($event, item)"
             >
               {{ item.name + (item.type !== "file" ? ` (${item.path})` : "") }}
               <template v-if="item.type === 'assignment'">
-                <v-avatar color="blue lighten-4" style="font-size: smaller" size="24" class="ml-2 my-auto">
-                  {{ getNumberOfTasksInCategory(item, 'Easy') }}
+                <v-avatar
+                  color="blue lighten-4"
+                  style="font-size: smaller"
+                  size="24"
+                  class="ml-2 my-auto"
+                >
+                  {{ getNumberOfTasksInCategory(item, "Easy") }}
                 </v-avatar>
-                <v-avatar color="green lighten-4" style="font-size: smaller" size="24" class="ml-2 my-auto">
-                  {{ getNumberOfTasksInCategory(item, 'Moderate') }}
+                <v-avatar
+                  color="green lighten-4"
+                  style="font-size: smaller"
+                  size="24"
+                  class="ml-2 my-auto"
+                >
+                  {{ getNumberOfTasksInCategory(item, "Moderate") }}
                 </v-avatar>
-                <v-avatar color="red lighten-4" style="font-size: smaller" size="24" class="ml-2 my-auto">
-                  {{ getNumberOfTasksInCategory(item, 'Hard') }}
+                <v-avatar
+                  color="red lighten-4"
+                  style="font-size: smaller"
+                  size="24"
+                  class="ml-2 my-auto"
+                >
+                  {{ getNumberOfTasksInCategory(item, "Hard") }}
                 </v-avatar>
               </template>
             </v-list-item-title>
@@ -150,9 +163,9 @@
       <v-col cols="8">
         <v-card class="sticky" tile elevation="2">
           <FileEditor
-              :service="service"
-              ref="fileEditor"
-              class="editorWrapper"
+            :service="service"
+            ref="fileEditor"
+            class="editorWrapper"
           />
         </v-card>
       </v-col>
@@ -171,8 +184,8 @@ import FileEditor from "@/components/game/builder/FileEditor";
 import DeleteTask from "@/components/game/builder/modals/DeleteTask";
 import DeleteFile from "@/components/game/builder/modals/DeleteFile";
 import CreateFile from "@/components/game/builder/modals/CreateFile";
-import {gameService} from "@/services";
-import {fileTypes, extensionRegex} from "@/constants";
+import { gameService } from "@/services";
+import { fileTypes, extensionRegex } from "@/constants";
 
 export default {
   components: {
@@ -238,7 +251,9 @@ export default {
         console.log(`It is a directory ${Date.now()}`);
         if (item.type === "task") {
           console.log(`It is a task ${Date.now()}`);
-          const children = item.children?.filter(child => extensionRegex.exec(child.name)[1] === "html");
+          const children = item.children?.filter(
+            child => extensionRegex.exec(child.name)[1] === "html"
+          );
           console.log(`Filtered shit ${Date.now()}`);
           if (children && children.length > 0) {
             console.log(`show the first html file ${Date.now()}`);
@@ -299,7 +314,7 @@ export default {
     getNumberOfTasksInCategory(assignment, category) {
       if (assignment.type === "assignment") {
         let id = 1;
-        this.categories.forEach(c => c.name === category ? id = c.id : "");
+        this.categories.forEach(c => (c.name === category ? (id = c.id) : ""));
         let numberOfTasks = 0;
         if (assignment.children) {
           assignment.children.forEach(task => {
@@ -313,7 +328,7 @@ export default {
       return 0;
     },
     getColorOfIcon(node) {
-      if (node.type === 'task') {
+      if (node.type === "task") {
         const id = node.data.category;
         for (const category of this.categories) {
           if (category.id === id) {
@@ -332,7 +347,7 @@ export default {
       if (item.type === "task" && item.data.hint.trim().length > 0) {
         return "orange lighten-2";
       }
-      return "transparent"
+      return "transparent";
     }
   }
 };

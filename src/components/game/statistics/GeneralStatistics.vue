@@ -7,23 +7,20 @@
           <v-simple-table>
             <template v-slot:default>
               <thead>
-              <tr>
-                <th class="text-left">
-                  Label
-                </th>
-                <th class="text-left">
-                  Value
-                </th>
-              </tr>
+                <tr>
+                  <th class="text-left">
+                    Label
+                  </th>
+                  <th class="text-left">
+                    Value
+                  </th>
+                </tr>
               </thead>
               <tbody>
-              <tr
-                  v-for="number in numbers"
-                  :key="number.label"
-              >
-                <td>{{ number.label }}</td>
-                <td>{{ number.value }}</td>
-              </tr>
+                <tr v-for="number in numbers" :key="number.label">
+                  <td>{{ number.label }}</td>
+                  <td>{{ number.value }}</td>
+                </tr>
               </tbody>
             </template>
           </v-simple-table>
@@ -37,24 +34,24 @@
           <v-simple-table>
             <template v-slot:default>
               <thead>
-              <tr>
-                <th class="text-left">
-                  Name
-                </th>
-                <th class="text-left">
-                  Points
-                </th>
-              </tr>
+                <tr>
+                  <th class="text-left">
+                    Name
+                  </th>
+                  <th class="text-left">
+                    Points
+                  </th>
+                </tr>
               </thead>
               <tbody>
-              <tr
+                <tr
                   v-for="student in bestStudents"
                   :key="student.username"
                   @click="studentClicked(student.username)"
-              >
-                <td>{{ student.realName }}</td>
-                <td>{{ student.points }}</td>
-              </tr>
+                >
+                  <td>{{ student.realName }}</td>
+                  <td>{{ student.points }}</td>
+                </tr>
               </tbody>
             </template>
           </v-simple-table>
@@ -65,7 +62,7 @@
 </template>
 
 <script>
-import {gameStatisticsService} from "@/services";
+import { gameStatisticsService } from "@/services";
 
 export default {
   name: "GeneralStatistics",
@@ -108,9 +105,7 @@ export default {
       this.$router.push(`/game/student?username=${username}`);
     }
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

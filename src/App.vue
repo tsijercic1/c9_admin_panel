@@ -14,6 +14,7 @@
 
 <script>
 import Navigation from "./components/Navigation";
+
 export default {
   components: {
     Navigation
@@ -37,14 +38,17 @@ export default {
   color: #212121;
   background: #eceff1;
   border-left: 5px solid #b2ebf2;
+
   &.message {
     background: #eceff1;
     border-left-color: #cfd8dc;
   }
+
   &.good {
     background: #eceff1;
     border-left-color: #4caf50;
   }
+
   &.bad {
     background: #eceff1;
     border-left-color: #f44336;
