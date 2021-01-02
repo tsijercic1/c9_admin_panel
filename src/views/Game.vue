@@ -30,10 +30,10 @@
 <script>
 
 
-import Leaderboard from "@/components/gameStatisticsComponents/Leaderboard";
-import GeneralStatistics from "@/components/gameStatisticsComponents/GeneralStatistics";
-import Groups from "@/components/gameStatisticsComponents/Groups";
-import GameBuilder from "@/components/GameBuilder";
+import Leaderboard from "@/components/game/statistics/Leaderboard";
+import GeneralStatistics from "@/components/game/statistics/GeneralStatistics";
+import Groups from "@/components/game/statistics/Groups";
+import GameBuilder from "@/components/game/Builder";
 export default {
   name: "Game",
   components: {GameBuilder, Groups, GeneralStatistics, Leaderboard},

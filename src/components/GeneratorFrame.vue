@@ -19,8 +19,7 @@ export default {
   data() {
     return {
       autotestSrc:
-        window.location.origin +
-        "/panel/assets/autotestGenerator/html/index.html"
+        window.location.origin + "/static/js/autotest-genv2/html/index.html"
     };
   },
   created() {

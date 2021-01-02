@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import CourseCard from "../components/CourseCard";
+import CourseCard from "../components/course/CourseCard";
 import { mapGetters } from "vuex";
 
 export default {

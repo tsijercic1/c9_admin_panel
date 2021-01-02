@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import GeneralStatistics from "@/components/gameStatisticsComponents/GeneralStatistics";
+import GeneralStatistics from "@/components/game/statistics/GeneralStatistics";
 export default {
   name: "GameStatistics",
   components: {GeneralStatistics}

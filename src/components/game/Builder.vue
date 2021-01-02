@@ -163,14 +163,14 @@
 <script>
 import VueContext from "vue-context";
 import "vue-context/src/sass/vue-context.scss";
-import CreateAssignment from "@/components/gameComponents/CreateAssignment";
-import EditAssignment from "@/components/gameComponents/EditAssignment";
-import CreateTask from "@/components/gameComponents/CreateTask";
-import EditTask from "@/components/gameComponents/EditTask";
-import FileEditor from "@/components/gameComponents/FileEditor";
-import DeleteTask from "@/components/gameComponents/DeleteTask";
-import DeleteFile from "@/components/gameComponents/DeleteFile";
-import CreateFile from "@/components/gameComponents/CreateFile";
+import CreateAssignment from "@/components/game/builder/modals/CreateAssignment";
+import EditAssignment from "@/components/game/builder/modals/EditAssignment";
+import CreateTask from "@/components/game/builder/modals/CreateTask";
+import EditTask from "@/components/game/builder/modals/EditTask";
+import FileEditor from "@/components/game/builder/FileEditor";
+import DeleteTask from "@/components/game/builder/modals/DeleteTask";
+import DeleteFile from "@/components/game/builder/modals/DeleteFile";
+import CreateFile from "@/components/game/builder/modals/CreateFile";
 import {gameService} from "@/services";
 import {fileTypes, extensionRegex} from "@/constants";
 

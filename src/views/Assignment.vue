@@ -151,12 +151,12 @@ import "codemirror/addon/edit/closebrackets";
 import { mapGetters } from "vuex";
 import VueContext from "vue-context";
 import "vue-context/src/sass/vue-context.scss"; // Alternatively import into a stylesheet instead
-import FileEditor from "@/components/assignmentComponents/FileEditor";
-import CreateAssignment from "@/components/assignmentComponents/CreateAssignment";
-import EditAssignment from "@/components/assignmentComponents/EditAssignment";
-import DeleteAssignment from "@/components/assignmentComponents/DeleteAssignment";
-import CreateFile from "@/components/assignmentComponents/CreateFile";
-import DeleteFile from "@/components/assignmentComponents/DeleteFile";
+import FileEditor from "@/components/course/assignment/FileEditor";
+import CreateAssignment from "@/components/course/assignment/CreateAssignment";
+import EditAssignment from "@/components/course/assignment/EditAssignment";
+import DeleteAssignment from "@/components/course/assignment/DeleteAssignment";
+import CreateFile from "@/components/course/assignment/CreateFile";
+import DeleteFile from "@/components/course/assignment/DeleteFile";
 import {extensionRegex, fileTypes} from "@/constants";
 
 export default {

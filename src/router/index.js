@@ -36,12 +36,12 @@ const routes = [
   {
     path: "/courses/:course_id",
     name: "Course",
-    component: () => import("@/views/Course")
+    component: () => import("@/components/course/Course")
   },
   {
     path: "/courses/:course_id/groups/:group_id",
     name: "Group",
-    component: () => import("@/views/Group")
+    component: () => import("@/components/course/Group")
   },
   {
     path: "/assignments/:course_id",
@@ -61,12 +61,12 @@ const routes = [
   {
     path: "/game/group",
     name: "GameGroup",
-    component: () => import("@/components/gameStatisticsComponents/Group")
+    component: () => import("@/components/game/statistics/Group")
   },
   {
     path: "/game/student",
     name: "StudentInfo",
-    component: () => import("@/components/gameStatisticsComponents/StudentInfo")
+    component: () => import("@/components/game/statistics/StudentInfo")
   },
   {
     path: "*",

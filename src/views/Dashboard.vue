@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import GameBuilder from "@/components/GameBuilder";
+import GameBuilder from "@/components/game/Builder";
 export default {
   name: "Dashboard",
   components: { GameBuilder },
