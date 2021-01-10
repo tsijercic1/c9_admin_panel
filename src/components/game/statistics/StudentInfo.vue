@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title>{{ realName }}</v-card-title>
     <v-progress-linear height="25" :value="pointPercentage">
-      <strong>{{ points }}</strong>
+      <strong>{{ points.toFixed(2) }}</strong>
     </v-progress-linear>
     <v-row>
       <v-col cols="6">
@@ -30,11 +30,26 @@
               color="green"
               >mdi-check-bold</v-icon
             >
-            <v-chip
-              v-if="item.type === 'task'"
-              :color="getTaskChipColor(item)"
-              >{{ item.status }}</v-chip
-            >
+            <template v-if="item.status === 'TURNED IN'">
+              <v-chip
+                class="ma-2"
+                label
+                small
+                v-if="item.type === 'task'"
+                :color="getTaskChipColor(item)"
+                >{{ item.points }}</v-chip
+              >
+            </template>
+            <template v-else>
+              <v-chip
+                v-if="item.type === 'task'"
+                label
+                small
+                class="ma-2"
+                :color="getTaskChipColor(item)"
+                >{{ item.status }}</v-chip
+              >
+            </template>
             <template v-if="item.type === 'assignment'">
               {{
                 `${getAssignmentPoints(item).toFixed(2)} / ${item.totalPoints}`
@@ -44,7 +59,11 @@
         </v-treeview>
       </v-col>
       <v-col cols="6">
-        In development
+        <v-container>
+          {{
+            selectedTask === undefined ? "Nothing selected" : selectedTask.type
+          }}
+        </v-container>
       </v-col>
     </v-row>
   </v-card>
@@ -62,6 +81,7 @@ export default {
       points: 0,
       assignments: [],
       active: undefined,
+      selectedTask: undefined,
       fileTypes,
       extensionRegex
     };
@@ -106,6 +126,10 @@ export default {
           let children = [];
           body.data[assignmentId].forEach(task => {
             const descriptor = assignmentMap[assignmentId][task.task_id];
+            console.log(descriptor);
+            console.log(assignmentMap[assignmentId]);
+            console.log(assignmentId);
+            console.log(task);
             let element = {
               id: assignmentId + "-" + descriptor.id,
               scrapedId: descriptor.id,
@@ -134,6 +158,9 @@ export default {
     activeChanged(item) {
       console.log("Clicked on: ");
       console.log(item);
+      if (item !== undefined && item.length > 0) {
+        this.selectedTask = item[0];
+      }
     },
     getColorOfIcon(item) {
       if (item.type === "task") {
