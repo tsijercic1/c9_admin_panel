@@ -16,6 +16,7 @@
         :rules="[isSelected]"
         return-object
       ></v-select>
+      <v-checkbox label="Disabled" v-model="disabled" />
       <v-textarea label="Hint" v-model="hint"></v-textarea>
       <div class="d-flex justify-space-between mt-5">
         <v-btn @click="exit" :disabled="isProcessing">Cancel</v-btn>
@@ -42,6 +43,7 @@ export default {
       isProcessing: false,
       name: "",
       hint: "",
+      disabled: false,
       selected: undefined,
       valid: true,
       notEmpty: v => (v || "").length > 0 || "This field cannot be empty",
@@ -62,6 +64,7 @@ export default {
     document.addEventListener("keydown", this._keyListener);
     this.name = this.task.name;
     this.hint = this.task.data.hint;
+    this.disabled = this.task.data.disabled;
     let result = this.categories.reduce((cat, item) => {
       if (item.id === this.task.data.category) {
         cat = item;
@@ -81,7 +84,8 @@ export default {
           id: this.task.scrapedId,
           name: this.name,
           categoryId: this.selected.id,
-          hint: this.hint
+          hint: this.hint,
+          disabled: this.disabled
         });
         this.isProcessing = false;
         if (!body.success) {

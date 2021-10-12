@@ -127,6 +127,11 @@
           </template>
           <template v-slot:label="{ item }">
             <v-list-item-title
+              :class="
+                item.type === 'task' && item.data.disabled === true
+                  ? 'text-decoration-line-through'
+                  : ''
+              "
               @contextmenu.prevent="$refs.menu.open($event, item)"
             >
               {{ item.name + (item.type !== "file" ? ` (${item.path})` : "") }}

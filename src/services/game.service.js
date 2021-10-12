@@ -94,7 +94,7 @@ export default {
     }
     return body;
   },
-  async createTask({ assignmentId, name, displayName, category, hint }) {
+  async createTask({ assignmentId, name, displayName, category, hint, disabled }) {
     const response = await fetch(
       `/services/uup_game.php?action=createTask&assignmentId=${assignmentId}`,
       {
@@ -106,7 +106,8 @@ export default {
           name,
           displayName,
           category,
-          hint
+          hint,
+          disabled
         })
       }
     );
@@ -119,7 +120,7 @@ export default {
     }
     return body;
   },
-  async editTask({ id, name, categoryId, hint }) {
+  async editTask({ id, name, categoryId, hint, disabled }) {
     const response = await fetch(
       `/services/uup_game.php?action=editTask&taskId=${id}`,
       {
@@ -128,9 +129,10 @@ export default {
           Accept: "application/json"
         },
         body: JSON.stringify({
-          name: name,
+          name,
           category: categoryId,
-          hint: hint
+          hint,
+          disabled
         })
       }
     );

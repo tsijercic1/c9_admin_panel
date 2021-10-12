@@ -22,6 +22,7 @@
         item-text="name"
         return-object
       ></v-select>
+      <v-checkbox label="Disabled" v-model="disabled" />
       <v-textarea label="Hint" v-model="hint"></v-textarea>
       <v-card-actions class="justify-space-between">
         <v-btn @click="exit" :disabled="isProcessing">Cancel</v-btn>
@@ -49,6 +50,7 @@ export default {
       name: "",
       displayName: "",
       hint: "",
+      disabled: false,
       selected: undefined,
       notEmpty: v => (v || "").length > 0 || "This field cannot be empty",
       noSpaces: v => (v || "").indexOf(" ") < 0 || "No spaces are allowed",
@@ -64,7 +66,8 @@ export default {
           name: this.name,
           displayName: this.displayName,
           category: this.selected.id,
-          hint: this.hint
+          hint: this.hint,
+          disabled: this.disabled
         });
         this.isProcessing = false;
         if (!body.success) {
