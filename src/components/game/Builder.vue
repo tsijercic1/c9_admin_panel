@@ -115,7 +115,13 @@
                 @contextmenu.prevent="$refs.menu.open($event, item)"
                 :color="getColorOfIcon(item)"
               >
-                {{ open ? "mdi-folder-open" : "mdi-folder" }}
+                {{
+                  item.type === "task" && item.data.disabled
+                    ? "mdi-wheelchair-accessibility"
+                    : open
+                    ? "mdi-folder-open"
+                    : "mdi-folder"
+                }}
               </v-icon>
               <v-icon
                 v-else
@@ -256,6 +262,7 @@ export default {
         console.log(`It is a directory ${Date.now()}`);
         if (item.type === "task") {
           console.log(`It is a task ${Date.now()}`);
+          console.log(item);
           const children = item.children?.filter(
             child => extensionRegex.exec(child.name)[1] === "html"
           );
